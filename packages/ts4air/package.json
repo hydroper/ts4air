@@ -1,5 +1,5 @@
 {
-  "name": "ts4air-ts2swf",
+  "name": "ts4air",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "esprima": "^4.0.1"
+    "commander": "^10.0.0",
+    "esprima": "^4.0.1",
+    "source-map": "^0.7.4"
   }
 }
