@@ -564,6 +564,9 @@ class ABCBuilder extends Builder {
 }
 
 class ABCFileBuilder extends ABCBuilder {
+    abc: ABCFile;
+    cpool: CPool;
+
     constructor() {
         super();
         this.abc = new ABCFile();
@@ -709,10 +712,12 @@ class ABCFileBuilder extends ABCBuilder {
         );
     }
 
+    /*
     interface(info) {
         let iface = new Interface(info);
         return this.abc.interfaces.push(iface) - 1;
     }
+    */
 
     addClass(cinit, traits) {
         let classObj = new Class(cinit, traits);
@@ -1013,6 +1018,9 @@ class ABCFileBuilder extends ABCBuilder {
 
 let labelIndex = 0;
 class Label {
+    name: string;
+    used: boolean;
+
     constructor(name) {
         if (name === undefined) {
             name = '$$label$' + (++labelIndex);
@@ -1024,6 +1032,19 @@ class Label {
 
 class MethodBuilder extends ABCBuilder {
     abc: ABCFileBuilder;
+    cpool: CPool;
+    fixups: any[];
+    addresses: Map<string, number>;
+    stack_depth: number;
+
+    max_stack: number;
+    max_local: number;
+
+    tracing: boolean;
+    trace_locals: number;
+
+    traceName: number;
+    joinName: number;
 
     /// @param {ABCFileBuilder} abc
     constructor(abc) {
@@ -1994,6 +2015,7 @@ export {
     NamespaceSet,
     Multiname,
 
+    Class,
     Method,
     OptionDetail,
     MethodBody,
