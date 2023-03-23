@@ -3,6 +3,10 @@
         "module": "commonjs",
         "lib": ["es2015"],
         "target": "es2015",
-        "types": ["@types/node"]
+        "types": ["@types/node"],
+        "baseUrl": ".",
+        "paths": {
+            "ts4air/*": ["src/*"]
+        }
     }
 }
