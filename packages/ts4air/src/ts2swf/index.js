@@ -1,7 +1,7 @@
-class JS2SWF {
+class TS2SWF {
     constructor() {
         //
     }
 }
 
-exports.JS2SWF = JS2SWF;
+exports.TS2SWF = TS2SWF;
