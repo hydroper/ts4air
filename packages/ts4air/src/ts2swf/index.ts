@@ -12,6 +12,6 @@ import {
 import * as ts from 'typescript';
 
 export class TS2SWF {
-    constructor(fileName, options) {
+    constructor(projectPath: string, outputSWFPath: string) {
     }
 }
