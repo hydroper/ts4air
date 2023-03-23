@@ -1,36 +1,32 @@
 // code by https://github.com/brion
 
-const {
-    Builder
-} = require('./utils');
+import {
+    Builder,
+} from './utils';
 
 class ABCFile {
-    constructor() {
-        this.minor_version = 16;
-        this.major_version = 46;
-        this.constant_pool = new CPool();
-        this.methods = [];
-        this.metadata = [];
-        this.instances = [];
-        this.classes = [];
-        this.scripts = [];
-        this.method_bodies = [];
-    }
+    minor_version: number = 16;
+    major_version: number = 46;
+    constant_pool: CPool = new CPool();
+    methods: Method[] = [];
+    metadata: Metadata[] = [];
+    instances: Instance[] = [];
+    classes: Class[] = [];
+    scripts: Script[] = [];
+    method_bodies: MethodBody[] = [];
 }
 
 class CPool {
-    constructor() {
-        this.integers = [0];
-        this.uintegers = [0];
-        this.doubles = [NaN];
-        this.strings = [undefined]; // placeholder for '' or '*' in namespace constants
-        this.namespaces = [new Namespace(null, -1)]; // placeholder for '*' namespace
-        this.ns_sets = [new NamespaceSet(null, [-1])];
-        this.multinames = [new Multiname(null, {
-            kind: -1,
-            name: -1
-        })];
-    }
+    integers: number[] = [0];
+    uintegers: number[] = [0];
+    doubles: number[] = [NaN];
+    strings: (undefined | string)[] = [undefined]; // placeholder for '' or '*' in namespace constants
+    namespaces: Namespace[] = [new Namespace(null, -1)]; // placeholder for '*' namespace
+    ns_sets: NamespaceSet[] = [new NamespaceSet(null, [-1])];
+    multinames: Multiname[] = [new Multiname(null, {
+        kind: -1,
+        name: -1
+    })];
 
     _find(list, val) {
         // Try for an exact match first:
@@ -106,9 +102,13 @@ class CPool {
 }
 
 class Namespace {
+    abc: ABCFileBuilder;
+    kind: number;
+    name: undefined | number;
+
     // kind is one of the constants
     // name is a reference to the string pool
-    constructor(abc, kind, name) {
+    constructor(abc, kind, name = undefined) {
         this.abc = abc;
         this.kind = kind;
         this.name = name;
@@ -136,7 +136,9 @@ class Namespace {
 }
 
 class NamespaceSet {
-    // @param {Array<int>} ns
+    abc: ABCFileBuilder;
+    namespaces: number[];
+
     constructor(abc, namespaces) {
         this.abc = abc;
         this.namespaces = namespaces;
@@ -167,6 +169,12 @@ class NamespaceSet {
 }
 
 class Multiname {
+    abc: ABCFileBuilder;
+    kind: number;
+    ns: number;
+    name: number;
+    ns_set: number;
+
     constructor(abc, info) {
         this.abc = abc;
         this.kind = info.kind;
@@ -205,7 +213,26 @@ class Multiname {
 }
 
 class Method {
-    constructor(info = {}) {
+    return_type: number;
+    param_types: number[];
+    name: number;
+    flags: number;
+    options: OptionDetail[];
+    param_names: number[];
+
+    constructor
+    (
+        info:
+        {
+            return_type?: number,
+            param_types?: number[],
+            name?: number,
+            flags?: number,
+            options?: OptionDetail[],
+            param_names?: number[],
+        } = {}
+    )
+    {
         this.return_type = info.return_type || 0;
         this.param_types = info.param_types || []
         this.name = info.name || 0;
@@ -223,6 +250,9 @@ class Method {
 }
 
 class OptionDetail {
+    val: number;
+    kind: number;
+
     constructor(val, kind) {
         this.val = val;
         this.kind = kind;
@@ -239,7 +269,30 @@ class OptionDetail {
 }
 
 class MethodBody {
-    constructor(info) {
+    method: number;
+    max_stack: number;
+    local_count: number;
+    init_scope_depth: number;
+    max_scope_depth: number;
+    code: Uint8Array;
+    exceptions: ExceptionInfo[];
+    traits: Trait[];
+
+    constructor
+    (
+        info:
+        {
+            method?: number,
+            max_stack?: number,
+            local_count?: number,
+            init_scope_depth?: number,
+            max_scope_depth?: number,
+            code?: Uint8Array,
+            exceptions?: ExceptionInfo[],
+            traits?: Trait[],
+        }
+    )
+    {
         this.method = info.method || 0;
         this.max_stack = info.max_stack || 64; // ! just use a large #?
         this.local_count = info.local_count || 0; // includes args?
@@ -252,6 +305,9 @@ class MethodBody {
 }
 
 class Metadata {
+    name: number;
+    items: Item[];
+
     constructor(name, items) {
         this.name = name;
         this.items = items;
@@ -259,6 +315,9 @@ class Metadata {
 }
 
 class Item {
+    key: number;
+    value: number;
+
     constructor(key, value) {
         this.key = key;
         this.value = value;
@@ -266,7 +325,28 @@ class Item {
 }
 
 class Instance {
-    constructor(info) {
+    name: number;
+    super_name: number;
+    flags: number;
+    protectedNs: number;
+    interfaces: number[];
+    iinit: number;
+    traits: Trait[];
+
+    constructor
+    (
+        info:
+        {
+            name?: number,
+            super_name?: number,
+            flags?: number,
+            protectedNs?: number,
+            interfaces?: number[],
+            iinit?: number,
+            traits?: Trait[],
+        }
+    )
+    {
         this.name        = info.name        || 0;  // string index
         this.super_name  = info.super_name  || 0;  // string index or 0
         this.flags       = info.flags       || 0;  // flags
@@ -283,7 +363,44 @@ class Instance {
 }
 
 class Trait {
-    constructor(info) {
+    name: number;
+    kind: number;
+    metadata: number[];
+
+    slot_id: number;
+    type_name: number;
+    vindex: number;
+    vkind: number;
+
+    classi: number;
+
+    'function': number;
+
+    disp_id: number;
+    method: number;
+
+    constructor
+    (
+        info:
+        {
+            name?: number,
+            kind?: number,
+            metadata?: number[],
+
+            slot_id?: number,
+            type_name?: number,
+            vindex?: number,
+            vkind?: number,
+
+            classi?: number,
+
+            'function'?: number,
+
+            disp_id?: number,
+            method?: number
+        }
+    )
+    {
         this.name     = info.name     || 0;  // string ref
         this.kind     = info.kind     || 0;  // const
         this.metadata = info.metadata || []; // array of metadata indexes
@@ -333,6 +450,9 @@ class Trait {
 }
 
 class Class {
+    cinit: number;
+    traits: Trait[];
+
     constructor(cinit, traits) {
         this.cinit = cinit; // index into method for static initializer
         this.traits = traits; // array of Trait objects
@@ -340,6 +460,9 @@ class Class {
 }
 
 class Script {
+    init: number;
+    traits: Trait[];
+
     constructor(init, traits) {
         this.init = init; // index into method for body of the script
         this.traits = traits;
@@ -347,7 +470,23 @@ class Script {
 }
 
 class ExceptionInfo {
-    constructor(info) {
+    from: number;
+    to: number;
+    target: number;
+    exc_type: number;
+    var_name: number;
+
+    constructor
+    (
+        info: {
+            from?: number,
+            to?: number,
+            target?: number,
+            exc_type?: number,
+            var_name?: number
+        }
+    )
+    {
         this.from     = info.from || 0; // offset in bytecode array
         this.to       = info.to   || 0; // offset in bytecode array
         this.target   = info.target || 0; // offset in bytecode array
@@ -884,6 +1023,8 @@ class Label {
 }
 
 class MethodBuilder extends ABCBuilder {
+    abc: ABCFileBuilder;
+
     /// @param {ABCFileBuilder} abc
     constructor(abc) {
         super();
@@ -1845,7 +1986,7 @@ class MethodBuilder extends ABCBuilder {
     }
 }
 
-module.exports = {
+export {
     ABCFile,
 
     CPool,

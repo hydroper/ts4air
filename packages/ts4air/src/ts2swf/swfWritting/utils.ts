@@ -1,8 +1,9 @@
 // code by https://github.com/brion
 
 class Builder {
+    stream: number[] = [];
+
     constructor() {
-        this.stream = [];
     }
 
     log(...args) {
@@ -23,10 +24,11 @@ class Builder {
 }
 
 class Bitstream extends Builder {
+    accumulator: number = 0;
+    nbits: number = 0;
+
     constructor() {
         super();
-        this.accumulator = 0;
-        this.nbits = 0;
     }
 
     toBytes() {
@@ -69,7 +71,7 @@ class Bitstream extends Builder {
     }
 }
 
-module.exports = {
+export {
     Builder,
     Bitstream,
 };

@@ -1,13 +1,13 @@
 // code by https://github.com/brion
 
-const {
+import {
     Builder,
     Bitstream,
-} = require('./utils');
+} from './utils';
 
 const utf8 = new TextEncoder();
 
-class SWFBuilder extends Builder {
+class SWFBuilder extends Bitstream {
     ui8(val) {
         this.out(val & 255);
     }
@@ -65,11 +65,12 @@ class SWFBuilder extends Builder {
 }
 
 class SWFFileBuilder extends SWFBuilder {
+    lengthOffset: number = 0;
+    frameCountOffset: number = 0;
+    frameCount: number = 0;
+
     constructor() {
         super();
-        this.lengthOffset = 0;
-        this.frameCountOffset = 0;
-        this.frameCount = 0;
     }
 
     toBytes() {
@@ -170,6 +171,6 @@ class SWFFileBuilder extends SWFBuilder {
     static kDoAbcLazyInitializeFlag = 1;
 }
 
-module.exports = {
+export {
     SWFFileBuilder
 };
