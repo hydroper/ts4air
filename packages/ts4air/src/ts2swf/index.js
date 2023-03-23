@@ -9,6 +9,7 @@ const {
 
     SWFFileBuilder,
 } = require('./swfWritting/index');
+const ts = require('typescript');
 
 class TS2SWF {
     constructor(fileName, options) {
