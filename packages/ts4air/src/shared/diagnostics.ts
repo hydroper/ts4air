@@ -103,6 +103,12 @@ export const errors = {
 	noFooError: error(
 		"Some message.",
 	),
+	incorrectFileName: (originalFileName: string, suggestedFileName: string, fullPath: string) =>
+		errorText(
+			`Incorrect file name: \`${originalFileName}\`!`,
+			`Full path: ${fullPath}`,
+			suggestion(`Change \`${originalFileName}\` to \`${suggestedFileName}\`.`),
+		),
 };
 
 export const warnings = {

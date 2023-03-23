@@ -9,14 +9,12 @@ export const INCLUDE_PATH = path.join(PACKAGE_ROOT, "include");
 export const COMPILER_VERSION: string = require("../../package.json").version;
 
 export const NODE_MODULES = "node_modules";
-export const RBXTS_SCOPE = "@rbxts";
 
 export const TS_EXT = ".ts";
 export const TSX_EXT = ".tsx";
 export const D_EXT = ".d";
 export const DTS_EXT = D_EXT + TS_EXT;
 export const TRANSFORMED_EXT = ".transformed";
-export const LUA_EXT = ".lua";
 export const SWF_EXT = ".swf";
 export const JSON_EXT = ".json";
 
