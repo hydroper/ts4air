@@ -11,8 +11,6 @@ Features:
 
 This is a work-in-progress. The learning of the TypeScript Compiler API can be done by examining the following items:
 
-- https://github.com/roblox-ts/roblox-ts
-  - Build command: https://github.com/roblox-ts/roblox-ts/blob/master/src/CLI/commands/build.ts#L117
 - https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API
 - https://github.com/microsoft/TypeScript/blob/main/src/compiler/types.ts#L2725
 
