@@ -12,7 +12,7 @@ Features:
 This is a work-in-progress. The learning of the TypeScript Compiler API can be done by examining the following items:
 
 - https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API
-- https://github.com/microsoft/TypeScript/blob/main/src/compiler/types.ts#L2725
+- https://github.com/microsoft/TypeScript/blob/7c14aff09383f3814d7aae1406b5b2707b72b479/lib/typescript.d.ts#L78
 
 The SWF writting process is based on:
 
