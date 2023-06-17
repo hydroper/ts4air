@@ -1,3 +1,5 @@
+import ByteArray from 'com.hydroper.util.nodejsbytearray';
+
 export class AbcFile {
     public majorVersion: number = 46;
     public minorVersion: number = 16;
@@ -381,9 +383,35 @@ export type MethodTraitKind = 'method' | 'getter' | 'setter';
 
 export class ClassInfo {
     /**
-     * @param cinit Index into the method section of the constant pool.
-     * References the method that is invoked when the class is first created.
+     * @param staticInit Index into the method section of the constant pool.
+     * References the method that is invoked when the class is first created, also
+     * known as static initializer.
      */
-    constructor(public cinit: number, public traits: TraitInfo[]) {
+    constructor(public staticInit: number, public traits: TraitInfo[]) {
+    }
+}
+
+export class ScriptInfo {
+    /**
+     * @param initMethod Index into the method section of the constant pool.
+     */
+    constructor(public initMethod: number, public traits: TraitInfo[]) {
+    }
+}
+
+export class MethodBodyInfo {
+    /**
+     * Index into the method section of the constant pool.
+     */
+    public method: number = 0;
+    public maxStack: number = 0;
+    public localCount: number = 0;
+    public initScopeDepth: number = 0;
+    public maxScopeDepth: number = 0;
+    public code: ByteArray;
+    public exceptions: ExceptionInfo[] = [];
+    public traits: TraitInfo[] = [];
+
+    constructor() {
     }
 }
