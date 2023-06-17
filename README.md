@@ -9,6 +9,12 @@ This is a work-in-progress. To-do:
 - [ ] Command for managing ts4air projects, including creating blank projects, compiling SWF and more.
   - [ ] Subcommand `ts4air doc` for running TypeDoc.
 
+## TypeScript Plans
+
+- Optional parameters must have a type that supports a constant value. The default value should be handled in different ways: if it is a non-constant value, it is assigned later in the method body. If the optional parameter's type has a non-ideal default constant value, e.g. `boolean`, it should be unsupported. For `number`, a `NaN` will be used as the initial constant value.
+- https://github.com/airsdk/Adobe-Runtime-Support/discussions/2595
+  - As for FFI matters: instead of a comment, use a separate file `srcName.ffi.json` with a content like `{"Q.f": {"exportAs": "q_f"}}` and also decide how to resolve to static or instance properties in this FFI meta-data.
+
 ## Research
 
 - [AVM2 Overview](https://web.archive.org/web/20211021025012/https://jmendeth.com/snapshot/4d9475cfb10af8142e331551dc9b91e1217dc8c6/media/2014-05-17-reverse-engineering-flash/avm2overview.pdf)
