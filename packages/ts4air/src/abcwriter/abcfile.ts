@@ -53,7 +53,6 @@ export class NsSetInfo {
  */
 export class MultinameInfo {
     constructor(public isAttribute: boolean) {
-        this.isAttribute = isAttribute;
     }
 }
 
@@ -67,8 +66,6 @@ export class QNameMultinameInfo extends MultinameInfo {
      */
     constructor(public ns: number, public name: number, isAttribute: boolean = false) {
         super(isAttribute);
-        this.ns = ns;
-        this.name = name;
     }
 }
 
@@ -81,7 +78,6 @@ export class RTQNameMultinameInfo extends MultinameInfo {
      */
     constructor(public name: number, isAttribute: boolean = false) {
         super(isAttribute);
-        this.name = name;
     }
 }
 
@@ -104,8 +100,6 @@ export class MultinameMultinameInfo extends MultinameInfo {
      */
     constructor(public name: number, public nsSet: number, isAttribute: boolean = false) {
         super(isAttribute);
-        this.name = name;
-        this.nsSet = nsSet;
     }
 }
 
@@ -118,7 +112,6 @@ export class MultinameLMultinameInfo extends MultinameInfo {
      */
     constructor(public nsSet: number, isAttribute: boolean = false) {
         super(isAttribute);
-        this.nsSet = nsSet;
     }
 }
 
