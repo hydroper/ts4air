@@ -1,14 +1,3 @@
-import {
-    ABCFileBuilder,
-    Label,
-    Namespace,
-    Instance,
-    Class,
-    Trait,
-    Script,
-
-    SWFFileBuilder,
-} from './swfWritting/index';
 import * as ts from 'typescript';
 import * as fs from 'fs';
 import * as path from 'path';
