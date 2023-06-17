@@ -261,19 +261,27 @@ export class TraitInfo {
     /**
      * @param name Index into the multiname section of the constant pool.
      * Must be a non-zero QName.
+     * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
      */
-    constructor(public name: number, public metadata: number[] = []) {
+    constructor(public name: number, public attributes: number = 0, public metadata: number[] = []) {
     }
 }
+
+export const TraitAttributes = {
+    FINAL: 0x1,
+    OVERRIDE: 0x2,
+    METADATA: 0x4,
+};
 
 export class XTraitInfo extends TraitInfo {
     /**
      * @param name Index into the multiname section of the constant pool.
      * Must be a non-zero QName.
+     * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
      */
-    constructor(public name: number, public metadata: number[] = []) {
-        super(name, metadata);
+    constructor(public name: number, public attributes: number = 0, public metadata: number[] = []) {
+        super(name, attributes, metadata);
     }
 }
