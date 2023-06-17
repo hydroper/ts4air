@@ -1,4 +1,4 @@
-import { assert } from 'console';
+import {assert} from 'console';
 
 export type Endian = 'littleEndian' | 'bigEndian';
 
@@ -15,15 +15,70 @@ export default class ByteArray {
         this._buffer = Buffer.allocUnsafe(initialCapacity);
     }
 
-    static withCapacity(length: number): ByteArray {
+    public static withCapacity(length: number): ByteArray {
         return new ByteArray(length);
     }
-    
+
+    public static withZeroes(length: number): ByteArray {
+        var r = new ByteArray();
+        r._buffer = Buffer.alloc(length);
+        r._length = length;
+        return r;
+    }
+
+    public static from(arg: ByteArray | Buffer): ByteArray {
+        var r = new ByteArray();
+        if (arg instanceof ByteArray) {
+            r._buffer = arg.toNodejsBuffer();
+            r._length = r._buffer.byteLength;
+        } else {
+            r._buffer = Buffer.from(arg);
+            r._length = arg.byteLength;
+        }
+        return r;
+    }
+
+    public toNodejsBuffer(): Buffer {
+        return Buffer.from(this._buffer.subarray(0, this._length));
+    }
+
+    public get length(): number {
+        return this._length;
+    }
+
+    public get position(): number {
+        return this._index;
+    }
+
+    public set position(value: number) {
+        this._index = Math.min(Math.max(value, 0), this._length);
+    }
+
+    public at(position: number): number {
+        return position < this._length ? this._buffer.readUInt8(position) : 0;
+    }
+
     private _growIfRequired(length: number): void {
         var ipl = this._index + length;
         // double buffer capacity as needed
         while (ipl > this._buffer.byteLength) {
             this._buffer = Buffer.concat([this._buffer, Buffer.allocUnsafe(this._buffer.byteLength)]);
         }
+    }
+
+    *[Symbol.iterator]() {
+        for (let i = 0; i < this._length; ++i) {
+            yield this._buffer.readUInt8(i);
+        }
+    }
+
+    public readByte(): number {
+        assert(this._index < this._length, 'Insufficient data available to read.');
+        return this._buffer.readUInt8(this._index);
+    }
+
+    public writeByte(value: number): void {
+        this._growIfRequired(1);
+        this._length += this._index >= this._length ? 1 : 0;
     }
 }
