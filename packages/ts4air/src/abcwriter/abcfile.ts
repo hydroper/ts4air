@@ -53,6 +53,10 @@ export class NsSetInfo {
     }
 }
 
+/**
+ * Base class for constant pool multinames. Do not instantiate
+ * this class directly.
+ */
 export class MultinameInfo {
     constructor(public isAttribute: boolean) {
         this.isAttribute = isAttribute;
@@ -125,11 +129,11 @@ export class MultinameLMultinameInfo extends MultinameInfo {
 }
 
 export class MethodInfo {
-    public paramCount: number;
+    public paramCount: number = 0;
     /**
      * Index into the multiname section of the constant pool.
      */
-    public returnType: number;
+    public returnType: number = 0;
     /**
      * Indexes into the multiname section of the constant pool.
      */
@@ -137,9 +141,17 @@ export class MethodInfo {
     /**
      * Index into the string section of the constant pool.
      */
-    public name: number;
-    public flags: number;
+    public name: number = 0;
+    /**
+     * Flags represnted by `MethodInfoFlags`.
+     */
+    public flags: number = 0;
+
     public options: OptionDetail[] = null;
+
+    /**
+     * Indexes into the string section of the constant pool.
+     */
     public paramNames: number[] = null;
 }
 
@@ -178,3 +190,90 @@ export type ConstantValueKind
     | 'staticProtectedNs'
     | 'privateNs';
 
+export class MetadataInfo {
+    /**
+     * @param name Index into the string section of the constant pool.
+     */
+    constructor(public name: number, public items: MetadataItemInfo[]) {
+    }
+}
+
+export class MetadataItemInfo {
+    /**
+     * @param key Index into the string section of the constant pool.
+     * If zero, the item is a keyless entry carrying only a value.
+     * @param value Index into the string section of the constant pool.
+     */
+    constructor(public key: number, public value: number) {
+    }
+}
+
+export class InstanceInfo {
+    /**
+     * Index into the multiname section of the constant pool. Must be a QName.
+     */
+    public name: number = 0;
+    /**
+     * Index into the multiname section of the constant pool.
+     * Provides the name of the base (super) class, if any.
+     * Assign zero for no super class.
+     */
+    public superName: number = 0;
+
+    /**
+     * Flags represented by `InstanceInfoFlags`.
+     */
+    public flags: number = 0;
+
+    /**
+     * Index into the namespace section of the constant pool.
+     * Must only be set if `flags` includes `InstanceInfoFlags.CLASS_PROTECTED_NS`.
+     */
+    public protectedNs: number = 0;
+
+    /**
+     * Indexes into the multiname section of the constant pool.
+     */
+    public interfaces: number[] = [];
+
+    /**
+     * Index into the method section of the ABC.
+     */
+    public iinit: number = 0;
+
+    public traits: TraitInfo[] = [];
+
+    constructor() {
+    }
+}
+
+export const InstanceInfo = {
+    CLASS_SEALED: 0x01,
+    CLASS_FINAL: 0x02,
+    CLASS_INTERFACE: 0x04,
+    CLASS_PROTECTED_NS: 0x08,
+};
+
+/**
+ * Base class for traits. Do not instantiate this class directly.
+ */
+export class TraitInfo {
+    /**
+     * @param name Index into the multiname section of the constant pool.
+     * Must be a non-zero QName.
+     * @param metadata Indexes into the metadata section of the ABC.
+     */
+    constructor(public name: number, public metadata: number[] = []) {
+    }
+}
+
+export class XTraitInfo extends TraitInfo {
+    /**
+     * @param name Index into the multiname section of the constant pool.
+     * Must be a non-zero QName.
+     * @param metadata Indexes into the metadata section of the ABC.
+     */
+    constructor(public name: number, public metadata: number[] = []) {
+        super(name, metadata);
+    }
+}
