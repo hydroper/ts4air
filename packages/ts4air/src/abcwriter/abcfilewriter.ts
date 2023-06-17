@@ -1,5 +1,5 @@
 import ByteArray, {Endian} from 'com.hydroper.util.nodejsbytearray';
-import {AbcFile} from './abcfile';
+import {AbcFile} from './abcFile';
 import {assert} from 'console';
 
 export default class AbcFileWriter {
