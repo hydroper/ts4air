@@ -247,7 +247,7 @@ export class InstanceInfo {
     }
 }
 
-export const InstanceInfo = {
+export const InstanceInfoFlags = {
     CLASS_SEALED: 0x01,
     CLASS_FINAL: 0x02,
     CLASS_INTERFACE: 0x04,
