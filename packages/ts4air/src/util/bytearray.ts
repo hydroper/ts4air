@@ -64,6 +64,13 @@ export default class ByteArray {
         while (ipl > this._buffer.byteLength) {
             this._buffer = Buffer.concat([this._buffer, Buffer.allocUnsafe(this._buffer.byteLength)]);
         }
+        if (this._index == this._length) {
+            this._length += length;
+        } else {
+            while (ipl >= this._length) {
+                ++this._length;
+            }
+        }
     }
 
     *[Symbol.iterator]() {
@@ -79,6 +86,6 @@ export default class ByteArray {
 
     public writeByte(value: number): void {
         this._growIfRequired(1);
-        this._length += this._index >= this._length ? 1 : 0;
+        this._buffer.writeUInt8(value, this._index);
     }
 }
