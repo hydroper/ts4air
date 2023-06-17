@@ -172,11 +172,10 @@ export class OptionDetail {
 
 export class ConstantValue {
     /**
-     * @param value If the value is empty, should be 0;
-     * otherwise it is an index into one of the constant pool sections according
+     * @param value Index into one of the constant pool sections according
      * to `kind`.
      */
-    constructor(public value: number, public kind: ConstantValueKind) {
+    constructor(public kind: ConstantValueKind, public value: number) {
     }
 }
 
@@ -297,25 +296,7 @@ export class SlotTraitInfo extends TraitInfo {
 
     public value: ConstantValue;
 
-    /**
-     * @param name Index into the multiname section of the constant pool.
-     * Must be a non-zero QName.
-     * @param slotId Integer from 0 to N used to identify a position
-     * in which this trait resides.
-     * @param typeName Index into the multiname section of the constant pool.
-     * A value of zero indicates the any type (`*`).
-     * @param attributes Attribute flags represented by `TraitAttributes`.
-     * @param metadata Indexes into the metadata section of the ABC.
-     */
-    constructor(options: {
-        name: number,
-        isConst: boolean,
-        slotId: number,
-        typeName: number,
-        value: ConstantValue,
-        attributes?: undefined | number,
-        metadata?: undefined | number[],
-    }) {
+    constructor(options: SlotTraitInfoOptions) {
         // isReadonly identifies a "const"
         super(options.name, options.attributes === undefined ? 0 : options.attributes, options.metadata === undefined ? [] : options.metadata);
         this.isConst = options.isConst;
@@ -325,26 +306,84 @@ export class SlotTraitInfo extends TraitInfo {
     }
 }
 
-export class XTraitInfo extends TraitInfo {
+export type SlotTraitInfoOptions = {
+    /**
+     * Index into the multiname section of the constant pool.
+     * Must be a non-zero QName.
+     */
+    name: number,
+    isConst: boolean,
+    /**
+     * Integer from 0 to N used to identify a position
+     * in which this trait resides.
+     */
+    slotId: number,
+    /**
+     * Index into the multiname section of the constant pool.
+     * A value of zero indicates the any type (`*`).
+     */
+    typeName: number,
+    value: ConstantValue,
+    /**
+     * Attribute flags represented by `TraitAttributes`.
+     */
+    attributes?: undefined | number,
+    /**
+     * Indexes into the metadata section of the ABC.
+     */
+    metadata?: undefined | number[],
+};
+
+export class ClassTraitInfo extends TraitInfo {
     /**
      * @param name Index into the multiname section of the constant pool.
      * Must be a non-zero QName.
+     * @param slotId Integer from 0 to N used to identify a position in which this trait resides.
+     * @param classIndex Index into the class section of the ABC.
      * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
      */
-    constructor(public name: number, public attributes: number = 0, public metadata: number[] = []) {
+    constructor(public name: number, public slotId: number, public classIndex: number, public attributes: number = 0, public metadata: number[] = []) {
         super(name, attributes, metadata);
     }
 }
 
-export class XTraitInfo extends TraitInfo {
+export class FunctionTraitInfo extends TraitInfo {
     /**
      * @param name Index into the multiname section of the constant pool.
      * Must be a non-zero QName.
+     * @param slotId Integer from 0 to N used to identify a position in which this trait resides.
+     * @param methodIndex Index into the method section of the ABC.
      * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
      */
-    constructor(public name: number, public attributes: number = 0, public metadata: number[] = []) {
+    constructor(public name: number, public slotId: number, public methodIndex: number, public attributes: number = 0, public metadata: number[] = []) {
         super(name, attributes, metadata);
+    }
+}
+
+export class MethodTraitInfo extends TraitInfo {
+    /**
+     * @param name Index into the multiname section of the constant pool.
+     * Must be a non-zero QName.
+     * @param methodIndex Index into the method section of the ABC.
+     * @param dispId Compiler assigned integer for optimizing virtual function calls. A value
+     * of zero disables this optimization. Consult the AVM2 Overview document for more information.
+     * @param attributes Attribute flags represented by `TraitAttributes`.
+     * @param metadata Indexes into the metadata section of the ABC.
+     */
+    constructor(public name: number, public methodKind: MethodTraitKind, public methodIndex: number, public dispId: number, public attributes: number = 0, public metadata: number[] = []) {
+        super(name, attributes, metadata);
+    }
+}
+
+export type MethodTraitKind = 'method' | 'getter' | 'setter';
+
+export class ClassInfo {
+    /**
+     * @param cinit Index into the method section of the constant pool.
+     * References the method that is invoked when the class is first created.
+     */
+    constructor(public cinit: number, public traits: TraitInfo[]) {
     }
 }
