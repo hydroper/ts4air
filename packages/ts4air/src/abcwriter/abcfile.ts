@@ -11,13 +11,13 @@ export class AbcFile {
 }
 
 export class ConstantPool {
-    public integers: number[] = [];
-    public unsignedIntegers: number[] = [];
-    public doubles: number[] = [];
-    public strings: string[] = [];
-    public namespaces: NamespaceInfo[] = [];
-    public nsSets: NsSetInfo[] = [];
-    public multinames: MultinameInfo[] = [];
+    public integers: (null | number)[] = [null];
+    public unsignedIntegers: (null | number)[] = [null];
+    public doubles: (null | number[]) = [null];
+    public strings: (null | string[]) = [null];
+    public namespaces: (null | NamespaceInfo[]) = [null];
+    public nsSets: (null | NsSetInfo[]) = [null];
+    public multinames: (null | MultinameInfo[]) = [null];
 }
 
 export class NamespaceInfo {
@@ -136,6 +136,7 @@ export class MethodInfo {
     public returnType: number = 0;
     /**
      * Indexes into the multiname section of the constant pool.
+     * A zero indicates the any type (`*`).
      */
     public paramTypes: number[] = [];
     /**
@@ -165,8 +166,14 @@ export const MethodInfoFlags = {
 };
 
 export class OptionDetail {
+    constructor(public value: ConstantValue) {
+    }
+}
+
+export class ConstantValue {
     /**
-     * @param value Index into one of the constant pool sections according
+     * @param value If the value is empty, should be 0;
+     * otherwise it is an index into one of the constant pool sections according
      * to `kind`.
      */
     constructor(public value: number, public kind: ConstantValueKind) {
@@ -273,6 +280,62 @@ export const TraitAttributes = {
     OVERRIDE: 0x2,
     METADATA: 0x4,
 };
+
+export class SlotTraitInfo extends TraitInfo {
+    public isConst: boolean;
+    /**
+     * Integer from 0 to N used to identify a position
+     * in which this trait resides.
+     */
+    public slotId: number;
+
+    /**
+     * Index into the multiname section of the constant pool.
+     * A value of zero indicates the any type (`*`).
+     */
+    public typeName: number;
+
+    public value: ConstantValue;
+
+    /**
+     * @param name Index into the multiname section of the constant pool.
+     * Must be a non-zero QName.
+     * @param slotId Integer from 0 to N used to identify a position
+     * in which this trait resides.
+     * @param typeName Index into the multiname section of the constant pool.
+     * A value of zero indicates the any type (`*`).
+     * @param attributes Attribute flags represented by `TraitAttributes`.
+     * @param metadata Indexes into the metadata section of the ABC.
+     */
+    constructor(options: {
+        name: number,
+        isConst: boolean,
+        slotId: number,
+        typeName: number,
+        value: ConstantValue,
+        attributes?: undefined | number,
+        metadata?: undefined | number[],
+    }) {
+        // isReadonly identifies a "const"
+        super(options.name, options.attributes === undefined ? 0 : options.attributes, options.metadata === undefined ? [] : options.metadata);
+        this.isConst = options.isConst;
+        this.slotId = options.slotId;
+        this.typeName = options.typeName;
+        this.value = options.value;
+    }
+}
+
+export class XTraitInfo extends TraitInfo {
+    /**
+     * @param name Index into the multiname section of the constant pool.
+     * Must be a non-zero QName.
+     * @param attributes Attribute flags represented by `TraitAttributes`.
+     * @param metadata Indexes into the metadata section of the ABC.
+     */
+    constructor(public name: number, public attributes: number = 0, public metadata: number[] = []) {
+        super(name, attributes, metadata);
+    }
+}
 
 export class XTraitInfo extends TraitInfo {
     /**
