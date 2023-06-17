@@ -23,18 +23,10 @@ export class ConstantPool {
 }
 
 export class NamespaceInfo {
-    public kind: NamespaceInfoKind;
-    /**
-     * Index into the string section of the constant pool.
-     */
-    public name: number;
-
     /**
      * @param name Index into the string section of the constant pool.
      */
-    constructor(kind: NamespaceInfoKind, name: number) {
-        this.kind = kind;
-        this.name = name;
+    constructor(public kind: NamespaceInfoKind, public name: number) {
     }
 }
 
