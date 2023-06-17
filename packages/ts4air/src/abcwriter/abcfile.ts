@@ -383,7 +383,7 @@ export type MethodTraitKind = 'method' | 'getter' | 'setter';
 
 export class ClassInfo {
     /**
-     * @param staticInit Index into the method section of the constant pool.
+     * @param staticInit Index into the method section of the ABC.
      * References the method that is invoked when the class is first created, also
      * known as static initializer.
      */
@@ -393,7 +393,7 @@ export class ClassInfo {
 
 export class ScriptInfo {
     /**
-     * @param initMethod Index into the method section of the constant pool.
+     * @param initMethod Index into the method section of the ABC.
      */
     constructor(public initMethod: number, public traits: TraitInfo[]) {
     }
@@ -401,7 +401,7 @@ export class ScriptInfo {
 
 export class MethodBodyInfo {
     /**
-     * Index into the method section of the constant pool.
+     * Index into the method section of the ABC.
      */
     public method: number = 0;
     public maxStack: number = 0;
@@ -414,4 +414,33 @@ export class MethodBodyInfo {
 
     constructor() {
     }
+}
+
+export class ExceptionInfo {
+    /**
+     * The starting position in the `methodBody.code` field from which the exception is enabled. 
+     */
+    public from: number = 0;
+    /**
+     * The ending position in the `methodBody.code` field after which the exception is disabled. 
+     */
+    public to: number = 0;
+
+    /**
+     * Target position in the `methodBody.code` field.
+     */
+    public target: number = 0;
+
+    /**
+     * Index into the string section of the constant pool.
+     * Zero means any type.
+     */
+    public exceptionType: number = 0;
+
+    /**
+     * Index into the string section of the constant pool indicating
+     * the variable to receive the exception object when any exception is thrown.
+     * If zero, there is no name associated with the exception object.
+     */
+    public varName: number = 0;
 }
