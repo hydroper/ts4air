@@ -15,11 +15,11 @@ export class AbcFile {
 export class ConstantPool {
     public integers: (null | number)[] = [null];
     public unsignedIntegers: (null | number)[] = [null];
-    public doubles: (null | number[]) = [null];
-    public strings: (null | string[]) = [null];
-    public namespaces: (null | NamespaceInfo[]) = [null];
-    public nsSets: (null | NsSetInfo[]) = [null];
-    public multinames: (null | MultinameInfo[]) = [null];
+    public doubles: (null | number)[] = [null];
+    public strings: (null | string)[] = [null];
+    public namespaces: (null | NamespaceInfo)[] = [null];
+    public nsSets: (null | NsSetInfo)[] = [null];
+    public multinames: (null | MultinameInfo)[] = [null];
 }
 
 export class NamespaceInfo {
