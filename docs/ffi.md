@@ -16,10 +16,13 @@ export declare class C {
 
 ```json
 {
-  "C": {"actionscript": "q.b::C"},
-  "C.f": {"actionscript": "f2"},
-  "C#x": {"actionscript": "y"}
+    "C": {"actionscript": "q.b::C"},
+    "foo.C": {"actionscript": "q.b::C2"},
+    "C.f": {},
+    "C#x": {}
 }
 ```
 
 `C.f` means `f` property from `C` and `C#x` means `x` instance property from `C`. `q.b::C` is `C` in the `public` namespace of the package `q.b`.
+
+The `"actionscript"` property is used to map a TypeScript class to an existing ActionScript class.
