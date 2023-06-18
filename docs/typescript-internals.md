@@ -27,3 +27,28 @@
 ## Control Flow Graph
 
 - Consider, e.g., no return after `throw` in a function that doesn't return `void`.
+
+## Built-ins
+
+Globals should be defined in some file global.d.ts.
+
+```typescript
+declare global {
+    class Array {
+        // ...
+    }
+}
+```
+
+Typings for globals and built-ins (including Adobe AIR API) should be included in `compilerOptions.types`: `com.adobe.air`. Globals like `Math`, `Infinity` and `isFinite()` should translate to `public::Math`, `public::Infinity` and `public::isFinite` respectively, where `public` is the global package's namespace (`namespace('packageNamespace', '')`).
+
+Definitions inside `declare global` should be connected to their ActionScript global equivalents, with the _**only**_ exception of:
+
+- The `Embed` function. It is erased whenever found.
+- The `ByteArray` class. It is equivalent to `flash.utils.ByteArray`.
+
+Definitions other than `declare global` should have a suffix to not conflict with them.
+
+## Integer types
+
+Internal tweaks may be neccessary since there is no `int` and `uint` in TypeScript.
