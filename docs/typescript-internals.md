@@ -24,6 +24,7 @@
 
 - `async`-`await` should be outputted based on what `tsc` outputs for them in the ES5 target.
 - `Promise` should wrap another type, `com.asextra.util.Promise`, from the SWF of the [`actionscript-extra` project](../actionscript-extra).
+  - Add `"then"`, `"catch"` and `"finally"` as keywords are available in the ABC format.
 
 ## Symbols
 
@@ -46,6 +47,9 @@ declare global {
     // declare import.meta.embedT() methods here
     interface ImportMeta {
     }
+
+    // declare assertion functions to use
+    // from actionscript-extra.swf
 }
 ```
 
@@ -56,6 +60,11 @@ Definitions inside `declare global` should be connected to their ActionScript gl
 - The `ByteArray` class. It is equivalent to `flash.utils.ByteArray`.
 
 Definitions other than `declare global` should have a suffix to not conflict with them.
+
+## Manually Generated Globals
+
+- `Promise`, `Map`, `WeakMap`, `Set` and `WeakSet` should be wrappers around their equivalents in `com.asextra.util`.
+  - Iterating these requires careful mapping.
 
 ## Integer types
 

@@ -20,6 +20,11 @@
 - [x] Writer
   - [ ] Opcodes
 
+## actionscript-extra
+
+- Re-structure the map and set iterators in `com.asextra.util` so that they can be used as proper ECMAScript iterators. Maybe improve some other things too there.
+- Add `WeakMap` and `WeakSet`.
+
 ## Nodes
 
 Filter this list.

@@ -1,4 +1,4 @@
-package com.asextra.util.assertion
+package
 {
     public function assertNotEquals(left:*, right:*, errorMessage:String = ''):void
     {

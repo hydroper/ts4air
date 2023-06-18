@@ -1,4 +1,4 @@
-package com.asextra.util.assertion
+package
 {
     public class AssertionError extends Error
     {
