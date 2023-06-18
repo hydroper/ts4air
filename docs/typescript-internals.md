@@ -23,7 +23,7 @@
 ## Async.
 
 - `async`-`await` should be outputted based on what `tsc` outputs for them in the ES5 target.
-- The `Promise` type can be implemented based on https://github.com/rialight/api-adobeair/blob/master/com.rialight.util/src/com/rialight/util/Promise.as. However it's being inconvenient since it'd require manually outputting ABC code due to `declare global` not allowing to implement `Promise` on TypeScript itself.
+- The `Promise` type couldd be implemented based on https://github.com/rialight/api-adobeair/blob/master/com.rialight.util/src/com/rialight/util/Promise.as. However it's being inconvenient since it'd require manually outputting ABC code due to `declare global` not allowing to implement `Promise` on TypeScript itself.
 
 ## Symbols
 
