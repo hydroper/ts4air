@@ -70,7 +70,11 @@ export default class AbcFileWriter {
         for (let metadata of abcFile.metadata) {
             this.metadataInfo(metadata);
         }
+        assert(abcFile.classes.length == abcFile.instances.length, 'Number of classes and instances must be equals.');
         this.u30(abcFile.classes.length);
+        for (let inst of abcFile.instances) {
+            this.instanceInfo(inst);
+        }
         for (let c of abcFile.classes) {
             this.classInfo(c);
         }
@@ -151,21 +155,15 @@ export default class AbcFileWriter {
         method.flags |= method.options == null ? 0 : abc.MethodInfoFlags.HAS_OPTIONAL;
         this.u8(method.flags);
         if ((method.flags & abc.MethodInfoFlags.HAS_OPTIONAL) != 0) {
-            if (method.options == null) {
-                throw new Error('methodInfo.options is null.');
-            }
+            assert(method.options != null, 'methodInfo.options is null.');
             this.u30(method.options.length);
             for (let opt of method.options) {
                 this.constantValue(opt.value, false);
             }
         }
         if ((method.flags & abc.MethodInfoFlags.HAS_PARAM_NAMES) != 0) {
-            if (method.paramNames == null) {
-                throw new Error('methodInfo.paramNames is null.');
-            }
-            if (method.paramCount != method.paramNames.length) {
-                throw new Error('Inconsistent count of parameters in method info.');
-            }
+            assert(method.paramNames != null, 'methodInfo.paramNames is null.');
+            assert(method.paramCount == method.paramNames.length, 'Inconsistent count of parameters in method info.');
             for (let name of method.paramNames) {
                 this.u30(name);
             }
@@ -180,7 +178,12 @@ export default class AbcFileWriter {
     }
 
     metadataInfo(metadata: abc.MetadataInfo) {
-        unimplemented();
+        this.u30(metadata.name);
+        this.u30(metadata.items.length);
+        for (let item of metadata.items) {
+            this.u30(item.key);
+            this.u30(item.value);
+        }
     }
 
     classInfo(classInfo: abc.ClassInfo) {
