@@ -52,6 +52,27 @@ export class ConstantPool {
         }
         return i;
     }
+
+    internNamespace(kind: NamespaceInfoKind, name: number): number {
+        for (let i = 0; i < this.namespaces.length; ++i) {
+            let ns = this.namespaces[i];
+            if (ns.kind == kind && ns.name == name) {
+                return i;
+            }
+        }
+        return this.namespaces.push(new NamespaceInfo(kind, name)) - 1;
+    }
+
+    internQName(ns: number, name: number): number {
+        let i = 0;
+        for (let multiname of this.multinames) {
+            if (multiname instanceof QNameMultinameInfo && multiname.ns == ns && multiname.name == name) {
+                return i;
+            }
+            ++i;
+        }
+        return this.multinames.push(new QNameMultinameInfo(ns, name)) - 1;
+    }
 }
 
 export class NamespaceInfo {

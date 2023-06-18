@@ -10,3 +10,12 @@ const Q = {
 };
 trace(Q.x); // trace(10);
 ```
+
+## Subtype
+
+```typescript
+let v = o instanceof RegExp ? o.source : ''; // new local for RegExp
+if (v instanceof Date && v.getSeconds() > 0) {
+    // new local for Date
+}
+```
