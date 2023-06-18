@@ -58,7 +58,33 @@ declare global {
 }
 ```
 
-Globals and built-ins (including Adobe AIR API) should be processed before other sources in the TypeScript-to-ABC conversion process so that definitions with duplicate names won't cause a suffix to be appended to the name of the globals and built-ins.
+Globals and built-ins (including Adobe AIR API) should be processed before other sources in the TypeScript-to-ABC conversion process. Globals like `Infinity` and `isFinite()` should translate to `public::Infinity` and `public::isFinite` respectively, where `public` is the global package's namespace (`namespace('packageNamespace', '')`).
+
+### FFI
+
+A TypeScript source can have FFI meta-data attached to it. Here is an example:
+
+`program.ts`
+
+```typescript
+export declare class C {
+    public x: number;
+
+    public static f(): void;
+}
+```
+
+`program.ffi.json`
+
+```json
+{
+  "C": {"actionscriptName": "q.b.C"},
+  "C.f": {"actionscriptName": "f2"},
+  "C#x": {"actionscriptName": "y"}
+}
+```
+
+`C.f` means `f` property from `C` and `C#x` means `x` instance property from `C`.
 
 ## ABC notes
 
