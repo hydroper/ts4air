@@ -20,6 +20,11 @@
 
 - Generators are useful for iterators and `for...of`. When TypeScript emits JavaScript for an edition prior to ES2015, it emits special code instead of using `yield`; this means `ts4air` can use a similiar approach, taking care to not break the control flow graph.
 
+## Async.
+
+- `async`-`await` should be outputted based on what `tsc` outputs for them in the ES5 target.
+- The `Promise` type can be implemented based on https://github.com/rialight/api-adobeair/blob/master/com.rialight.util/src/com/rialight/util/Promise.as. However it's being inconvenient since it'd require manually outputting ABC code due to `declare global` not allowing to implement `Promise` on TypeScript itself.
+
 ## Symbols
 
 - Symbols may be supported by creating global static maps using `Dictionary` with _**weak keys**_.

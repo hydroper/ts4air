@@ -10,11 +10,14 @@ export class Ts2Abc {
 
     public compile(program: ts.Program) {
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportTSDiagnostic.bind(this));
-        if (!this.state.foundAnyError) {
-            // compile to ABC
-            // - program.getTypeChecker();
-            // - program.getSourceFiles();
+        if (this.state.foundAnyError) {
+            return;
         }
+        this.state.currentProgram = program;
+        // compile to ABC
+        // - program.getTypeChecker();
+        // - program.getSourceFiles();
+        // throw new Error(`Unimplemented node: ${node.kind}`);
     }
 
     public programFromProject(projectPath: string): ts.Program {
