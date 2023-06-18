@@ -3,14 +3,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {Ts2AbcError} from 'ts4air/ts2abc/errors';
 import {AbcFile} from 'ts4air/abcwriter/abcFile';
+import Ts2AbcState from './state';
 
 export class Ts2Abc {
-    private abcFile: AbcFile = new AbcFile();
-    private foundAnyError: boolean = false;
+    private state: Ts2AbcState = new Ts2AbcState();
 
     public compile(program: ts.Program) {
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportDiagnostic.bind(this));
-        if (!this.foundAnyError) {
+        if (!this.state.foundAnyError) {
             // compile to ABC
             // - program.getTypeChecker();
             // - program.getSourceFiles();
@@ -25,7 +25,7 @@ export class Ts2Abc {
     }
 
     private reportDiagnostic(diagnostic: ts.Diagnostic) {
-        this.foundAnyError ||= diagnostic.category === ts.DiagnosticCategory.Error;
+        this.state.foundAnyError ||= diagnostic.category === ts.DiagnosticCategory.Error;
         if (diagnostic.file) {
             let {line, character} = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
             let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');

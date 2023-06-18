@@ -46,7 +46,21 @@ Support something in the form:
 - `for..in` does not iterate keys from class instance properties.
 - If a class duplicates a name, it should have another name, by appending a dollar sign. Loop appending different suffixes such as `$1`, `$2` or `$90` until it is not a duplicate. The global objects should be priorized, thus they should not have these suffixes.
 
-## ABC generation
+### Globals and built-ins
+
+Globals should be defined in some file global.d.ts.
+
+```typescript
+declare global {
+    class Array {
+        // ...
+    }
+}
+```
+
+Globals and built-ins (including Adobe AIR API) should be processed before other sources in the TypeScript-to-ABC conversion process so that definitions with duplicate names won't cause a suffix to be appended to the name of the globals and built-ins.
+
+## ABC notes
 
 - Control flow graph: consider, e.g., no return after `throw` in a function that doesn't return `void`.
 
