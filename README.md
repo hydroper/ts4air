@@ -84,7 +84,7 @@ export declare class C {
 }
 ```
 
-`C.f` means `f` property from `C` and `C#x` means `x` instance property from `C`.
+`C.f` means `f` property from `C` and `C#x` means `x` instance property from `C`. `q.b.C` is `C` in the `public` namespace of the package `q.b`.
 
 ## ABC notes
 
