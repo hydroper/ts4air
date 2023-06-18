@@ -58,6 +58,7 @@ Typings for globals and built-ins (including Adobe AIR API) should be included i
 Definitions inside `declare global` should be connected to their ActionScript global equivalents, with the _**only**_ exception of:
 
 - The `ByteArray` class. It is equivalent to `flash.utils.ByteArray`.
+- The vector types (`Int32Array` etc.). Also look at FFDec or swfdump to see what is the name of e.g. `Vector.<uint>`: is it the global `Vector$uint` or something like?
 
 Definitions other than `declare global` should have a suffix to not conflict with them.
 

@@ -16,9 +16,9 @@ let ba = new ByteArray();
 The following are equivalent to `Vector`:
 
 ```typescript
-let doubles = new DoubleArray();
-let ints = new IntArray();
-let uints = new UintArray();
+let doubles = new Float64Array();
+let ints = new Int32Array();
+let uints = new Uint32Array();
 ```
 
 ## Embed
