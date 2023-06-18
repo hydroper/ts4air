@@ -20,6 +20,38 @@ export class ConstantPool {
     public namespaces: (null | NamespaceInfo)[] = [null];
     public nsSets: (null | NsSetInfo)[] = [null];
     public multinames: (null | MultinameInfo)[] = [null];
+
+    internInteger(value: number): number {
+        let i = this.integers.indexOf(value);
+        if (i == -1) {
+            return this.integers.push(value) - 1;
+        }
+        return i;
+    }
+
+    internUnsignedInteger(value: number): number {
+        let i = this.unsignedIntegers.indexOf(value);
+        if (i == -1) {
+            return this.unsignedIntegers.push(value) - 1;
+        }
+        return i;
+    }
+
+    internDouble(value: number): number {
+        let i = this.doubles.indexOf(value);
+        if (i == -1) {
+            return this.doubles.push(value) - 1;
+        }
+        return i;
+    }
+
+    internString(value: string): number {
+        let i = this.strings.indexOf(value);
+        if (i == -1) {
+            return this.strings.push(value) - 1;
+        }
+        return i;
+    }
 }
 
 export class NamespaceInfo {
