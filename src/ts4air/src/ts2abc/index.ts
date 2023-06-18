@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 import * as fs from 'fs';
 import * as path from 'path';
 import {Ts2AbcError} from 'ts4air/ts2abc/errors';
-import {AbcFile} from 'ts4air/abcwriter/abcFile';
+import {AbcFile} from 'ts4air/abc/abcFile';
 import Ts2AbcState from './state';
 
 export class Ts2Abc {

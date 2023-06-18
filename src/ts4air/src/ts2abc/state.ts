@@ -1,4 +1,4 @@
-import {AbcFile} from 'ts4air/abcwriter/abcFile';
+import {AbcFile} from 'ts4air/abc/abcFile';
 import * as ts from 'typescript';
 
 export default class Ts2AbcState {
