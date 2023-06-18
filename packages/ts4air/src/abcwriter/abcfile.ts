@@ -34,8 +34,8 @@ export type NamespaceInfoKind
     = 'namespace'
     | 'packageNamespace'
     | 'packageInternalNs'
-    | 'protectedNs'
-    | 'explicitNs'
+    | 'protectedNamespace'
+    | 'explicitNamespace'
     | 'staticProtectedNs'
     | 'privateNs';
 

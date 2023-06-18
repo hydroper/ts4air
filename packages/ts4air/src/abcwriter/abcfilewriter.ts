@@ -1,5 +1,5 @@
 import ByteArray, {Endian} from 'com.hydroper.util.nodejsbytearray';
-import {AbcFile} from './abcFile';
+import * as abc from './abcFile';
 import {assert} from 'console';
 
 export default class AbcFileWriter {
@@ -23,7 +23,7 @@ export default class AbcFileWriter {
 
     s24(value: number) {
         assert(value >= -0x80_00_00 && value <= 0x7F_FF_FF, `Invalid s24 range, given: ${value}.`);
-        this.bytes.writeUnsignedShort(-value & 0xFF_FF);
+        this.bytes.writeUnsignedShort(Math.abs(value) & 0xFF_FF);
         this.bytes.writeByte(value > -1 ? value >> 16 : -(value >> 16) | 0x80);
     }
 
@@ -49,17 +49,106 @@ export default class AbcFileWriter {
     s32(value: number) {
         assert(value >= 0x80_00_00_00 && value <= 0x7F_FF_FF_FF, `Invalid s32 range, given: ${value}.`);
         this.u32(value >>> 0);
+        if (value < 0) {
+            this.bytes.set(this.bytes.position - 1, this.bytes.at(this.bytes.position - 1) | 0b0100_0000);
+        }
     }
 
     d64(value: number) {
         this.bytes.writeDouble(value);
     }
 
-    abcFile(abcFile: AbcFile) {
-        unimplementedYet();
+    abcFile(abcFile: abc.AbcFile) {
+        this.u16(abcFile.minorVersion);
+        this.u16(abcFile.majorVersion);
+        this.constantPool(abcFile.constantPool);
+        this.u30(abcFile.methods.length);
+        for (let method of abcFile.methods) {
+            this.methodInfo(method);
+        }
+        this.u30(abcFile.metadata.length);
+        for (let metadata of abcFile.metadata) {
+            this.metadataInfo(metadata);
+        }
+        this.u30(abcFile.classes.length);
+        for (let c of abcFile.classes) {
+            this.classInfo(c);
+        }
+        this.u30(abcFile.scripts.length);
+        for (let script of abcFile.scripts) {
+            this.scriptInfo(script);
+        }
+        this.u30(abcFile.methodBodies.length);
+        for (let methodBody of abcFile.methodBodies) {
+            this.methodBodyInfo(methodBody);
+        }
+    }
+
+    constantPool(constantPool: abc.ConstantPool) {
+        this.u30(constantPool.integers.length);
+        for (let i of constantPool.integers) {
+            this.s32(i);
+        }
+        this.u30(constantPool.unsignedIntegers.length);
+        for (let i of constantPool.unsignedIntegers) {
+            this.u32(i);
+        }
+        this.u30(constantPool.doubles.length);
+        for (let n of constantPool.doubles) {
+            this.d64(n);
+        }
+        this.u30(constantPool.strings.length);
+        for (let str of constantPool.strings) {
+            let ba = new ByteArray();
+            ba.writeUTF8(str);
+            this.u30(ba.length);
+            this.bytes.writeBytes(ba);
+        }
+        this.u30(constantPool.namespaces.length);
+        for (let ns of constantPool.namespaces) {
+            this.u8(namespaceInfoKindValue.get(ns.kind));
+            this.u30(ns.name);
+        }
+        this.u30(constantPool.nsSets.length);
+        for (let nsSet of constantPool.nsSets) {
+            this.u30(nsSet.namespaces.length);
+            for (let ns of nsSet.namespaces) {
+                this.u30(ns);
+            }
+        }
+    }
+
+    methodInfo(method: abc.MethodInfo) {
+        unimplemented();
+    }
+
+    metadataInfo(metadata: abc.MetadataInfo) {
+        unimplemented();
+    }
+
+    classInfo(classInfo: abc.ClassInfo) {
+        unimplemented();
+    }
+
+    scriptInfo(script: abc.ScriptInfo) {
+        unimplemented();
+    }
+
+    methodBodyInfo(methodBody: abc.MethodBodyInfo) {
+        unimplemented();
     }
 
     add() {
         this.u8(0xA0);
     }
 }
+
+const namespaceInfoKindValue: Map<abc.NamespaceInfoKind, number> = new Map([
+    ['namespace', 0x08],
+    ['packageNamespace', 0x16],
+    ['packageInternalNs', 0x17],
+    ['protectedNamespace', 0x18],
+    ['explicitNamespace', 0x19],
+    ['staticProtectedNs', 0x1A],
+    ['privateNs', 0x05],
+]);
