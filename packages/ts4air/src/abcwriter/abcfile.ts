@@ -394,7 +394,7 @@ export class MethodBodyInfo {
     public localCount: number = 0;
     public initScopeDepth: number = 0;
     public maxScopeDepth: number = 0;
-    public code: ByteArray;
+    public code: ByteArray = null;
     public exceptions: ExceptionInfo[] = [];
     public traits: TraitInfo[] = [];
 

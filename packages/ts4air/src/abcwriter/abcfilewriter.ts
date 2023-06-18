@@ -235,15 +235,46 @@ export default class AbcFileWriter {
     }
 
     classInfo(classInfo: abc.ClassInfo) {
-        unimplemented();
+        this.u30(classInfo.staticInit);
+        this.u30(classInfo.traits.length);
+        for (let trait of classInfo.traits) {
+            this.traitInfo(trait);
+        }
     }
 
     scriptInfo(script: abc.ScriptInfo) {
-        unimplemented();
+        this.u30(script.initMethod);
+        this.u30(script.traits.length);
+        for (let trait of script.traits) {
+            this.traitInfo(trait);
+        }
     }
 
     methodBodyInfo(methodBody: abc.MethodBodyInfo) {
-        unimplemented();
+        this.u30(methodBody.method);
+        this.u30(methodBody.maxStack);
+        this.u30(methodBody.localCount);
+        this.u30(methodBody.initScopeDepth);
+        this.u30(methodBody.maxScopeDepth);
+        assert(methodBody.code != null, 'methodBody.code is null.');
+        this.u30(methodBody.code.length);
+        this.bytes.writeBytes(methodBody.code);
+        this.u30(methodBody.exceptions.length);
+        for (let exc of methodBody.exceptions) {
+            this.exceptionInfo(exc);
+        }
+        this.u30(methodBody.traits.length);
+        for (let trait of methodBody.traits) {
+            this.traitInfo(trait);
+        }
+    }
+
+    exceptionInfo(exc: abc.ExceptionInfo) {
+        this.u30(exc.from);
+        this.u30(exc.to);
+        this.u30(exc.target);
+        this.u30(exc.exceptionType);
+        this.u30(exc.varName);
     }
 
     add() {
