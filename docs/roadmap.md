@@ -27,10 +27,11 @@
 
 ## TS-to-ABC
 
-- [ ] Load external ABCs from other SWFs.
+- [ ] 1. Load external ABCs from other SWFs.
   - Load first actionscript-extra.swf
   - Then load ABCs from project supplied SWFs.
-- [ ] Nodes
+- [ ] 2. Create some built-ins manually, like `Promise`.
+- [ ] 3. Compile nodes
 
 ## Nodes
 
