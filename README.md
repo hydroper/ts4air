@@ -35,3 +35,4 @@ This is a work-in-progress. To-do:
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/write.rs
   - https://github.com/brion/wasm2swf
+    - Output SWF based on https://github.com/brion/wasm2swf/blob/0457dc2a3d188f21446de98282a3267d381ccc10/src/wasm2swf.js#L2059
