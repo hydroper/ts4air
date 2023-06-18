@@ -3,7 +3,7 @@
         "module": "commonjs",
         "lib": [],
         "target": "ES5",
-        "types": [],
+        "types": ["com.adobe.air"],
         "baseUrl": ".",
         "paths": {
             "app/*": ["src/*"]

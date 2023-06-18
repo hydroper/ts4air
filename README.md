@@ -16,6 +16,12 @@ This is a work-in-progress. To-do:
   - [ ] `ts4air ts2abc`
   - [ ] `ts4air doc` for running TypeDoc.
 
+## Overview
+
+```typescript
+import {Rectangle} from 'com.adobe.air/geom';
+```
+
 #### ts4air.json
 
 There should be a command to create new projects, but the settings file for `ts4air`
@@ -35,60 +41,12 @@ Support something in the form:
 }
 ```
 
-## TypeScript Plans
+### Documentation
 
-- Object initializer, just as in JavaScript, translates to plain objects whose constructor is `Object`, regardless of its associated type. If the object implements an interface, it is not considered an implementor anymore after translated to ABC.
-- Whenever a signature type is known, output unused parameters to the ABC. This avoids bugs such as `map()` receiving a callback that accepts only one parameter (`o.map(a => v)` vs. `o.map((a, i, arr) => v)`).
-- Optional parameters are optimized if their type supports a constant value and a proper default (e.g. `NaN`, `null` or `undefined`); otherwise they'll translate to an untyped parameter, which is converted to its expected type later in the same function.
-- https://github.com/airsdk/Adobe-Runtime-Support/discussions/2595
-  - As for FFI matters: instead of a comment, use a separate file `srcName.ffi.json` with a content like `{"Q.f": {"exportAs": "q_f"}}` and also decide how to resolve to static or instance properties in this FFI meta-data.
-- The `number[]` type should not be optimized into a `Vector.<Number>`.
-- `for..in` does not iterate keys from class instance properties.
-- If a class duplicates a name, it should have another name, by appending a dollar sign. Loop appending different suffixes such as `$1`, `$2` or `$90` until it is not a duplicate. The global objects should be priorized, thus they should not have these suffixes.
-
-### Globals and built-ins
-
-Globals should be defined in some file global.d.ts.
-
-```typescript
-declare global {
-    class Array {
-        // ...
-    }
-}
-```
-
-Globals and built-ins (including Adobe AIR API) should be processed before other sources in the TypeScript-to-ABC conversion process. Globals like `Infinity` and `isFinite()` should translate to `public::Infinity` and `public::isFinite` respectively, where `public` is the global package's namespace (`namespace('packageNamespace', '')`).
-
-### FFI
-
-A TypeScript source can have FFI meta-data attached to it. Here is an example:
-
-`program.ts`
-
-```typescript
-export declare class C {
-    public x: number;
-
-    public static f(): void;
-}
-```
-
-`program.ffi.json`
-
-```json
-{
-  "C": {"actionscript": "q.b.C"},
-  "C.f": {"actionscript": "f2"},
-  "C#x": {"actionscript": "y"}
-}
-```
-
-`C.f` means `f` property from `C` and `C#x` means `x` instance property from `C`. `q.b.C` is `C` in the `public` namespace of the package `q.b`.
-
-## ABC notes
-
-- Control flow graph: consider, e.g., no return after `throw` in a function that doesn't return `void`.
+- [Optimizations](docs/optimizations.md)
+- [Built-ins](docs/builtins.md)
+- [FFI](docs/ffi.md)
+- [TypeScript Internals](docs/typescript-internals.md)
 
 ## Research
 

@@ -1,0 +1,17 @@
+{
+  "name": "com.adobe.air",
+  "version": "0.1.0",
+  "description": "Adobe AIR API",
+  "repository": "https://github.com/hydroper/ts4air",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["adobe-air"],
+  "author": "hydroper",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
