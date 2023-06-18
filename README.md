@@ -37,6 +37,7 @@ Support something in the form:
 
 ## TypeScript Plans
 
+- Object initializer, just as in JavaScript, translates to plain objects whose constructor is `Object`, regardless of its associated type. If the object implements an interface, it is not considered an implementor anymore after translated to ABC.
 - Whenever a signature type is known, output unused parameters to the ABC. This avoids bugs such as `map()` receiving a callback that accepts only one parameter (`o.map(a => v)` vs. `o.map((a, i, arr) => v)`).
 - Optional parameters must have a type that supports a constant value. The default value should be handled in different ways: if it is a non-constant value, it is assigned later in the method body. If the optional parameter's type has a non-ideal default constant value, e.g. `boolean`, it should be unsupported. For `number`, a `NaN` will be used as the initial constant value.
 - https://github.com/airsdk/Adobe-Runtime-Support/discussions/2595

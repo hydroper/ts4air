@@ -12,6 +12,7 @@ export class Ts2Abc {
     }
 
     public compile(program: ts.Program) {
+        // program.getTypeChecker()
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportDiagnostic);
     }
     
