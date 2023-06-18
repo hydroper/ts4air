@@ -29,3 +29,8 @@ This is a work-in-progress. To-do:
   - https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API
   - https://github.com/microsoft/TypeScript/blob/7c14aff09383f3814d7aae1406b5b2707b72b479/lib/typescript.d.ts#L78
     - Symbols are mixed with nodes.
+- Use `swfdump` or FFDec to examine ABC and SWF.
+  - http://www.swftools.org
+- SWF and ABC writing
+  - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
+  - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/write.rs
