@@ -1,0 +1,19 @@
+{
+  "name": "ts4air-testproj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "ts4air": "bin/ts4air"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "=4.9.4"
+  },
+  "devDependencies": {}
+}

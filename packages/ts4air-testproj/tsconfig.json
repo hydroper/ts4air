@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "lib": [],
+        "target": "ES5",
+        "types": [],
+        "baseUrl": ".",
+        "paths": {
+            "app/*": ["src/*"]
+        }
+    }
+}

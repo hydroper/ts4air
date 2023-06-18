@@ -8,14 +8,22 @@ export class Ts2Abc {
     private abcFile: AbcFile = new AbcFile();
     private foundAnyError: boolean = false;
 
-    constructor(projectPath: string) {
+    constructor() {
     }
 
     public compile(program: ts.Program) {
-        // program.getTypeChecker()
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportDiagnostic);
+        // program.getTypeChecker()
+        // compile here...
     }
-    
+
+    public programFromProject(projectPath: string): ts.Program {
+        let tsConfigPath = findTsConfigPath(projectPath);
+        let tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf8'));
+        let entryTS = findEntryTypeScript(projectPath);
+        return ts.createProgram([entryTS], tsConfig.compilerOptions);
+    }
+
     private reportDiagnostic(diagnostic: ts.Diagnostic) {
         this.foundAnyError ||= diagnostic.category === ts.DiagnosticCategory.Error;
         if (diagnostic.file) {
@@ -28,9 +36,19 @@ export class Ts2Abc {
     }
 }
 
+function findEntryTypeScript(projectPath: string): string {
+    if (fs.existsSync(path.resolve(projectPath, 'src/index.ts')) && fs.statSync(path.resolve(projectPath, 'src/index.ts')).isFile()) {
+        return path.resolve(projectPath, 'tsconfig.json');
+    }
+    throw new Ts2AbcError('noEntryTS');
+}
+
 function findTsConfigPath(projectPath: string): string {
-    let tsConfigPath: string | undefined = path.resolve(projectPath);
-    if (!fs.existsSync(tsConfigPath) || !fs.statSync(tsConfigPath).isFile()) {
+    let tsConfigPath: string | undefined = undefined;
+    if (fs.existsSync(path.resolve(projectPath, 'tsconfig.json')) && fs.statSync(path.resolve(projectPath, 'tsconfig.json')).isFile()) {
+        tsConfigPath = path.resolve(projectPath, 'tsconfig.json');
+    } else {
+        tsConfigPath = path.resolve(projectPath);
         tsConfigPath = ts.findConfigFile(tsConfigPath, ts.sys.fileExists);
         if (tsConfigPath === undefined) {
             throw new Ts2AbcError('noTSConfig');

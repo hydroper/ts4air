@@ -1,0 +1,9 @@
+{
+    "type": "app",
+    "swf": {
+        "path": "target/my-app.swf",
+        "framerate": 60,
+        "width": 1350,
+        "height": 700
+    }
+}
