@@ -8,13 +8,11 @@ export class Ts2Abc {
     private abcFile: AbcFile = new AbcFile();
     private foundAnyError: boolean = false;
 
-    constructor() {
-    }
-
     public compile(program: ts.Program) {
-        [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportDiagnostic);
-        // program.getTypeChecker()
-        // compile here...
+        [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportDiagnostic.bind(this));
+        if (!this.foundAnyError) {
+            // compile to ABC
+        }
     }
 
     public programFromProject(projectPath: string): ts.Program {
@@ -38,7 +36,7 @@ export class Ts2Abc {
 
 function findEntryTypeScript(projectPath: string): string {
     if (fs.existsSync(path.resolve(projectPath, 'src/index.ts')) && fs.statSync(path.resolve(projectPath, 'src/index.ts')).isFile()) {
-        return path.resolve(projectPath, 'tsconfig.json');
+        return path.resolve(projectPath, 'src/index.ts');
     }
     throw new Ts2AbcError('noEntryTS');
 }

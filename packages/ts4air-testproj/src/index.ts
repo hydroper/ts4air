@@ -1,1 +1,1 @@
-f();
+trace('Hello, world!');
