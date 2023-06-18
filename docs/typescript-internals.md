@@ -70,3 +70,7 @@ Definitions other than `declare global` should have a suffix to not conflict wit
 ## Integer types
 
 Internal tweaks may be neccessary since there is no `int` and `uint` in TypeScript.
+
+## Byte embedding
+
+To support `import.meta.embedBytes`, the SWF reader and writer must be able to recognize DefineBinaryData and SymbolClass tags.
