@@ -2,7 +2,7 @@
 
 ## Byte array
 
-The `ByteArray` type is global:
+`ByteArray` is global:
 
 ```typescript
 // do not import
@@ -13,24 +13,18 @@ let ba = new ByteArray();
 
 ## Vector
 
-Types similiar to JavaScript's typed arrays are present globally, however they are exactly vector types.
+The following are equivalent to `Vector`:
 
 ```typescript
-let doubles = new Float64Array();
-doubles.push(10);
-
-let ints = new Int32Array();
-
-let uints = new Uint32Array();
+let doubles = new DoubleArray();
+let ints = new IntArray();
+let uints = new UintArray();
 ```
 
 ## Embed
 
 ```typescript
-// UTF-8
 let dataText: string = import.meta.embedString('./data.txt');
-
-// Octets
 let byteArray: ByteArray = import.meta.embedBytes('./data.bin');
 ```
 
