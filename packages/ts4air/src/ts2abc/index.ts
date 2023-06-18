@@ -12,6 +12,8 @@ export class Ts2Abc {
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportDiagnostic.bind(this));
         if (!this.foundAnyError) {
             // compile to ABC
+            // - program.getTypeChecker();
+            // - program.getSourceFiles();
         }
     }
 
