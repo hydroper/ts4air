@@ -25,6 +25,13 @@
 - Re-structure the map and set iterators in `com.asextra.util` so that they can be used as proper ECMAScript iterators. Maybe improve some other things too there.
 - Add `WeakMap` and `WeakSet`.
 
+## TS-to-ABC
+
+- [ ] Load external ABCs from other SWFs.
+  - Load first actionscript-extra.swf
+  - Then load ABCs from project supplied SWFs.
+- [ ] Nodes
+
 ## Nodes
 
 Filter this list.

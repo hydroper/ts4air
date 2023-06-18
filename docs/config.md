@@ -27,3 +27,13 @@ Typical `ts4air.json` for libraries. This is reserved for writting native extens
     "type": "lib"
 }
 ```
+
+## Load Pre-compiled ActionScript
+
+By using [FFI meta-data](ffi.md), you can reuse ActionScript code from existing SWFs.
+
+```json
+{
+    "externalActionScript": ["some.swf", "another.swf"]
+}
+```
