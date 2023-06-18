@@ -8,6 +8,21 @@
 - The `number[]` type should not be optimized into a `Vector.<Number>`.
 - `for..in` does not iterate keys from class instance properties.
 - If a class duplicates a name, it should have another name, by appending a dollar sign. Loop appending different suffixes such as `$1`, `$2` or `$90` until it is not a duplicate. The global objects should be priorized, thus they should not have these suffixes.
+- The target ECMAScript edition is ES5, since ES3 is deprecated.
+
+## for...of
+
+- `for...of` over a statically-typed `Array` should iterate the values like `for each`.
+- `for...of` over an untyped value should iterate based on a map that maps constructor (`obj.constructor`) to its equivalent generator.
+- `for...of` should use generator.
+
+## Generators
+
+- Generators are useful for iterators and `for...of`. When TypeScript emits JavaScript for an edition prior to ES2015, it emits special code instead of using `yield`; this means `ts4air` can use a similiar approach, taking care to not break the control flow graph.
+
+## Symbols
+
+- Symbols may be supported by creating global static maps using `Dictionary` with _**weak keys**_.
 
 ## Control Flow Graph
 

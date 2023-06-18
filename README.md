@@ -31,7 +31,7 @@ Blank projects will be created through `ts4air new`.
   - https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API
   - https://github.com/microsoft/TypeScript/blob/7c14aff09383f3814d7aae1406b5b2707b72b479/lib/typescript.d.ts#L78
     - Symbols are mixed with nodes.
-- Use `swfdump` or FFDec to examine ABC and SWF.
+- Use `swfdump` or FFDec to get an idea of what ABC and SWF files contain.
   - http://www.swftools.org
 - SWF and ABC writing
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
