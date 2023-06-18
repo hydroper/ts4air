@@ -36,4 +36,4 @@ let byteArray: ByteArray = import.meta.embedBytes('./data.bin');
 
 ## Bound Methods
 
-TypeScript, in the case of TS4AIR, supports implicit bound methods just like ActionScript.
+TypeScript under `ts4air` inherits ActionScript's bound methods, therefore there is no need for `o.f.bind(o)`.
