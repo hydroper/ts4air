@@ -23,8 +23,9 @@ export default class AbcFileWriter {
 
     s24(value: number) {
         assert(value >= -0x80_00_00 && value <= 0x7F_FF_FF, `Invalid s24 range, given: ${value}.`);
-        this.bytes.writeUnsignedShort(Math.abs(value) & 0xFF_FF);
-        this.bytes.writeByte(value > -1 ? value >> 16 : -(value >> 16) | 0x80);
+        value = (value >>> 0) & 0xFF_FF_FF;
+        this.bytes.writeUnsignedShort(value & 0xFF_FF);
+        this.bytes.writeByte(value >> 16);
     }
 
     u30(value: number) {
