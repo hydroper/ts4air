@@ -78,9 +78,9 @@ export declare class C {
 
 ```json
 {
-  "C": {"actionscriptName": "q.b.C"},
-  "C.f": {"actionscriptName": "f2"},
-  "C#x": {"actionscriptName": "y"}
+  "C": {"actionscript": "q.b.C"},
+  "C.f": {"actionscript": "f2"},
+  "C#x": {"actionscript": "y"}
 }
 ```
 
