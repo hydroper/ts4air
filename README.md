@@ -6,8 +6,33 @@ Create Adobe AIR apps with the TypeScript language.
 
 This is a work-in-progress. To-do:
 
-- [ ] Command for managing ts4air projects, including creating blank projects, compiling SWF and more.
-  - [ ] Subcommand `ts4air doc` for running TypeDoc.
+- [ ] ts4air.json
+- [ ] TypeScript transformer
+- [ ] `ts4air` command
+  - [ ] `ts4air new --app`: Create new application project
+  - [ ] `ts4air new --lib`: Create new library
+  - [ ] `ts4air ts2swf`
+  - [ ] `ts4air ts2abc`
+  - [ ] `ts4air doc` for running TypeDoc.
+
+#### ts4air.json
+
+There should be a command to create new projects, but the settings file for `ts4air`
+should also be documented. It should be similiar to the `asconfigc` tool by Josh Tynjala.
+
+Support something in the form:
+
+```json
+{
+  "type": "app",
+  "swf": {
+    "path": "target/my-app.swf",
+    "framerate": 60,
+    "width": 1350,
+    "height": 700,
+  }
+}
+```
 
 ## TypeScript Plans
 
