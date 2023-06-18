@@ -116,6 +116,25 @@ export default class AbcFileWriter {
                 this.u30(ns);
             }
         }
+        this.u30(constantPool.multinames.length);
+        for (let multiname of constantPool.multinames) {
+            this.u8(multinameInfoKindValue(multiname));
+            if (multiname instanceof abc.QNameMultinameInfo) {
+                this.u30(multiname.ns);
+                this.u30(multiname.name);
+            } else if (multiname instanceof abc.RTQNameMultinameInfo) {
+                this.u30(multiname.name);
+            } else if (multiname instanceof abc.RTQNameLMultinameInfo) {
+                // empty
+            } else if (multiname instanceof abc.MultinameMultinameInfo) {
+                this.u30(multiname.name);
+                this.u30(multiname.nsSet);
+            } else if (multiname instanceof abc.MultinameLMultinameInfo) {
+                this.u30(multiname.nsSet);
+            } else {
+                throw new Error('Missing multiname kind.');
+            }
+        }
     }
 
     methodInfo(method: abc.MethodInfo) {
@@ -152,3 +171,13 @@ const namespaceInfoKindValue: Map<abc.NamespaceInfoKind, number> = new Map([
     ['staticProtectedNs', 0x1A],
     ['privateNs', 0x05],
 ]);
+
+function multinameInfoKindValue(object: abc.MultinameInfo): number {
+    return (
+        object instanceof abc.QNameMultinameInfo ? (object.isAttribute ? 0x00 : 0x07) :
+        object instanceof abc.RTQNameMultinameInfo ? (object.isAttribute ? 0x10 : 0x0F) :
+        object instanceof abc.RTQNameLMultinameInfo ? (object.isAttribute ? 0x12 : 0x11) :
+        object instanceof abc.MultinameMultinameInfo ? (object.isAttribute ? 0x0E : 0x09) :
+        object instanceof abc.MultinameLMultinameInfo ? (object.isAttribute ? 0x1C : 0x1B) : 0
+    );
+}
