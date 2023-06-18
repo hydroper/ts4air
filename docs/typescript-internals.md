@@ -64,6 +64,7 @@ Definitions other than `declare global` should have a suffix to not conflict wit
 ## Manually Generated Globals
 
 - `Promise`, `Map`, `WeakMap`, `Set` and `WeakSet` should be wrappers around their equivalents in `com.asextra.util`.
+  - These types can use keyword in ABC; e.g. `delete`, `try` and `finally`.
   - Iterating these requires careful mapping.
 
 ## Integer types
