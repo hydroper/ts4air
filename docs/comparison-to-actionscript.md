@@ -26,8 +26,14 @@ let uints = new Uint32Array();
 
 ## Embed
 
-The global `Embed` function returns directly either a `string` or `ByteArray`.
-
 ```typescript
-let s: string = Embed('./data.txt', 'application/octet-stream');
+// UTF-8
+let dataText: string = import.meta.embedString('./data.txt');
+
+// Octets
+let byteArray: ByteArray = import.meta.embedBytes('./data.bin');
 ```
+
+## Bound Methods
+
+TypeScript, in the case of TS4AIR, supports implicit bound methods just like ActionScript.

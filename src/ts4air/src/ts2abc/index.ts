@@ -9,7 +9,7 @@ export class Ts2Abc {
     private state: Ts2AbcState = new Ts2AbcState();
 
     public compile(program: ts.Program) {
-        [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportDiagnostic.bind(this));
+        [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportTSDiagnostic.bind(this));
         if (!this.state.foundAnyError) {
             // compile to ABC
             // - program.getTypeChecker();
@@ -24,7 +24,7 @@ export class Ts2Abc {
         return ts.createProgram([entryTS], tsConfig.compilerOptions);
     }
 
-    private reportDiagnostic(diagnostic: ts.Diagnostic) {
+    private reportTSDiagnostic(diagnostic: ts.Diagnostic) {
         this.state.foundAnyError ||= diagnostic.category === ts.DiagnosticCategory.Error;
         if (diagnostic.file) {
             let {line, character} = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);

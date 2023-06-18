@@ -37,6 +37,10 @@ declare global {
     class Array {
         // ...
     }
+
+    // declare import.meta.embedT() methods here
+    interface ImportMeta {
+    }
 }
 ```
 
@@ -44,7 +48,6 @@ Typings for globals and built-ins (including Adobe AIR API) should be included i
 
 Definitions inside `declare global` should be connected to their ActionScript global equivalents, with the _**only**_ exception of:
 
-- The `Embed` function. It is erased whenever found.
 - The `ByteArray` class. It is equivalent to `flash.utils.ByteArray`.
 
 Definitions other than `declare global` should have a suffix to not conflict with them.
