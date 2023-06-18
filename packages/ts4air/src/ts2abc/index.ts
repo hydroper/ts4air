@@ -11,11 +11,11 @@ export class Ts2Abc {
     constructor(projectPath: string) {
     }
 
-    compile(program: ts.Program) {
+    public compile(program: ts.Program) {
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportDiagnostic);
     }
     
-    reportDiagnostic(diagnostic: ts.Diagnostic) {
+    private reportDiagnostic(diagnostic: ts.Diagnostic) {
         this.foundAnyError ||= diagnostic.category === ts.DiagnosticCategory.Error;
         if (diagnostic.file) {
             let {line, character} = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);

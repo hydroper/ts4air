@@ -11,6 +11,7 @@ This is a work-in-progress. To-do:
 - [ ] `ts4air` command
   - [ ] `ts4air new --app`: Create new application project
   - [ ] `ts4air new --lib`: Create new library
+  - [ ] When creating new projects, create a conventional `tsconfig.json` with best pratices, such as `"noFallthroughCasesInSwitch": true` and strict nullability checks.
   - [ ] `ts4air ts2swf`
   - [ ] `ts4air ts2abc`
   - [ ] `ts4air doc` for running TypeDoc.
