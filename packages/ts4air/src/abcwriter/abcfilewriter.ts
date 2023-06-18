@@ -138,7 +138,45 @@ export default class AbcFileWriter {
     }
 
     methodInfo(method: abc.MethodInfo) {
-        unimplemented();
+        this.u30(method.paramCount);
+        this.u30(method.returnType);
+        if (method.paramCount != method.paramTypes.length) {
+            throw new Error('Inconsistent count of parameters in method info.');
+        }
+        for (let type of method.paramTypes) {
+            this.u30(type);
+        }
+        this.u30(method.name);
+        method.flags |= method.paramNames == null ? 0 : abc.MethodInfoFlags.HAS_PARAM_NAMES;
+        method.flags |= method.options == null ? 0 : abc.MethodInfoFlags.HAS_OPTIONAL;
+        this.u8(method.flags);
+        if ((method.flags & abc.MethodInfoFlags.HAS_OPTIONAL) != 0) {
+            if (method.options == null) {
+                throw new Error('methodInfo.options is null.');
+            }
+            this.u30(method.options.length);
+            for (let opt of method.options) {
+                this.constantValue(opt.value, false);
+            }
+        }
+        if ((method.flags & abc.MethodInfoFlags.HAS_PARAM_NAMES) != 0) {
+            if (method.paramNames == null) {
+                throw new Error('methodInfo.paramNames is null.');
+            }
+            if (method.paramCount != method.paramNames.length) {
+                throw new Error('Inconsistent count of parameters in method info.');
+            }
+            for (let name of method.paramNames) {
+                this.u30(name);
+            }
+        }
+    }
+
+    constantValue(value: abc.ConstantValue, ignoreKindIfValueIsZero: boolean) {
+        this.u30(value.value);
+        if (ignoreKindIfValueIsZero ? value.value != 0 : true) {
+            this.u8(constantValueKindValue.get(value.kind));
+        }
     }
 
     metadataInfo(metadata: abc.MetadataInfo) {
@@ -163,6 +201,24 @@ export default class AbcFileWriter {
 }
 
 const namespaceInfoKindValue: Map<abc.NamespaceInfoKind, number> = new Map([
+    ['namespace', 0x08],
+    ['packageNamespace', 0x16],
+    ['packageInternalNs', 0x17],
+    ['protectedNamespace', 0x18],
+    ['explicitNamespace', 0x19],
+    ['staticProtectedNs', 0x1A],
+    ['privateNs', 0x05],
+]);
+
+const constantValueKindValue: Map<abc.ConstantValueKind, number> = new Map([
+    ['int', 0x03],
+    ['uint', 0x04],
+    ['double', 0x06],
+    ['utf8', 0x01],
+    ['true', 0x08],
+    ['false', 0x0A],
+    ['null', 0x0C],
+    ['undefined', 0x00],
     ['namespace', 0x08],
     ['packageNamespace', 0x16],
     ['packageInternalNs', 0x17],

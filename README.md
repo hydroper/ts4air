@@ -15,6 +15,7 @@ This is a work-in-progress. To-do:
 - https://github.com/airsdk/Adobe-Runtime-Support/discussions/2595
   - As for FFI matters: instead of a comment, use a separate file `srcName.ffi.json` with a content like `{"Q.f": {"exportAs": "q_f"}}` and also decide how to resolve to static or instance properties in this FFI meta-data.
 - The `number[]` type should not be optimized into a `Vector.<Number>`.
+- `for..in` does not iterate keys from class instance properties.
 
 ## Research
 
