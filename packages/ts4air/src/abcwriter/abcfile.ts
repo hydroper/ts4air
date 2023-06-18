@@ -230,7 +230,8 @@ export class InstanceInfo {
     public interfaces: number[] = [];
 
     /**
-     * Index into the method section of the ABC.
+     * Index into the method section of the ABC. Referred to as the
+     * instance initializer (constructor).
      */
     public iinit: number = 0;
 

@@ -136,7 +136,7 @@ export default class AbcFileWriter {
             } else if (multiname instanceof abc.MultinameLMultinameInfo) {
                 this.u30(multiname.nsSet);
             } else {
-                throw new Error('Missing multiname kind.');
+                throw new Error('Unimplemented multiname kind.');
             }
         }
     }
@@ -144,9 +144,7 @@ export default class AbcFileWriter {
     methodInfo(method: abc.MethodInfo) {
         this.u30(method.paramCount);
         this.u30(method.returnType);
-        if (method.paramCount != method.paramTypes.length) {
-            throw new Error('Inconsistent count of parameters in method info.');
-        }
+        assert(method.paramCount == method.paramTypes.length, 'Inconsistent count of parameters in method info.');
         for (let type of method.paramTypes) {
             this.u30(type);
         }
@@ -183,6 +181,56 @@ export default class AbcFileWriter {
         for (let item of metadata.items) {
             this.u30(item.key);
             this.u30(item.value);
+        }
+    }
+
+    instanceInfo(instance: abc.InstanceInfo) {
+        this.u30(instance.name);
+        this.u30(instance.superName);
+        this.u8(instance.flags);
+        if ((instance.flags & abc.InstanceInfoFlags.CLASS_PROTECTED_NS) != 0) {
+            this.u30(instance.protectedNs);
+        }
+        this.u30(instance.interfaces.length);
+        for (let itrfc of instance.interfaces) {
+            this.u30(itrfc);
+        }
+        this.u30(instance.iinit);
+        this.u30(instance.traits.length);
+        for (let trait of instance.traits) {
+            this.traitInfo(trait);
+        }
+    }
+
+    traitInfo(trait: abc.TraitInfo) {
+        this.u30(trait.name);
+        trait.attributes |= trait.metadata.length > 0 ? abc.TraitAttributes.METADATA : 0;
+        this.u8((trait.attributes << 4) | traitInfoKindValue(trait));
+        this.traitInfoData(trait);
+        if ((trait.attributes & abc.TraitAttributes.METADATA) != 0) {
+            this.u30(trait.metadata.length);
+            for (let metadata of trait.metadata) {
+                this.u30(metadata);
+            }
+        }
+    }
+
+    traitInfoData(trait: abc.TraitInfo)  {
+        if (trait instanceof abc.SlotTraitInfo) {
+            this.u30(trait.slotId);
+            this.u30(trait.typeName);
+            this.constantValue(trait.value, true);
+        } else if (trait instanceof abc.ClassTraitInfo) {
+            this.u30(trait.slotId);
+            this.u30(trait.classIndex);
+        } else if (trait instanceof abc.FunctionTraitInfo) {
+            this.u30(trait.slotId);
+            this.u30(trait.methodIndex);
+        } else if (trait instanceof abc.MethodTraitInfo) {
+            this.u30(trait.dispId);
+            this.u30(trait.methodIndex);
+        } else {
+            throw new Error('Unimplemented trait info.');
         }
     }
 
@@ -238,5 +286,14 @@ function multinameInfoKindValue(object: abc.MultinameInfo): number {
         object instanceof abc.RTQNameLMultinameInfo ? (object.isAttribute ? 0x12 : 0x11) :
         object instanceof abc.MultinameMultinameInfo ? (object.isAttribute ? 0x0E : 0x09) :
         object instanceof abc.MultinameLMultinameInfo ? (object.isAttribute ? 0x1C : 0x1B) : 0
+    );
+}
+
+function traitInfoKindValue(object: abc.TraitInfo): number {
+    return (
+        object instanceof abc.SlotTraitInfo ? (object.isConst ? 6 : 0) :
+        object instanceof abc.MethodTraitInfo ? (object.methodKind == 'getter' ? 2 : object.methodKind == 'setter' ? 3 : 1) :
+        object instanceof abc.ClassTraitInfo ? 4 :
+        object instanceof abc.FunctionTraitInfo ? 5 : 0
     );
 }
