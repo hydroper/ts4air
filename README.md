@@ -34,3 +34,4 @@ This is a work-in-progress. To-do:
 - SWF and ABC writing
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/write.rs
+  - https://github.com/brion/wasm2swf
