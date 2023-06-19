@@ -9,6 +9,7 @@
   - [ ] `ts4air new --lib`: Create new library
     - [ ] Automatically run `npm install` for the first time.
   - [ ] `ts4air ts2swf`
+  - [ ] `ts4air validate`: runs `ts2swf`, but does not generate SWF. Used for validating a program.
   - [ ] `ts4air doc` for running TypeDoc.
 
 ## SWF/ABC

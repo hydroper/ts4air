@@ -8,7 +8,7 @@ import Ts2SwfState from './state';
 export class Ts2Swf {
     public state: Ts2SwfState = new Ts2SwfState();
     
-    constructor(projectPath: string) {
+    constructor(projectPath: string, generateSWF: boolean = true) {
         projectPath = path.resolve(projectPath);
 
         this.mergePreludeSWFs();
@@ -31,13 +31,21 @@ export class Ts2Swf {
             }
         }
 
+        this.compileProject(projectPath);
+
         if (this.state.foundAnyError) {
-            console.log('No SWF generated due to errors above.');
-        } else {
+            console.log('Project invalidated due to errors above.');
+        } else if (generateSWF) {
             // read ts4air.json to get things like frame-rate, background, width etc.
             // - use util/convertColor.ts
-            generateSWF();
-            console.log(`SWF written to ${swfWrittenToZxczxc}.`);
+            if (projectIsApplication()) {
+                generateSWF();
+                console.log(`SWF written to ${swfWrittenToZxczxc}.`);
+            } else {
+                console.error(`Cannot generate SWF since the project is a library`);
+            }
+        } else {
+            console.log(`Project validated: no TypeScript errors.`);
         }
     }
 
