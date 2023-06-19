@@ -13,7 +13,8 @@ Typical `ts4air.json` for user-end applications.
       "path": "target/my-app.swf",
       "framerate": 60,
       "width": 1350,
-      "height": 700
+      "height": 700,
+      "background": "#333"
     }
 }
 ```

@@ -34,6 +34,8 @@ export class Ts2Swf {
         if (this.state.foundAnyError) {
             console.log('No SWF generated due to errors above.');
         } else {
+            // read ts4air.json to get things like frame-rate, background, width etc.
+            // - use util/convertColor.ts
             generateSWF();
             console.log(`SWF written to ${swfWrittenToZxczxc}.`);
         }
@@ -41,10 +43,14 @@ export class Ts2Swf {
 
     public compileProject(projectPath: string) {
         projectPath = path.resolve(projectPath);
+
         // merge any SWFs referenced in optional ts4air.json
-        zxczxczxczxczxczcxc();
-        // 
-        this.compileTSProgram(this.createTSProgram(projectPath), projectPath);
+        mergeProjectReferencedSWFs();
+
+        const program = this.createTSProgram(projectPath);
+        if (program !== undefined) {
+            this.compileTSProgram(program, projectPath);
+        }
     }
 
     public compileTSProgram(program: ts.Program, projectPath: string) {
@@ -63,11 +69,11 @@ export class Ts2Swf {
         // throw new Error(`Unimplemented node: ${node.kind}`);
     }
 
-    public createTSProgram(projectPath: string): ts.Program {
+    public createTSProgram(projectPath: string): ts.Program | undefined {
         let tsConfigPath = findTsConfigPath(projectPath);
         let tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf8'));
         let entryTS = findEntryTypeScript(projectPath);
-        return ts.createProgram([entryTS], tsConfig.compilerOptions);
+        return entryTS === undefined ? undefined : ts.createProgram([entryTS], tsConfig.compilerOptions);
     }
 
     private reportTSDiagnostic(diagnostic: ts.Diagnostic) {
@@ -82,12 +88,16 @@ export class Ts2Swf {
     }
 }
 
-function findEntryTypeScript(projectPath: string): string {
+function findEntryTypeScript(projectPath: string): string | undefined {
     let npmPackageConfigPath = path.resolve(projectPath, 'package.json');
     if (!(fs.existsSync(npmPackageConfigPath) && fs.statSync(npmPackageConfigPath).isFile())) {
         throw new Ts2SwfError('noEntryTS');
     }
-    let mainTsPath = path.resolve(projectPath, JSON.parse(fs.readFileSync(npmPackageConfigPath, 'utf8')).main);
+    const npmPackageConfig = JSON.parse(fs.readFileSync(npmPackageConfigPath, 'utf8'));
+    if (!npmPackageConfig.hasOwnProperty("main")) {
+        return undefined;
+    }
+    let mainTsPath = path.resolve(projectPath, npmPackageConfig.main);
     if (fs.existsSync(mainTsPath) && fs.statSync(mainTsPath).isFile()) {
         return mainTsPath;
     }

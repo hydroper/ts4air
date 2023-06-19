@@ -178,6 +178,15 @@ export default class SwfWriter {
         this.tag(87, tag.bytes);
     }
 
+    setBackgroundColor(color: number) {
+        let tag = new SwfWriter();
+        tag.ui8((color >> 16) & 0xFF);
+        tag.ui8((color >> 8) & 0xFF);
+        tag.ui8(color & 0xFF);
+
+        this.tag(9, tag.bytes);
+    }
+
     end() {
         this.tag(0, new ByteArray());
     }

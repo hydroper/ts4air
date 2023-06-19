@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "color-convert": "^2.0.1",
     "com.hydroper.util.nodejsbytearray": "^1.1.1",
     "commander": "^10.0.0",
     "swf-reader": "^1.0.0",
@@ -21,6 +22,7 @@
     "typescript": "=4.9.4"
   },
   "devDependencies": {
+    "@types/color-convert": "^2.0.0",
     "@types/node": "^18.15.5",
     "tsconfig-paths": "^4.2.0"
   }
