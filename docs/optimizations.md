@@ -33,3 +33,16 @@ function f(a: number | string) {
     // new local for String
 }
 ```
+
+Example 3:
+
+```ts
+try {
+    //
+} catch (error) {
+    if (!(error instanceof ReferenceError)) {
+        throw error;
+    }
+    // new local for ReferenceError
+}
+```

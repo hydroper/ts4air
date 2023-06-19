@@ -48,9 +48,14 @@ export class Ts2Swf {
 
     public generateSWF(projectPath: string) {
         // read ts4air.json to get things like frame-rate, background, width etc.
-        let ts4airJsonPath = path.resolve(projectPath, 'ts4air.json');
+        const ts4airJsonPath = path.resolve(projectPath, 'ts4air.json');
         if (!(fs.existsSync(ts4airJsonPath) && fs.statSync(ts4airJsonPath).isFile())) {
             console.error('Project must have a ts4air.json file.');
+            return;
+        }
+        const ts4airJson = JSON.parse(fs.readFileSync(ts4airJsonPath, 'utf8'));
+        if (ts4airJson.type != 'app') {
+            console.error('Project must be an Adobe AIR application for generating a SWF.');
             return;
         }
 
@@ -59,12 +64,8 @@ export class Ts2Swf {
         // - associate character tag id 0 to the main class (by adding a SymbolClass tag)
         // - use util/convertColor.ts
 
-        if (projectIsApplication()) {
-            generateSWF();
-            console.log(`SWF written to ${swfWrittenToZxczxc}.`);
-        } else {
-            console.error(`Cannot generate SWF since the project is a library`);
-        }
+        generateSWF();
+        console.log(`SWF written to ${swfWrittenToZxczxc}.`);
     }
 
     public mergePreludeSWFs() {
