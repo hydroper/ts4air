@@ -37,13 +37,16 @@
 ## TS-to-ABC
 
 - [ ] 1. Load external ABCs from other SWFs.
-  - Load first actionscript-extra.swf
+  - Merge prelude actionscript-extra.swf
   - Then load ABCs from project supplied SWFs.
-  - [ ] Load library projects from `node_modules` in the correct order (look at NPM dependency graph). If `node_modules` is not present in the entry project, an error occurs telling to run `npm install`.
-  - [ ] Combine binary data and symbol classes, so that external SWFs can embed bytes.
 - [ ] 2. Create some built-ins manually, like `Promise`.
 - [ ] 3. Compile nodes
+  - [ ] If the source file is the entry point of a library, compile another project on the stack via `compileProject`.
   - [ ] `import.meta.embedBytes`: while incrementing the `BinaryData` id, check if it doesn't duplicate too due to merged SWFs.
+
+SWF merging:
+
+- [ ] Combine binary data and symbol classes, so that external SWFs can embed bytes.
 
 ## Nodes
 

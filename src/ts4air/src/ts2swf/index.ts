@@ -4,6 +4,7 @@ import * as path from 'path';
 import {Ts2SwfError} from 'ts4air/ts2swf/errors';
 import {AbcFile} from 'ts4air/abc/abcFile';
 import Ts2SwfState from './state';
+import Project from './project';
 
 export class Ts2Swf {
     public state: Ts2SwfState = new Ts2SwfState();
@@ -20,11 +21,13 @@ export class Ts2Swf {
             throw new Ts2SwfError('npmDepsNotInstalled');
         }
         const packageLockPkgs = JSON.parse(fs.readFileSync(packageLockPath, 'utf8')).packages;
-        // installed packages have to be iterated in dependency ascending order
         for (let pkgPath of Object.keys(packageLockPkgs)) {
             if (!pkgPath.startsWith('node_modules/')) {
                 continue;
             }
+            // do not compile; just collect the library entry points and
+            // map entry point paths to library project paths.
+            fixThisFixthis();
             this.compileProject(path.resolve(projectPath, pkgPath));
             if (this.state.foundAnyError) {
                 break;
@@ -51,21 +54,22 @@ export class Ts2Swf {
 
     public compileProject(projectPath: string) {
         projectPath = path.resolve(projectPath);
+        this.state.projectStack.push(new Project(projectPath));
 
         // merge any SWFs referenced in optional ts4air.json
         mergeProjectReferencedSWFs();
 
         const program = this.createTSProgram(projectPath);
         if (program !== undefined) {
+            this.state.project.program = program;
             this.compileTSProgram(program, projectPath);
         }
+        this.state.projectStack.pop();
     }
 
     public compileTSProgram(program: ts.Program, projectPath: string) {
         projectPath = path.resolve(projectPath);
-        this.state.currentProgram = program;
-        this.state.projectPath = projectPath;
-  
+
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportTSDiagnostic.bind(this));
         if (this.state.foundAnyError) {
             return;
