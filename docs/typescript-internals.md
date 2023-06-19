@@ -23,7 +23,7 @@
 ## Async.
 
 - `async`-`await` should be outputted based on what `tsc` outputs for them in the ES5 target.
-- `Promise` should wrap another type, `com.asextra.util.Promise`, from the SWF of the [`actionscript-extra` project](../actionscript-extra).
+- `Promise` should wrap another type, `com.asprelude.util.Promise`, from the SWF of the [`actionscript-prelude` project](../actionscript-prelude).
   - Add `"then"`, `"catch"` and `"finally"` as keywords are available in the ABC format.
 
 ## Symbols
@@ -65,7 +65,7 @@ Definitions other than `declare global` should have a suffix to not conflict wit
 
 ## Manually Generated Globals
 
-- `Promise`, `Map`, `WeakMap`, `Set` and `WeakSet` should be wrappers around their equivalents in `com.asextra.util`.
+- `Promise`, `Map`, `WeakMap`, `Set` and `WeakSet` should be wrappers around their equivalents in `com.asprelude.util`.
   - These types can use keyword in ABC; e.g. `delete`, `try` and `finally`.
   - Iterating these requires careful mapping.
 

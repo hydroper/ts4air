@@ -41,6 +41,7 @@ export class Ts2Swf {
             console.log('Project invalidated due to errors above.');
         } else if (generateSWF) {
             // read ts4air.json to get things like frame-rate, background, width etc.
+            // - generate SWF based on https://github.com/brion/wasm2swf
             // - use util/convertColor.ts
             if (projectIsApplication()) {
                 generateSWF();
@@ -51,6 +52,10 @@ export class Ts2Swf {
         } else {
             console.log(`Project validated: no TypeScript errors.`);
         }
+    }
+
+    public mergePreludeSWFs() {
+        this.state.mergeSWF(path.resolve(__dirname, '../../../actionscript-prelude/swc/actionscript-prelude.swf'));
     }
 
     public compileProject(projectPath: string) {

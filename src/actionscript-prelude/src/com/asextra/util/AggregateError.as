@@ -1,4 +1,4 @@
-package com.asextra.util
+package com.asprelude.util
 {
     public class AggregateError extends Error
     {

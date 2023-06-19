@@ -1,4 +1,4 @@
-package com.asextra.util
+package com.asprelude.util
 {
     import flash.utils.Proxy;
     import flash.utils.flash_proxy;
@@ -6,18 +6,18 @@ package com.asextra.util
     /**
      * @private
      */
-    public final class MapEntries extends Proxy
+    public final class MapValues extends Proxy
     {
         private var m_map:Map = null;
 
-        public function MapEntries(map:Map)
+        public function MapValues(map:Map)
         {
             m_map = map;
         }
 
         override flash_proxy function nextNameIndex(index:int):int
         {
-            if (index < m_map.m_keys.length)
+            if (index < m_map.m_values.length)
             {
                 return index + 1;
             }
@@ -29,8 +29,7 @@ package com.asextra.util
 
         override flash_proxy function nextValue(index:int):*
         {
-            index -= 1;
-            return [m_map.m_keys[index], m_map.m_values[index]];
+            return m_map.m_values[index - 1];
         }
     }
 }

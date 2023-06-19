@@ -1,4 +1,4 @@
-package com.asextra.util
+package com.asprelude.util
 {
     /**
      * UTF-16 utility functions.

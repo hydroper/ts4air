@@ -1,4 +1,4 @@
-package com.asextra.util
+package com.asprelude.util
 {
     import flash.utils.Dictionary;
     import flash.utils.Proxy;

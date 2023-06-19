@@ -4,7 +4,7 @@
     "compilerOptions": {
         "include-sources": ["src"],
         "library-path": ["libs"],
-        "output": "swc/as-extra.swc"
+        "output": "swc/actionscript-prelude.swc"
     },
     "additionalOptions": "-compress=false"
 }

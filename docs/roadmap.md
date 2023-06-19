@@ -31,22 +31,17 @@
 
 ## actionscript-extra
 
-- Re-structure the map and set iterators in `com.asextra.util` so that they can be used as proper ECMAScript iterators. Maybe improve some other things too there.
+- Re-structure the map and set iterators in `com.asprelude.util` so that they can be used as proper ECMAScript iterators. Maybe improve some other things too there.
 - Add `WeakMap` and `WeakSet`.
 
 ## TS-to-ABC
 
 - [ ] 1. Load external ABCs from other SWFs.
-  - Merge prelude actionscript-extra.swf
-  - Then load ABCs from project supplied SWFs.
+  - Merge prelude actionscript-prelude.swf
 - [ ] 2. Create some built-ins manually, like `Promise`.
 - [ ] 3. Compile nodes
   - [ ] If the source file is the entry point of a library (`state.libEntryPoints.has(path.normalize(sourceFilePath))`), compile it via `compileProject`; otherwise compile it as part of the current project.
   - [ ] `import.meta.embedBytes`: while incrementing the `BinaryData` id, check if it doesn't duplicate too due to merged SWFs.
-
-SWF merging:
-
-- [ ] Combine binary data and symbol classes, so that external SWFs can embed bytes.
 
 ## Nodes
 

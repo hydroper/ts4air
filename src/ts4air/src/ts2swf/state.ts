@@ -10,6 +10,7 @@ import SwfWriter from 'ts4air/swf/swfWriter';
 
 export default class Ts2SwfState {
     public swfTags: SwfTag[] = [];
+
     private swfAlreadyUsedCharTagIds: Set<number> = new Set();
 
     public abcFile: AbcFile = new AbcFile();
