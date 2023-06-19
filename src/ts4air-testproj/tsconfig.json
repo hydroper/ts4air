@@ -9,6 +9,7 @@
             "app/*": ["src/*"]
         },
         "noFallthroughCasesInSwitch": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true
     }
 }

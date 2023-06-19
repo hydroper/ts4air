@@ -96,13 +96,13 @@ export class Ts2Swf {
 
         for (const tag of this.state.swfTags) {
             if (tag.code == SwfTagCode.DO_ABC) {
-                let doAbc = new SwfReader(ByteArray.from(tag.data)).doABC();
+                let doAbc = new SwfReader(ByteArray.from(tag.data!)).doABC();
                 swfWriter.doABC(doAbc.name, doAbc.data, doAbc.flags);
             } else if (tag.code == SwfTagCode.DEFINE_BINARY_DATA) {
-                let binaryData = new SwfReader(ByteArray.from(tag.data)).defineBinaryData();
+                let binaryData = new SwfReader(ByteArray.from(tag.data!)).defineBinaryData();
                 swfWriter.defineBinaryData(binaryData.tag, binaryData.data);
             } else if (tag.code == SwfTagCode.SYMBOL_CLASS) {
-                swfWriter.symbolClass(tag.symbols);
+                swfWriter.symbolClass(tag.symbols!);
             }
         }
 
@@ -126,6 +126,13 @@ export class Ts2Swf {
     }
 
     public compileProject(project: Project) {
+        project = this.state.projectPool.has(project.path) ? this.state.projectPool.get(project.path)! : project;
+        this.state.projectPool.set(project.path, project);
+        if (project.alreadyCompiled) {
+            return;
+        }
+        project.alreadyCompiled = true;
+
         this.state.projectStack.push(project);
 
         // merge any SWFs referenced in optional ts4air.json
@@ -165,6 +172,7 @@ export class Ts2Swf {
         // - program.getTypeChecker();
         // - program.getSourceFiles();
         // throw new Error(`Unimplemented node: ${node.kind}`);
+        this.compileNode(sourceFileToCompile);
     }
 
     public createTSProgram(projectPath: string): ts.Program | undefined {
@@ -177,7 +185,7 @@ export class Ts2Swf {
     private reportTSDiagnostic(diagnostic: ts.Diagnostic) {
         this.state.foundAnyError ||= diagnostic.category === ts.DiagnosticCategory.Error;
         if (diagnostic.file) {
-            let {line, character} = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
+            let {line, character} = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start!);
             let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
             this.state.logMessage(diagnostic.file.fileName, line, character, message);
         } else {

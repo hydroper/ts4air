@@ -9,6 +9,12 @@ import ByteArray from 'com.hydroper.util.nodejsbytearray';
 import SwfWriter from 'ts4air/swf/swfWriter';
 
 export default class Ts2SwfState {
+    /**
+     * Avoids duplicating `Project` instances. Maps from a project path
+     * to a `Project` object.
+     */
+    public projectPool: Map<string, Project> = new Map();
+
     public swfTags: SwfTag[] = [];
     private swfAlreadyUsedCharTagIds: Set<number> = new Set();
 
@@ -56,7 +62,7 @@ export default class Ts2SwfState {
                 this.swfTags.push(tag);
             } else if (tag.code == SwfTagCode.DEFINE_BINARY_DATA) {
                 // re-assign the character tag ID if already used.
-                let binaryData = new SwfReader(ByteArray.from(tag.data)).defineBinaryData();
+                let binaryData = new SwfReader(ByteArray.from(tag.data!)).defineBinaryData();
                 let prevTag = binaryData.tag;
                 binaryData.tag = this.swfAlreadyUsedCharTagIds.has(binaryData.tag) ? this.nextSWFCharTagId() : binaryData.tag;
                 this.swfAlreadyUsedCharTagIds.add(binaryData.tag);
@@ -70,8 +76,8 @@ export default class Ts2SwfState {
         }
         for (let symbolClass of symbolClasses) {
             // re-assign the character tag IDs
-            for (let symbol of symbolClass.symbols) {
-                symbol.id = reassignedCharTagIds.get(symbol.id);
+            for (let symbol of symbolClass.symbols!) {
+                symbol.id = reassignedCharTagIds.get(symbol.id)!;
             }
 
             this.swfTags.push(symbolClass);
