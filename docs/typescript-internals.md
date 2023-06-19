@@ -74,4 +74,4 @@ Internal tweaks may be neccessary since there is no `int` and `uint` in TypeScri
 
 ## Byte embedding
 
-To support `import.meta.embedBytes`, the SWF reader and writer must be able to recognize DefineBinaryData and SymbolClass tags.
+`import.meta.embedBytes`, must output `DefineBinaryData` and `SymbolClass` tags to the SWF without conflicting with existing ones from previously merged SWFs.

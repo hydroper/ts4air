@@ -37,10 +37,11 @@
 - [ ] 1. Load external ABCs from other SWFs.
   - Load first actionscript-extra.swf
   - Then load ABCs from project supplied SWFs.
-  - [ ] Optional step (can do later): combine binary data and symbol classes, so that external SWFs can embed bytes.
+  - [ ] Load library projects from `node_modules` in the correct order (look at NPM dependency graph).
+  - [ ] Combine binary data and symbol classes, so that external SWFs can embed bytes.
 - [ ] 2. Create some built-ins manually, like `Promise`.
 - [ ] 3. Compile nodes
-  - [ ] `import.meta.embedBytes`
+  - [ ] `import.meta.embedBytes`: while incrementing the `BinaryData` id, check if it doesn't duplicate too due to merged SWFs.
 
 ## Nodes
 

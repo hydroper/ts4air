@@ -6,7 +6,11 @@ import {AbcFile} from 'ts4air/abc/abcFile';
 import Ts2AbcState from './state';
 
 export class Ts2Abc {
-    private state: Ts2AbcState = new Ts2AbcState();
+    public state: Ts2AbcState = new Ts2AbcState();
+    
+    constructor(projectPath: string) {
+        projectPath = path.resolve(projectPath);
+    }
 
     public compile(program: ts.Program, projectPath: string) {
         projectPath = path.resolve(projectPath);
