@@ -42,3 +42,9 @@ export type SwfBinaryData = {
     tag: number,
     data: ByteArray,
 };
+
+export type SwfDoABC = {
+    flags: number,
+    name: string,
+    data: ByteArray,
+};

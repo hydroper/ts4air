@@ -8,6 +8,8 @@ import Project from './project';
 import * as colorconvert from 'ts4air/util/convertColor';
 import SwfWriter from 'ts4air/swf/swfWriter';
 import AbcFileWriter from 'ts4air/abc/abcWriter';
+import SwfReader, {SwfTagCode} from 'ts4air/swf/swfReader';
+import ByteArray from 'com.hydroper.util.nodejsbytearray';
 
 export class Ts2Swf {
     public state: Ts2SwfState = new Ts2SwfState();
@@ -91,6 +93,18 @@ export class Ts2Swf {
         });
         swfWriter.setBackgroundColor(ts4airJson.swf.background === undefined ? 0 : colorconvert.rgb(ts4airJson.swf.background));
         swfWriter.frameLabel('frame1');
+
+        for (const tag of this.state.swfTags) {
+            if (tag.code == SwfTagCode.DO_ABC) {
+                let doAbc = new SwfReader(ByteArray.from(tag.data)).doABC();
+                swfWriter.doABC(doAbc.name, doAbc.data, doAbc.flags);
+            } else if (tag.code == SwfTagCode.DEFINE_BINARY_DATA) {
+                let binaryData = new SwfReader(ByteArray.from(tag.data)).defineBinaryData();
+                swfWriter.defineBinaryData(binaryData.tag, binaryData.data);
+            } else if (tag.code == SwfTagCode.SYMBOL_CLASS) {
+                toDo();
+            }
+        }
 
         const abcWriter = new AbcFileWriter();
         abcWriter.abcFile(this.state.abcFile);

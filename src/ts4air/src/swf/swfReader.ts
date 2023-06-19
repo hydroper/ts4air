@@ -1,7 +1,7 @@
 import ByteArray from 'com.hydroper.util.nodejsbytearray';
 import * as rfd_SWFReader from 'swf-reader';
 import {assert} from 'console';
-import {Swf, SwfBinaryData} from './swf';
+import {Swf, SwfBinaryData, SwfDoABC} from './swf';
 
 export default class SwfReader {
     public static readSync(file: Buffer | string): Swf {
@@ -40,6 +40,22 @@ export default class SwfReader {
         this.ui32();
         let data = this.bytes.readBytes(this.bytes.bytesAvailable);
         return { tag, data };
+    }
+
+    public doABC(): SwfDoABC {
+        let flags = this.ui32();
+        let ba = new ByteArray();
+        for (;;) {
+            let byte = this.ui8();
+            if (byte == 0) {
+                break;
+            }
+            ba.writeByte(byte);
+        }
+        ba.position = 0;
+        let name = ba.readUTF8(ba.length);
+        let data = this.bytes.readBytes(this.bytes.bytesAvailable);
+        return {flags, name, data};
     }
 }
 
