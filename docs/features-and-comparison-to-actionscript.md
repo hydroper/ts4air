@@ -17,6 +17,7 @@ The following are equivalent to `Vector`:
 
 ```typescript
 let doubles = new Float64Array();
+doubles.push(10);
 let ints = new Int32Array();
 let uints = new Uint32Array();
 ```
