@@ -19,7 +19,7 @@
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/read.rs
 - [x] Writer
   - [ ] DefineBinaryData
-  - [ ] SymbolClass
+  - [x] SymbolClass
   - [ ] Opcodes
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/write.rs
