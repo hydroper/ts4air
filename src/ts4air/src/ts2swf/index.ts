@@ -10,9 +10,44 @@ export class Ts2Swf {
     
     constructor(projectPath: string) {
         projectPath = path.resolve(projectPath);
+
+        this.mergePreludeSWFs();
+        this.defineAdditionalBuiltins();
+
+        // compile libraries
+        let packageLockPath = path.resolve(projectPath, 'package-lock.json');
+        if (!(fs.existsSync(packageLockPath) && fs.statSync(packageLockPath).isFile())) {
+            throw new Ts2SwfError('npmDepsNotInstalled');
+        }
+        const packageLockPkgs = JSON.parse(fs.readFileSync(packageLockPath, 'utf8')).packages;
+        // installed packages have to be iterated in dependency ascending order
+        for (let pkgPath of Object.keys(packageLockPkgs)) {
+            if (!pkgPath.startsWith('node_modules/')) {
+                continue;
+            }
+            this.compileProject(path.resolve(projectPath, pkgPath));
+            if (this.state.foundAnyError) {
+                break;
+            }
+        }
+
+        if (this.state.foundAnyError) {
+            console.log('No SWF generated due to errors above.');
+        } else {
+            generateSWF();
+            console.log(`SWF written to ${swfWrittenToZxczxc}.`);
+        }
     }
 
-    public compile(program: ts.Program, projectPath: string) {
+    public compileProject(projectPath: string) {
+        projectPath = path.resolve(projectPath);
+        // merge any SWFs referenced in optional ts4air.json
+        zxczxczxczxczxczcxc();
+        // 
+        this.compileTSProgram(this.createTSProgram(projectPath), projectPath);
+    }
+
+    public compileTSProgram(program: ts.Program, projectPath: string) {
         projectPath = path.resolve(projectPath);
         this.state.currentProgram = program;
         this.state.projectPath = projectPath;
@@ -28,7 +63,7 @@ export class Ts2Swf {
         // throw new Error(`Unimplemented node: ${node.kind}`);
     }
 
-    public programFromProject(projectPath: string): ts.Program {
+    public createTSProgram(projectPath: string): ts.Program {
         let tsConfigPath = findTsConfigPath(projectPath);
         let tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf8'));
         let entryTS = findEntryTypeScript(projectPath);
@@ -48,8 +83,13 @@ export class Ts2Swf {
 }
 
 function findEntryTypeScript(projectPath: string): string {
-    if (fs.existsSync(path.resolve(projectPath, 'src/index.ts')) && fs.statSync(path.resolve(projectPath, 'src/index.ts')).isFile()) {
-        return path.resolve(projectPath, 'src/index.ts');
+    let npmPackageConfigPath = path.resolve(projectPath, 'package.json');
+    if (!(fs.existsSync(npmPackageConfigPath) && fs.statSync(npmPackageConfigPath).isFile())) {
+        throw new Ts2SwfError('noEntryTS');
+    }
+    let mainTsPath = path.resolve(projectPath, JSON.parse(fs.readFileSync(npmPackageConfigPath, 'utf8')).main);
+    if (fs.existsSync(mainTsPath) && fs.statSync(mainTsPath).isFile()) {
+        return mainTsPath;
     }
     throw new Ts2SwfError('noEntryTS');
 }

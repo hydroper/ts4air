@@ -5,7 +5,9 @@
 - [ ] `ts4air` command
   - [ ] `ts4air new --app`: Create new application project
     - Look at src/tsair-testproj for a blank project example.
+    - [ ] Automatically run `npm install` for the first time.
   - [ ] `ts4air new --lib`: Create new library
+    - [ ] Automatically run `npm install` for the first time.
   - [ ] `ts4air ts2swf`
   - [ ] `ts4air doc` for running TypeDoc.
 
