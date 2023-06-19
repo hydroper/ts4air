@@ -1,5 +1,4 @@
 import ByteArray from 'com.hydroper.util.nodejsbytearray';
-import {Rect} from './swf';
 import BitStream from './util/bitstream';
 import {assert} from 'console';
 
@@ -170,6 +169,15 @@ export default class SwfWriter {
         this.tag(76, tag.bytes);
     }
 
+    defineBinaryData(id: number, data: ByteArray) {
+        let tag = new SwfWriter();
+        tag.ui16(id);
+        tag.ui32(0);
+        tag.bytes.writeBytes(data);
+
+        this.tag(87, tag.bytes);
+    }
+
     end() {
         this.tag(0, new ByteArray());
     }
@@ -207,4 +215,11 @@ export type SwfFileAttributes = {
 
 export const DoABCFlags = {
     LAZY_INITIALIZE: 1,
+};
+
+export type Rect = {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
 };
