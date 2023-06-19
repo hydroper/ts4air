@@ -42,7 +42,7 @@
   - [ ] If the source file is the entry point of a library (`state.libEntryPoints.has(path.normalize(sourceFilePath))`), compile it via `compileProject`; otherwise compile it as part of the current project.
   - [ ] `import.meta.embedBytes`: while incrementing the `BinaryData` id, check if it doesn't duplicate too due to merged SWFs.
 - [ ] 4. Generate SWF
-  - [ ] The application's entry point .ts exports a default class that extends `Sprite`. Add a `SymbolClass` with character tag ID 0 (the "main" class) and the name of that default class.
+  - [ ] The application's entry point .ts exports a default `Sprite` subclass. Add a `SymbolClass` with character tag ID 0 (the "main" class) and the name of that default class.
     - [ ] Report an error if either the entry point does not export a default class or that default class does not extend `Sprite`.
 
 ## Nodes

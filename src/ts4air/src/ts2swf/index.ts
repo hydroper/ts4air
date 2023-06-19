@@ -5,6 +5,7 @@ import {Ts2SwfError} from 'ts4air/ts2swf/errors';
 import {AbcFile} from 'ts4air/abc/abcFile';
 import Ts2SwfState from './state';
 import Project from './project';
+import * as colorconvert from 'ts4air/util/convertColor';
 
 export class Ts2Swf {
     public state: Ts2SwfState = new Ts2SwfState();
@@ -57,12 +58,18 @@ export class Ts2Swf {
             console.error('Project must be an Adobe AIR application for generating a SWF.');
             return;
         }
+        if (typeof ts4airJson.swf != 'object') {
+            console.error('ts4air.json must have a "swf" property.');
+            return;
+        }
 
-        // - validate the main Sprite class before generating SWF
+        // validate the main Sprite class before generating the SWF.
+        // the entry point .ts must export a default Sprite subclass.
+        this.validateMainClass();
+
         // - generate SWF based on https://github.com/brion/wasm2swf
         // - associate character tag id 0 to the main class (by adding a SymbolClass tag)
-        // - use util/convertColor.ts
-
+        const background = ts4airJson.swf.background === undefined ? 0 : colorconvert.rgb(ts4airJson.swf.background);
         generateSWF();
         console.log(`SWF written to ${swfWrittenToZxczxc}.`);
     }
@@ -89,7 +96,7 @@ export class Ts2Swf {
         const ts4airJson = readTs4airJson(projectPath);
         if (ts4airJson !== undefined && (ts4airJson.externalActionScript instanceof Array)) {
             for (let swfPath of ts4airJson.externalActionScript) {
-                swfPath = path.resolve(swfPath);
+                swfPath = path.resolve(projectPath, swfPath);
                 if (!(fs.existsSync(swfPath) && fs.statSync(swfPath).isFile())) {
                     throw new Ts2SwfError('externalSWFNotFound', {path: swfPath});
                 }
