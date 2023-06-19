@@ -43,3 +43,7 @@ The ES2015 bigint type isn't supported.
 ## Callbacks
 
 In ActionScript, omitting parameters in a callback causes a runtime error without compile-time advice. In TypeScript under `ts4air`, parameters should be created automatically if possible (e.g. for a typed lambda).
+
+## Reflection
+
+- `for..in` does not iterate keys from, for example, instance properties, but it does still iterate plain object keys.

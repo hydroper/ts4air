@@ -12,7 +12,7 @@
 
 ## SWF/ABC
 
-- [ ] Reader
+- [x] Reader
   - Only the ABC, DefineBinaryData and SymbolClass tags will be read from a SWF at the moment.
   - Opcodes won't be read as that is not necessary.
   - [ ] ABC

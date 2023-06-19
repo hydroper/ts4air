@@ -8,12 +8,16 @@ import Ts2AbcState from './state';
 export class Ts2Abc {
     private state: Ts2AbcState = new Ts2AbcState();
 
-    public compile(program: ts.Program) {
+    public compile(program: ts.Program, projectPath: string) {
+        projectPath = path.resolve(projectPath);
+        this.state.currentProgram = program;
+        this.state.projectPath = projectPath;
+  
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportTSDiagnostic.bind(this));
         if (this.state.foundAnyError) {
             return;
         }
-        this.state.currentProgram = program;
+  
         // compile to ABC
         // - program.getTypeChecker();
         // - program.getSourceFiles();
@@ -32,7 +36,7 @@ export class Ts2Abc {
         if (diagnostic.file) {
             let {line, character} = ts.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
             let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
-            console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+            this.state.logMessage(diagnostic.file.fileName, line, character, message);
         } else {
             console.log(ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'));
         }
