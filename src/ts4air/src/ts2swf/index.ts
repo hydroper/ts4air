@@ -48,8 +48,15 @@ export class Ts2Swf {
 
     public generateSWF(projectPath: string) {
         // read ts4air.json to get things like frame-rate, background, width etc.
+        let ts4airJsonPath = path.resolve(projectPath, 'ts4air.json');
+        if (!(fs.existsSync(ts4airJsonPath) && fs.statSync(ts4airJsonPath).isFile())) {
+            console.error('Project must have a ts4air.json file.');
+            return;
+        }
 
+        // - validate the main Sprite class before generating SWF
         // - generate SWF based on https://github.com/brion/wasm2swf
+        // - associate character tag id 0 to the main class (by adding a SymbolClass tag)
         // - use util/convertColor.ts
 
         if (projectIsApplication()) {
