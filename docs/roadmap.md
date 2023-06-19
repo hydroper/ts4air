@@ -16,16 +16,12 @@
   - Only the ABC, DefineBinaryData and SymbolClass tags will be read from a SWF at the moment.
   - Opcodes won't be read as that is not necessary.
   - [ ] ABC
-  - [ ] SWF
-    - [ ] DoABC
-    - [ ] DefineBinaryData
-    - [ ] SymbolClass
+    - Not necessary for now as ABCs don't need to be merged: at least _I think_.
+  - [x] SWF
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/read.rs
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/read.rs
 - [x] Writer
-  - [ ] SWF
-    - [x] SymbolClass
-    - [ ] DefineBinaryData
+  - [x] SWF
   - [x] ABC
     - [ ] Opcodes
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
