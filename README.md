@@ -14,8 +14,8 @@ Blank projects will be created through `ts4air new`.
 
 ### Documentation
 
+- [TypeScript Introduction](docs/typescript-introduction.md)
 - [Configuration](docs/config.md)
-- [Features and Comparison to ActionScript](docs/features-and-comparison-to-actionscript.md)
 - [FFI](docs/ffi.md)
 - [Optimizations](docs/optimizations.md)
 - [TypeScript Internals](docs/typescript-internals.md)

@@ -1,4 +1,4 @@
-# Comparison to ActionScript
+# TypeScript Introduction
 
 ## Byte array
 
@@ -10,7 +10,7 @@ let ba = new ByteArray();
 
 ## Vector
 
-The following are equivalent to `Vector`:
+The following are equivalent to ActionScript's `Vector`:
 
 ```typescript
 import {DoubleVector, IntVector, UintVector} from 'com.adobe.air/util';
