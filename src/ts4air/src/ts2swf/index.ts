@@ -48,8 +48,10 @@ export class Ts2Swf {
 
     public generateSWF(projectPath: string) {
         // read ts4air.json to get things like frame-rate, background, width etc.
+
         // - generate SWF based on https://github.com/brion/wasm2swf
         // - use util/convertColor.ts
+
         if (projectIsApplication()) {
             generateSWF();
             console.log(`SWF written to ${swfWrittenToZxczxc}.`);
