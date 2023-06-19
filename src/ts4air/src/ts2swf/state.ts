@@ -3,7 +3,7 @@ import {SwfTag} from 'ts4air/swf/swf';
 import * as ts from 'typescript';
 import * as path from 'path';
 import Project from './project';
-import SwfReader, {SwfTag, SwfTagCode} from 'ts4air/swf/swfReader';
+import SwfReader, {SwfTagCode} from 'ts4air/swf/swfReader';
 import {assert} from 'console';
 import ByteArray from 'com.hydroper.util.nodejsbytearray';
 import SwfWriter from 'ts4air/swf/swfWriter';
