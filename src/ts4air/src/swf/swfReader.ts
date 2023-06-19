@@ -6,28 +6,30 @@ export default class SwfReader {
         this.bytes.endian = 'littleEndian';
     }
 
-    private ui32(): number {
-        return this.bytes.readUnsignedInt();
-    }
-
-    private ui16(): number {
-        return this.bytes.readUnsignedShort();
-    }
-
-    private ui8(): number {
-        return this.bytes.readByte();
-    }
-
-    private skipHeader() {
+    public skipHeader() {
         this.ui8(); // signature
         this.ui8(); // signature
         this.ui8(); // signature
         this.ui8(); // version
         this.ui32(); // file length
-        this.rect();
+        this.rect(); // frame size
+        this.ui16(); // frame rate
+        this.ui16(); // frame count
     }
 
-    private rect(): Rect {
+    public ui32(): number {
+        return this.bytes.readUnsignedInt();
+    }
+
+    public ui16(): number {
+        return this.bytes.readUnsignedShort();
+    }
+
+    public ui8(): number {
+        return this.bytes.readByte();
+    }
+
+    public rect(): Rect {
         let bits = new BitsReader(this.bytes);
         let numBits = bits.ub(5);
         return {
@@ -46,6 +48,8 @@ export type Rect = {
     maxY: number,
 };
 
+// note: picked up from https://github.com/rafaeldias/swf-reader/blob/master/lib/swf-buffer.js.
+// may need to be replaced by something different later.
 class BitsReader {
     constructor(private bytes: ByteArray) {
         this.start();
