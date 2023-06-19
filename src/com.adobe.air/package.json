@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Adobe AIR API",
   "repository": "https://github.com/hydroper/ts4air",
-  "main": "src/index.d.ts",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
