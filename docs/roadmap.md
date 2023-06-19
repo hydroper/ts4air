@@ -7,7 +7,6 @@
     - Look at src/tsair-testproj for a blank project example.
   - [ ] `ts4air new --lib`: Create new library
   - [ ] `ts4air ts2swf`
-  - [ ] `ts4air ts2abc`
   - [ ] `ts4air doc` for running TypeDoc.
 
 ## SWF/ABC

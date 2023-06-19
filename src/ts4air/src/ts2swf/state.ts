@@ -3,7 +3,7 @@ import {SwfTag} from 'ts4air/swf/swf';
 import * as ts from 'typescript';
 import * as path from 'path';
 
-export default class Ts2AbcState {
+export default class Ts2SwfState {
     public swfTags: SwfTag[] = [];
     public abcFile: AbcFile = new AbcFile();
     public foundAnyError: boolean = false;

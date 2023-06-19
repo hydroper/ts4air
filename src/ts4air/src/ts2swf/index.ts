@@ -1,12 +1,12 @@
 import * as ts from 'typescript';
 import * as fs from 'fs';
 import * as path from 'path';
-import {Ts2AbcError} from 'ts4air/ts2abc/errors';
+import {Ts2SwfError} from 'ts4air/ts2swf/errors';
 import {AbcFile} from 'ts4air/abc/abcFile';
-import Ts2AbcState from './state';
+import Ts2SwfState from './state';
 
-export class Ts2Abc {
-    public state: Ts2AbcState = new Ts2AbcState();
+export class Ts2Swf {
+    public state: Ts2SwfState = new Ts2SwfState();
     
     constructor(projectPath: string) {
         projectPath = path.resolve(projectPath);
@@ -51,7 +51,7 @@ function findEntryTypeScript(projectPath: string): string {
     if (fs.existsSync(path.resolve(projectPath, 'src/index.ts')) && fs.statSync(path.resolve(projectPath, 'src/index.ts')).isFile()) {
         return path.resolve(projectPath, 'src/index.ts');
     }
-    throw new Ts2AbcError('noEntryTS');
+    throw new Ts2SwfError('noEntryTS');
 }
 
 function findTsConfigPath(projectPath: string): string {
@@ -62,7 +62,7 @@ function findTsConfigPath(projectPath: string): string {
         tsConfigPath = path.resolve(projectPath);
         tsConfigPath = ts.findConfigFile(tsConfigPath, ts.sys.fileExists);
         if (tsConfigPath === undefined) {
-            throw new Ts2AbcError('noTSConfig');
+            throw new Ts2SwfError('noTSConfig');
         }
     }
     return path.resolve(process.cwd(), tsConfigPath);
