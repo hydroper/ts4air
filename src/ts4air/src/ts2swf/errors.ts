@@ -20,5 +20,5 @@ const errorMessages = new Map<Ts2SwfErrorKind, string>([
 ]);
 
 function getErrorMessage(kind: Ts2SwfErrorKind): string {
-    return errorMessages.get(kind);
+    return errorMessages.get(kind)!;
 }

@@ -56,6 +56,9 @@ export class ConstantPool {
     internNamespace(kind: NamespaceInfoKind, name: number): number {
         for (let i = 0; i < this.namespaces.length; ++i) {
             let ns = this.namespaces[i];
+            if (ns === null) {
+                continue;
+            }
             if (ns.kind == kind && ns.name == name) {
                 return i;
             }
@@ -188,12 +191,12 @@ export class MethodInfo {
      */
     public flags: number = 0;
 
-    public options: OptionDetail[] = null;
+    public options: OptionDetail[] | null = null;
 
     /**
      * Indexes into the string section of the constant pool.
      */
-    public paramNames: number[] = null;
+    public paramNames: number[] | null = null;
 }
 
 export const MethodInfoFlags = {
@@ -447,7 +450,7 @@ export class MethodBodyInfo {
     public localCount: number = 0;
     public initScopeDepth: number = 0;
     public maxScopeDepth: number = 0;
-    public code: ByteArray = null;
+    public code: ByteArray | null = null;
     public exceptions: ExceptionInfo[] = [];
     public traits: TraitInfo[] = [];
 

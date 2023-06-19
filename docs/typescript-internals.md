@@ -81,6 +81,13 @@ Internal tweaks may be neccessary since there is no `int` and `uint` in TypeScri
 
 Properties (including functions) in the top-level of a source file map to top-level package properties. If a property has a non-constant initializer, its initializer should be post-poned (taking in consideration statements that execute before and after it).
 
+## Non-null assertion
+
+```ts
+let o: number | undefined = undefined
+o! // throw a ReferenceError
+```
+
 ## Modules
 
 Using `exports` might not be supported as it is not a priority.

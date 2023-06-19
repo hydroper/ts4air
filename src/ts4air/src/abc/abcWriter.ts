@@ -92,18 +92,30 @@ export default class AbcFileWriter {
     constantPool(constantPool: abc.ConstantPool) {
         this.u30(constantPool.integers.length);
         for (let i of constantPool.integers) {
+            if (i === null) {
+                continue;
+            }
             this.s32(i);
         }
         this.u30(constantPool.unsignedIntegers.length);
         for (let i of constantPool.unsignedIntegers) {
+            if (i === null) {
+                continue;
+            }
             this.u32(i);
         }
         this.u30(constantPool.doubles.length);
         for (let n of constantPool.doubles) {
-            this.d64(n);
+            if (n === null) {
+                continue;
+            }
+            this.d64(n!);
         }
         this.u30(constantPool.strings.length);
         for (let str of constantPool.strings) {
+            if (str === null) {
+                continue;
+            }
             let ba = new ByteArray();
             ba.writeUTF8(str);
             this.u30(ba.length);
@@ -111,19 +123,28 @@ export default class AbcFileWriter {
         }
         this.u30(constantPool.namespaces.length);
         for (let ns of constantPool.namespaces) {
-            this.u8(namespaceInfoKindValue.get(ns.kind));
-            this.u30(ns.name);
+            if (ns === null) {
+                continue;
+            }
+            this.u8(namespaceInfoKindValue.get(ns!.kind)!);
+            this.u30(ns!.name);
         }
         this.u30(constantPool.nsSets.length);
         for (let nsSet of constantPool.nsSets) {
-            this.u30(nsSet.namespaces.length);
-            for (let ns of nsSet.namespaces) {
+            if (nsSet === null) {
+                continue;
+            }
+            this.u30(nsSet!.namespaces.length);
+            for (let ns of nsSet!.namespaces) {
                 this.u30(ns);
             }
         }
         this.u30(constantPool.multinames.length);
         for (let multiname of constantPool.multinames) {
-            this.u8(multinameInfoKindValue(multiname));
+            if (multiname === null) {
+                continue;
+            }
+            this.u8(multinameInfoKindValue(multiname!));
             if (multiname instanceof abc.QNameMultinameInfo) {
                 this.u30(multiname.ns);
                 this.u30(multiname.name);
@@ -172,7 +193,7 @@ export default class AbcFileWriter {
     constantValue(value: abc.ConstantValue, ignoreKindIfValueIsZero: boolean) {
         this.u30(value.value);
         if (ignoreKindIfValueIsZero ? value.value != 0 : true) {
-            this.u8(constantValueKindValue.get(value.kind));
+            this.u8(constantValueKindValue.get(value.kind)!);
         }
     }
 

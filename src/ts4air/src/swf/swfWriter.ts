@@ -195,9 +195,9 @@ export default class SwfWriter {
     }
 
     swfHeader(options: SwfHeaderOptions) {
-        this.ui8('F'.codePointAt(0));
-        this.ui8('W'.codePointAt(0));
-        this.ui8('S'.codePointAt(0));
+        this.ui8('F'.codePointAt(0)!);
+        this.ui8('W'.codePointAt(0)!);
+        this.ui8('S'.codePointAt(0)!);
         this.ui8(19);
 
         // fileLength

@@ -47,6 +47,10 @@ In ActionScript, omitting parameters in a callback causes a runtime error withou
 
 - `for..in` does not iterate keys from, for example, instance properties, but it does still iterate plain object keys.
 
+## Nullability
+
+The TypeScript `!` operator can be used to assert an expression is not `undefined` or `null`. It will throw a `ReferenceError` if it fails.
+
 ## NPM
 
 Not all packages from the NPM ecosystem may be reused because of some features, including:
