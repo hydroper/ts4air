@@ -6,6 +6,8 @@ import {AbcFile} from 'ts4air/abc/abcFile';
 import Ts2SwfState from './state';
 import Project from './project';
 import * as colorconvert from 'ts4air/util/convertColor';
+import SwfWriter from 'ts4air/swf/swfWriter';
+import AbcFileWriter from 'ts4air/abc/abcWriter';
 
 export class Ts2Swf {
     public state: Ts2SwfState = new Ts2SwfState();
@@ -62,16 +64,47 @@ export class Ts2Swf {
             console.error('ts4air.json must have a "swf" property.');
             return;
         }
+        if (typeof ts4airJson.swf.path != 'string') {
+            console.error('ts4air.json must have a "swf.path" string property.');
+            return;
+        }
+        const swfPath = path.resolve(project.path, ts4airJson.swf.path);
 
         // validate the main Sprite class before generating the SWF.
         // the entry point .ts must export a default Sprite subclass.
         this.validateMainClass();
 
         // - generate SWF based on https://github.com/brion/wasm2swf
-        // - associate character tag id 0 to the main class (by adding a SymbolClass tag)
-        const background = ts4airJson.swf.background === undefined ? 0 : colorconvert.rgb(ts4airJson.swf.background);
-        generateSWF();
-        console.log(`SWF written to ${swfWrittenToZxczxc}.`);
+        const swfWriter = new SwfWriter();
+        swfWriter.swfHeader({
+            frameSize: {
+                x: 0,
+                y: 0,
+                width: Number(ts4airJson.swf.width === undefined ? 600 : ts4airJson.swf.width),
+                height: Number(ts4airJson.swf.height === undefined ? 600 : ts4airJson.swf.height),
+            },
+            frameRate: Number(ts4airJson.swf.framerate === undefined ? 60 : ts4airJson.swf.framerate),
+        });
+        swfWriter.fileAttributes({
+            actionScript3: true,
+            useNetwork: true,
+        });
+        swfWriter.setBackgroundColor(ts4airJson.swf.background === undefined ? 0 : colorconvert.rgb(ts4airJson.swf.background));
+        swfWriter.frameLabel('frame1');
+
+        const abcWriter = new AbcFileWriter();
+        abcWriter.abcFile(this.state.abcFile);
+        swfWriter.doABC('frame1', abcWriter.bytes);
+
+        // - associate character tag id 0 to the main class by adding a SymbolClass tag
+        associateMain();
+
+        swfWriter.showFrame();
+        swfWriter.end();
+
+        fs.mkdirSync(path.resolve(swfPath, '..'), {recursive: true});
+        fs.writeFileSync(swfPath, swfWriter.toSWFBytes().toNodejsBuffer());
+        console.log(`SWF written to ${swfPath}.`);
     }
 
     public mergePreludeSWFs() {
