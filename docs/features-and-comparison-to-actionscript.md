@@ -2,11 +2,8 @@
 
 ## Byte array
 
-`ByteArray` is global:
-
 ```typescript
-// do not import
-// import {ByteArray} from 'com.adobe.air/util';
+import {ByteArray} from 'com.adobe.air/util';
 
 let ba = new ByteArray();
 ```
@@ -16,10 +13,11 @@ let ba = new ByteArray();
 The following are equivalent to `Vector`:
 
 ```typescript
-let doubles = new Float64Array();
-doubles.push(10);
-let ints = new Int32Array();
-let uints = new Uint32Array();
+import {DoubleVector, IntVector, UintVector} from 'com.adobe.air/util';
+
+let doubles = new DoubleVector();
+let ints = new IntVector();
+let uints = new UintVector();
 ```
 
 ## Embed
