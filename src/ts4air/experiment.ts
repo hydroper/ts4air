@@ -1,4 +1,3 @@
-import {Ts2Abc} from './src//ts2abc';
+import {Ts2Swf} from 'ts4air/ts2swf';
 
-let ts2abc = new Ts2Abc();
-ts2abc.compile(ts2abc.programFromProject('../ts4air-testproj'));
+new Ts2Swf('../ts4air-testproj');
