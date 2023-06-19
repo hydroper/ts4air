@@ -10,13 +10,13 @@ export class Ts2Swf {
     public state: Ts2SwfState = new Ts2SwfState();
     
     constructor(projectPath: string, generateSWF: boolean = true) {
-        projectPath = path.resolve(projectPath);
+        const project = new Project(path.resolve(projectPath));
 
         this.mergePreludeSWFs();
         this.defineAdditionalBuiltins();
 
         // check for package-lock.json
-        let packageLockPath = path.resolve(projectPath, 'package-lock.json');
+        let packageLockPath = path.resolve(project.path, 'package-lock.json');
         if (!(fs.existsSync(packageLockPath) && fs.statSync(packageLockPath).isFile())) {
             throw new Ts2SwfError('npmDepsNotInstalled');
         }
@@ -29,26 +29,26 @@ export class Ts2Swf {
             if (!pkgPath.startsWith('node_modules/')) {
                 continue;
             }
-            const entry = this.getLibraryProjectEntry(path.resolve(projectPath, pkgPath));
+            const entry = this.getLibraryProjectEntry(path.resolve(project.path, pkgPath));
             if (entry !== undefined) {
                this.state.libEntryPoints.set(entry[0], entry[1]);
             }
         }
 
-        this.compileProject(projectPath);
+        this.compileProject(project);
 
         if (this.state.foundAnyError) {
             console.log('Project invalidated due to errors above.');
         } else if (generateSWF) {
-            this.generateSWF(projectPath);
+            this.generateSWF(project);
         } else {
             console.log(`Project validated: no TypeScript errors.`);
         }
     }
 
-    public generateSWF(projectPath: string) {
+    public generateSWF(project: Project) {
         // read ts4air.json to get things like frame-rate, background, width etc.
-        const ts4airJsonPath = path.resolve(projectPath, 'ts4air.json');
+        const ts4airJsonPath = path.resolve(project.path, 'ts4air.json');
         if (!(fs.existsSync(ts4airJsonPath) && fs.statSync(ts4airJsonPath).isFile())) {
             console.error('Project must have a ts4air.json file.');
             return;
@@ -72,17 +72,16 @@ export class Ts2Swf {
         this.state.mergeSWF(path.resolve(__dirname, '../../../actionscript-prelude/swc/actionscript-prelude.swf'));
     }
 
-    public compileProject(projectPath: string) {
-        projectPath = path.resolve(projectPath);
-        this.state.projectStack.push(new Project(projectPath));
+    public compileProject(project: Project) {
+        this.state.projectStack.push(project);
 
         // merge any SWFs referenced in optional ts4air.json
         mergeProjectReferencedSWFs();
 
-        const program = this.createTSProgram(projectPath);
+        const program = this.createTSProgram(project.path);
         if (program !== undefined) {
             this.state.project.program = program;
-            this.compileTSProgram(program, projectPath);
+            this.compileTSProgram(program);
         }
         this.state.projectStack.pop();
     }
@@ -92,15 +91,11 @@ export class Ts2Swf {
         return entryTS === undefined ? undefined : [path.normalize(entryTS), projectPath];
     }
 
-    public compileTSProgram(program: ts.Program, projectPath: string) {
-        projectPath = path.resolve(projectPath);
-
+    public compileTSProgram(program: ts.Program) {
         [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportTSDiagnostic.bind(this));
         if (this.state.foundAnyError) {
             return;
-        }
-  
-        // compile to ABC
+        }  
         // - program.getTypeChecker();
         // - program.getSourceFiles();
         // throw new Error(`Unimplemented node: ${node.kind}`);

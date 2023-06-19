@@ -76,3 +76,11 @@ Internal tweaks may be neccessary since there is no `int` and `uint` in TypeScri
 ## Byte embedding
 
 `import.meta.embedBytes`, must output `DefineBinaryData` and `SymbolClass` tags to the SWF without conflicting with existing ones from previously merged SWFs.
+
+## Statements
+
+Properties in the top-level of a source file map to top-level package properties.
+
+## Modules
+
+Using `exports` might not be supported as it is not a priority.

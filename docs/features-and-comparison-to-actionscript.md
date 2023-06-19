@@ -46,3 +46,10 @@ In ActionScript, omitting parameters in a callback causes a runtime error withou
 ## Reflection
 
 - `for..in` does not iterate keys from, for example, instance properties, but it does still iterate plain object keys.
+
+## NPM
+
+Not all packages from the NPM ecosystem may be reused because of some features, including:
+
+- Use of features beyond ECMA-262 3rd edition
+- Use of Node.js `exports`. It might be supported later.
