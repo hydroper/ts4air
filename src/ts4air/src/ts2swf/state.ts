@@ -10,6 +10,12 @@ export default class Ts2SwfState {
     public foundAnyError: boolean = false;
     public projectStack: Project[] = [];
 
+    /**
+     * Maps an entry point `.ts` file to a library project path.
+     * Used for compiling dependency projects with custom `ts4air.json` configuration.
+     */
+    public libEntryPoints: Map<string, string> = new Map();
+
     public get project(): Project {
         return this.projectStack[this.projectStack.length - 1];
     }

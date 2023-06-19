@@ -41,7 +41,7 @@
   - Then load ABCs from project supplied SWFs.
 - [ ] 2. Create some built-ins manually, like `Promise`.
 - [ ] 3. Compile nodes
-  - [ ] If the source file is the entry point of a library, compile another project on the stack via `compileProject`.
+  - [ ] If the source file is the entry point of a library (`state.libEntryPoints.has(path.normalize(sourceFilePath))`), compile it via `compileProject`; otherwise compile it as part of the current project.
   - [ ] `import.meta.embedBytes`: while incrementing the `BinaryData` id, check if it doesn't duplicate too due to merged SWFs.
 
 SWF merging:

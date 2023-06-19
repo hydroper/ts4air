@@ -15,22 +15,23 @@ export class Ts2Swf {
         this.mergePreludeSWFs();
         this.defineAdditionalBuiltins();
 
-        // compile libraries
+        // check for package-lock.json
         let packageLockPath = path.resolve(projectPath, 'package-lock.json');
         if (!(fs.existsSync(packageLockPath) && fs.statSync(packageLockPath).isFile())) {
             throw new Ts2SwfError('npmDepsNotInstalled');
         }
-        const packageLockPkgs = JSON.parse(fs.readFileSync(packageLockPath, 'utf8')).packages;
-        for (let pkgPath of Object.keys(packageLockPkgs)) {
+        const packageLockJson = JSON.parse(fs.readFileSync(packageLockPath, 'utf8'));
+
+        // collect the library entry points,
+        // mapping them to their library project paths.
+        const libProjectEntries: [string, string][] = [];
+        for (let pkgPath of Object.keys(packageLockJson.packages)) {
             if (!pkgPath.startsWith('node_modules/')) {
                 continue;
             }
-            // do not compile; just collect the library entry points and
-            // map entry point paths to library project paths.
-            fixThisFixthis();
-            this.compileProject(path.resolve(projectPath, pkgPath));
-            if (this.state.foundAnyError) {
-                break;
+            const entry = this.getLibraryProjectEntry(path.resolve(projectPath, pkgPath));
+            if (entry !== undefined) {
+               this.state.libEntryPoints.set(entry[0], entry[1]);
             }
         }
 
@@ -65,6 +66,11 @@ export class Ts2Swf {
             this.compileTSProgram(program, projectPath);
         }
         this.state.projectStack.pop();
+    }
+
+    public getLibraryProjectEntry(projectPath: string): [string, string] | undefined {
+        const entryTS = findEntryTypeScript(projectPath);
+        return entryTS === undefined ? undefined : [path.normalize(entryTS), projectPath];
     }
 
     public compileTSProgram(program: ts.Program, projectPath: string) {
