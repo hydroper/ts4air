@@ -102,7 +102,7 @@ export class Ts2Swf {
                 let binaryData = new SwfReader(ByteArray.from(tag.data)).defineBinaryData();
                 swfWriter.defineBinaryData(binaryData.tag, binaryData.data);
             } else if (tag.code == SwfTagCode.SYMBOL_CLASS) {
-                toDo();
+                swfWriter.symbolClass(tag.symbols);
             }
         }
 

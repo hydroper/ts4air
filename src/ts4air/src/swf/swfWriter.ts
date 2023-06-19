@@ -161,11 +161,10 @@ export default class SwfWriter {
         this.tag(82, tag.bytes);
     }
 
-    symbolClass(symbols: string[], tags: Record<string, number> = {}) {
+    symbolClass(entries: ({id: number, name: string})[]) {
         let tag = new SwfWriter();
-        tag.ui16(symbols.length);
-        for (let name of symbols) {
-            let id = tags[name] || 0;
+        tag.ui16(entries.length);
+        for (let {id, name} of entries) {
             tag.ui16(id);
             tag.string(name);
         }
