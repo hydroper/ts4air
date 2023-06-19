@@ -19,7 +19,7 @@ export default class SwfReader {
         };
     }
 
-    constructor(private bytes: ByteArray) {
+    constructor(public bytes: ByteArray) {
         this.bytes.endian = 'littleEndian';
     }
 
