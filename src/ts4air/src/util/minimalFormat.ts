@@ -1,3 +1,12 @@
+/**
+ * Formats simple string parameters.
+ * # Examples
+ * ```ts
+ * minimalFormat('$a', {a: 'foo'})
+ * minimalFormat('$<hyphens-n_Underscores>', {'hyphens-n_Underscores': ''})
+ * minimalFormat('$$', {}) // '$'
+ * ```
+ */
 export default function minimalFormat(base: string, argumentsObject: any): string {
     argumentsObject ??= {};
     if (argumentsObject instanceof Array) {
