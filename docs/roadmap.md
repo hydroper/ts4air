@@ -12,6 +12,13 @@
   - [x] `ts4air validate`: runs `ts2swf`, but does not generate SWF. Used for validating a program.
   - [ ] `ts4air doc` for running TypeDoc.
 
+## Questions
+
+- Are multiple `DoABC`s fine in SWF? https://forum.starling-framework.org/d/23830-multiple-doabc
+- Am I creating `ts.Program`s correctly?
+  - https://stackoverflow.com/q/76509608/19692949
+  - https://discord.com/channels/508357248330760243/640177429775777792/1120436980409454605
+
 ## SWF/ABC
 
 - [x] Reader
