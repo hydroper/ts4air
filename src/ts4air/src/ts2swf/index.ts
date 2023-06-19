@@ -48,12 +48,11 @@ export class Ts2Swf {
 
     public generateSWF(project: Project) {
         // read ts4air.json to get things like frame-rate, background, width etc.
-        const ts4airJsonPath = path.resolve(project.path, 'ts4air.json');
-        if (!(fs.existsSync(ts4airJsonPath) && fs.statSync(ts4airJsonPath).isFile())) {
+        const ts4airJson = readTs4airJson(project.path);
+        if (ts4airJson === undefined) {
             console.error('Project must have a ts4air.json file.');
             return;
         }
-        const ts4airJson = JSON.parse(fs.readFileSync(ts4airJsonPath, 'utf8'));
         if (ts4airJson.type != 'app') {
             console.error('Project must be an Adobe AIR application for generating a SWF.');
             return;
@@ -76,7 +75,7 @@ export class Ts2Swf {
         this.state.projectStack.push(project);
 
         // merge any SWFs referenced in optional ts4air.json
-        mergeProjectReferencedSWFs();
+        this.mergeProjectReferencedSWFs(project.path);
 
         const program = this.createTSProgram(project.path);
         if (program !== undefined) {
@@ -84,6 +83,19 @@ export class Ts2Swf {
             this.compileTSProgram(program);
         }
         this.state.projectStack.pop();
+    }
+    
+    private mergeProjectReferencedSWFs(projectPath: string) {
+        const ts4airJson = readTs4airJson(projectPath);
+        if (ts4airJson !== undefined && (ts4airJson.externalActionScript instanceof Array)) {
+            for (let swfPath of ts4airJson.externalActionScript) {
+                swfPath = path.resolve(swfPath);
+                if (!(fs.existsSync(swfPath) && fs.statSync(swfPath).isFile())) {
+                    throw new Ts2SwfError('externalSWFNotFound', {path: swfPath});
+                }
+                this.state.mergeSWF(swfPath);
+            }
+        }
     }
 
     public getLibraryProjectEntry(projectPath: string): [string, string] | undefined {
@@ -118,6 +130,14 @@ export class Ts2Swf {
             console.log(ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'));
         }
     }
+}
+
+function readTs4airJson(projectPath: string): any {
+    const ts4airJsonPath = path.resolve(projectPath, 'ts4air.json');
+    if (!(fs.existsSync(ts4airJsonPath) && fs.statSync(ts4airJsonPath).isFile())) {
+        return undefined;
+    }
+    return JSON.parse(fs.readFileSync(ts4airJsonPath, 'utf8'));
 }
 
 function findEntryTypeScript(projectPath: string): string | undefined {

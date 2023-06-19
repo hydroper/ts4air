@@ -79,7 +79,7 @@ Internal tweaks may be neccessary since there is no `int` and `uint` in TypeScri
 
 ## Statements
 
-Properties in the top-level of a source file map to top-level package properties.
+Properties (including functions) in the top-level of a source file map to top-level package properties. If a property has a non-constant initializer, its initializer should be post-poned (taking in consideration statements that execute before and after it).
 
 ## Modules
 
