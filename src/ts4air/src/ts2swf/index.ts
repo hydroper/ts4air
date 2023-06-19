@@ -176,6 +176,9 @@ export class Ts2Swf {
     }
 
     public createTSProgram(projectPath: string): ts.Program | undefined {
+        // there should be only one program. no need to worry about custom TSConfig.
+        // - assign state.program
+        fixthisfixthisfhix();
         let tsConfigPath = findTsConfigPath(projectPath);
         let tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf8'));
         let entryTS = findEntryTypeScript(projectPath);

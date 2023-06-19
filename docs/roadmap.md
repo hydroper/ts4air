@@ -15,9 +15,6 @@
 ## Questions
 
 - Are multiple `DoABC`s fine in SWF? https://forum.starling-framework.org/d/23830-multiple-doabc
-- Am I creating `ts.Program`s correctly?
-  - https://stackoverflow.com/q/76509608/19692949
-  - https://discord.com/channels/508357248330760243/640177429775777792/1120436980409454605
 
 ## SWF/ABC
 
@@ -46,6 +43,7 @@
 - [x] 1. Merge prelude SWF
 - [ ] 2. Create some built-ins manually, like `Promise`.
 - [ ] 3. Compile nodes
+  - [ ] Fix various parts involving `ts.createProgram()`. I've discovered TSConfig is handled fine.
   - [ ] If the source file is the entry point of a library (`state.libEntryPoints.has(path.normalize(sourceFilePath))`), compile it via `compileProject`; otherwise compile it as part of the current project.
   - [ ] `import.meta.embedBytes`: while incrementing the `BinaryData` id, check if it doesn't duplicate too due to merged SWFs.
 - [ ] 4. Generate SWF
