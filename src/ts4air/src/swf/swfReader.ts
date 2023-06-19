@@ -7,7 +7,7 @@ export default class SwfReader {
     }
 
     public skipHeader() {
-        this.ui8(); // signature
+        assert(this.ui8() == 'F'.codePointAt(0), 'SWF with unsupported compression format.');
         this.ui8(); // signature
         this.ui8(); // signature
         this.ui8(); // version
@@ -15,6 +15,20 @@ export default class SwfReader {
         this.rect(); // frame size
         this.ui16(); // frame rate
         this.ui16(); // frame count
+    }
+
+    public tags(): SwfTag[] {
+        let tags: SwfTag[] = [];
+        while (this.bytes.hasBytesAvailable) {
+            let b = this.ui16();
+            let [kind, length] = [b >> 6, b & 0b111_111];
+            if (length >= 63) {
+                length = this.ui32();
+            }
+            let content = this.bytes.readBytes(length);
+            tags.push(new SwfTag(kind, content));
+        }
+        return tags;
     }
 
     public ui32(): number {
@@ -38,6 +52,11 @@ export default class SwfReader {
             minY: bits.sb(numBits),
             maxY: bits.sb(numBits),
         };
+    }
+}
+
+export class SwfTag {
+    constructor(public kind: number, public content: ByteArray) {
     }
 }
 
