@@ -15,12 +15,19 @@
 - [ ] Reader
   - Only the ABC, DefineBinaryData and SymbolClass tags will be read from a SWF at the moment.
   - Opcodes won't be read as that is not necessary.
+  - [ ] ABC
+  - [ ] SWF
+    - [ ] DoABC
+    - [ ] DefineBinaryData
+    - [ ] SymbolClass
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/read.rs
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/read.rs
 - [x] Writer
-  - [ ] DefineBinaryData
-  - [x] SymbolClass
-  - [ ] Opcodes
+  - [ ] SWF
+    - [x] SymbolClass
+    - [ ] DefineBinaryData
+  - [x] ABC
+    - [ ] Opcodes
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/write.rs
 
@@ -34,8 +41,10 @@
 - [ ] 1. Load external ABCs from other SWFs.
   - Load first actionscript-extra.swf
   - Then load ABCs from project supplied SWFs.
+  - [ ] Optional step (can do later): combine binary data and symbol classes, so that external SWFs can embed bytes.
 - [ ] 2. Create some built-ins manually, like `Promise`.
 - [ ] 3. Compile nodes
+  - [ ] `import.meta.embedBytes`
 
 ## Nodes
 
