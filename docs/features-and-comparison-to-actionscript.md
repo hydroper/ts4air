@@ -31,3 +31,15 @@ let byteArray: ByteArray = import.meta.embedBytes('./data.bin');
 ## Bound Methods
 
 TypeScript under `ts4air` inherits ActionScript's bound methods, therefore there is no need for `o.f.bind(o)`.
+
+## Symbol
+
+It is possible to define a custom iterator with `Symbol.iterator`, but using the ES2015 symbol type isn't supported.
+
+## BigInt
+
+The ES2015 bigint type isn't supported.
+
+## Callbacks
+
+In ActionScript, omitting parameters in a callback causes a runtime error without compile-time advice. In TypeScript under `ts4air`, parameters should be created automatically if possible (e.g. for a typed lambda).

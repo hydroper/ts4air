@@ -28,7 +28,7 @@
 
 ## Symbols
 
-- Symbols may be supported by creating global static maps using `Dictionary` with _**weak keys**_.
+- Symbols won't be supported, but it should be possible to define a `Symbol.iterator` iterator by creating global static maps using `Dictionary` with _**weak keys**_.
 
 ## Control Flow Graph
 
