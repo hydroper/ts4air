@@ -1,3 +1,5 @@
+import ByteArray from 'com.hydroper.util.nodejsbytearray';
+
 export type Swf = {
     version: number,
     fileLength: { compressed: number, uncompressed: number },
@@ -34,4 +36,9 @@ export type SwfTag = {
      * Used by SymbolClass.
      */
     symbols?: ({id: number, name: string})[],
+};
+
+export type SwfBinaryData = {
+    tag: number,
+    data: ByteArray,
 };

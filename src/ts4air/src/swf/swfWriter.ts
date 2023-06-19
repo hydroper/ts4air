@@ -72,6 +72,10 @@ export default class SwfWriter {
         this.ui8(0);
     }
 
+    binary(value: ByteArray) {
+        this.bytes.writeBytes(value);
+    }
+
     encodedU32(value: number) {
         for (;;) {
             let byte = value & 0b01111111;
