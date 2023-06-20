@@ -33,6 +33,14 @@ export default class Ts2SwfState {
      */
     public abcToplevelPubns: number = 0;
 
+    public abcVoidName: number = 0;
+    public abcNumberName: number = 0;
+    public abcStringName: number = 0;
+    public abcBooleanName: number = 0;
+    public abcUintName: number = 0;
+    public abcIntName: number = 0;
+    public abcPubnsNames
+
     /**
      * Tells whether the project is invalidated due to a TypeScript error.
      */
@@ -40,6 +48,8 @@ export default class Ts2SwfState {
 
     constructor() {
         this.abcToplevelPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '');
+        this.abcXName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, '');
+
     }
 
     public logMessage(file: string, line: number, character: number, message: string) {

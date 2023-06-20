@@ -72,7 +72,9 @@ Definitions inside `declare global` should be connected to their ActionScript gl
 
 Look at FFDec or swfdump to see what is the name of e.g. `Vector.<uint>`: is it the global `Vector$uint` or something like?
 
-Definitions other than `declare global` should have a suffix to not conflict with them.
+## Definition Names
+
+Every top-level or namespace-level definition other than `declare global` will be defined in the package `$ts`. This can be changed by using a `ffi.json` file as covered in the `ts4air` documentation.
 
 ## Manually Generated Globals
 
