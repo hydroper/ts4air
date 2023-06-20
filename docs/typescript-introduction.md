@@ -82,6 +82,10 @@ minimalFormat('$<hyphens-n_Underscores>', {'hyphens-n_Underscores': 10})
 minimalFormat('$$', {})
 ```
 
+## Final classes
+
+TypeScript doesn't have final classes. You might run into issues if you extend an ActionScript class that is marked final. If necessary this tool will report an error for such cases, but I guess there are few final classes (e.g. `Number`).
+
 ## NPM
 
 Not all packages from the NPM ecosystem may be reused because of some features, including:
@@ -90,3 +94,4 @@ Not all packages from the NPM ecosystem may be reused because of some features, 
   - `this` on class static method will return the class from the current class definition, not the one from the method scope itself.
 - Use of Node.js `exports`. It might be supported later.
 - Relying on `constructor.name`, which does not exist in ActionScript classes.
+- Extending ActionScript final classes.
