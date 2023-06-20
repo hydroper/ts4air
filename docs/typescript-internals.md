@@ -138,3 +138,7 @@ class C implements IFoo {
 
 new C().f(/(?:)/)
 ```
+
+## Method Overriding
+
+- [ ] Overriding method from a `declare class` requires the exact same signature and restricted optional parameter values. A `declare class` comes from ActionScript.
