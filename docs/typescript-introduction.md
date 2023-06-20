@@ -84,7 +84,19 @@ minimalFormat('$$', {})
 
 ## Final classes
 
-TypeScript doesn't have final classes. You might run into issues if you extend an ActionScript class that is marked final. If necessary this tool will report an error for such cases, but I guess there are few final classes (e.g. `Number`).
+TypeScript doesn't have final classes. If  you import custom ActionScript code, make sure to not mark classes as final as `ts4air` doesn't know classes other than the ones from Adobe AIR API.
+
+Known list of final classes:
+
+- [ ] ?
+
+## Int and uint on overriden methods from ActionScript classes
+
+`ts4air` will internally adapt `number` to `uint` or `int` when you override a method that takes `uint` or `int` on some parameter, however it does that for a specific list of methods. If you notice something is missing, fill an issue.
+
+Known list of such methods:
+
+- [ ] ?
 
 ## NPM
 
