@@ -18,7 +18,7 @@ package com.asprelude.util
             {
                 return {done: true, value: undefined};
             }
-            const v = this.m_set.m_values[this.m_index++];
+            const v:* = this.m_set.m_values[this.m_index++];
             return {done: false, value: [v, v]};
         }
     }

@@ -4,19 +4,6 @@ package com.asprelude.util
     import flash.utils.Proxy;
     import flash.utils.flash_proxy;
 
-    /**
-     * Set of values with insertion order.
-     * <p><b>Constructor</b></p>
-     * <p>A Set object can be constructed in different ways:</p>
-     * <listing version="3.0">
-     * new Set;
-     * new Set([ v1, v2 ]);
-     * new Set(anotherSet);
-     * new Set(map);
-     * new Set(flashDictionary);
-     * new Set(plainObject);
-     * </listing>
-     */
     public final class Set extends Proxy
     {
         internal var m_values:Vector.<*> = new Vector.<*>;

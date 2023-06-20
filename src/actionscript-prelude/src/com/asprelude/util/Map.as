@@ -4,53 +4,6 @@ package com.asprelude.util
     import flash.utils.Proxy;
     import flash.utils.flash_proxy;
 
-    /**
-     * Map of key-value pairs with insertion order.
-     * <p><b>Constructor</b></p>
-     * <p>A Map object can be constructed in different ways:</p>
-     * <listing version="3.0">
-     * new Map;
-     * new Map([ [k1, v1], [k2, v2], ]);
-     * new Map(plainObject);
-     * new Map(anotherMap);
-     * new Map(flashDictionary);
-     * </listing>
-     * <p><b>Iterator</b></p>
-     * <p>The map iterator yields pairs consisting of
-     * the key followed by the value.</p>
-     * <listing version="3.0">
-     * var mapObject:Map = new Map({x: 10, y: 16});
-     * for each (var entry:Array in mapObject)
-     * {
-     *     trace('key:', entry[0]);
-     *     trace('value:', entry[1]);
-     * }
-     * // key: 'x'
-     * // value: 10
-     * // key: 'y'
-     * // value: 16
-     * </listing>
-     * <p><b>Manipulating keys</b></p>
-     * <p>The keys of the Map object must be accessed with one of the following methods:
-     * <ul>
-     * <li><code>get(key)</code></li>
-     * <li><code>set(key, value)</code></li>
-     * <li><code>deleteKey(key)</code></li>
-     * <li><code>has(key)</code></li>
-     * </ul>
-     * </p>
-     * <p>You cannot use the ActionScript operators to access the Map keys.
-     * This detail prevents conflict between ActionScript definitions and the
-     * user keys of the Map.</p>
-     * <p><b>Conversion methods</b></p>
-     * <p>You can directly convert a Map object to other types:</p>
-     * <listing version="3.0">
-     * // returns an Object
-     * mapObject.toPlainObject();
-     * // returns a flash.utils.Dictionary
-     * mapObject.toFlashDictionary();
-     * </listing>
-     */
     public final class Map extends Proxy
     {
         /**

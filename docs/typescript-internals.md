@@ -81,7 +81,10 @@ Definitions other than `declare global` should have a suffix to not conflict wit
 
 ## for..of
 
-For any type other than `Array`, `for..of` will try to resolve the `"$iterator"` property (either as `o.public::['$iterator']` or `o['$iterator']`).
+For any type other than `Array`, `Map` and `Set`, `for..of` will try to:
+
+- Resolve the `"$iterator"` method (either as `o.public::['$iterator']` or `o['$iterator']`) and iterate it by using `iterator.next()` calls (captures it from either `o.public::next` or `o['next']`; maybe ABC does have a single instruction to look for both?).
+- Resolve the `next` method (either as `o.public::next` as `o['next']`) and use it to iterate.
 
 ## Integer types
 
