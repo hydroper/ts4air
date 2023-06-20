@@ -75,10 +75,16 @@ declare global {
         valueOf(): any;
     }
 
+    class Symbol {
+        readonly iterator: symbol;
+    }
+
     class Array<T> {
         length: number;
 
         constructor(numElements?: number);
+
+        [Symbol.iterator](): Iterator<T>;
 
         concat(...argumentsList: T[]): T[];
 
@@ -330,5 +336,9 @@ declare global {
     }
 
     class Class {
+    }
+    
+    interface Iterator<T> {
+        next(): {done: boolean, value: T | undefined};
     }
 }

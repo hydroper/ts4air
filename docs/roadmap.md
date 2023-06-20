@@ -62,13 +62,36 @@
   - [ ] `VerifyError`
   - [ ] `XML`
   - [ ] `XMLList`
+- [ ] ECMA-262 additional top-level
+  - [ ] `Iterator`
+  - [ ] `Promise`
+  - [ ] `Generator`
+  - [ ] `Map`
+  - [ ] `WeakMap`
+  - [ ] `Set`
+  - [ ] `WeakSet`
 - [ ] Adobe AIR
   - [ ] `com.adobe.air/util`
     - [ ] `ByteArray`
     - [ ] Vectors (any (`Vector`), uint, int and double)
 
+## Dynamically generated ABC
+
+- [ ] Map iterators from `[Symbol.iterator]` definitions in classes.
+- [ ] Ignore `[Symbol.iterator]` in interfaces and type aliases.
+
 ## actionscript-prelude
 
+- [ ] `Map` entry iterator
+- [ ] `Map` key iterator
+- [ ] `Map` value iterator
+- [ ] `Set` iterator
+- [ ] `WeakMap`
+- [ ] `WeakMap` key iterator
+- [ ] `WeakMap` value iterator
+- [ ] `WeakSet`
+- [ ] `WeakMap` iterator
+- [ ] `WeakSet` iterator
 - Re-structure the map and set iterators in `com.asprelude.util` so that they can be used as proper ECMAScript iterators. Maybe improve some other things too there.
 - Add `WeakMap` and `WeakSet`.
 

@@ -63,6 +63,9 @@ Typings for globals and built-ins (including Adobe AIR API) should be included i
 
 Definitions inside `declare global` should be connected to their ActionScript global equivalents, with the **_only exception of_**:
 
+- `Symbol` (inexistent)
+- `Iterator` (inexistent interface)
+- `Generator` (inexistent interface)
 - `IArguments` (specific to TypeScript)
 - `RegExpMatches`
 
@@ -104,5 +107,28 @@ Using `exports` might not be supported as it is not a priority.
 
 ## Unallowed
 
-- [ ] Unallow using as an `IArguments` object at runtime.
-- [ ] Unallow using `RegExpMatches` object at runtime.
+- [ ] Unallow using `Symbol` class object at runtime.
+- [ ] Unallow using `Iterator` class object at runtime.
+- [ ] Unallow using `Generator` class object at runtime.
+- [ ] Unallow using `IArguments` class object at runtime.
+- [ ] Unallow using `RegExpMatches` class object at runtime.
+
+## Multiple signature functions
+
+- [ ] When a method of an interface has multiple signatures, it translates to `function(...rest)`.
+- [ ] When a method of a class is the implementor of an interface's method with multiple signatures, it translates to `function(...rest)`.
+
+Example:
+
+```ts
+interface IFoo {
+    f(n: number): void
+    f(s: string): void
+}
+
+class C implements IFoo {
+    f(r: RegExp) {}
+}
+
+new C().f(/(?:)/)
+```
