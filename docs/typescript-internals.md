@@ -139,6 +139,10 @@ class C implements IFoo {
 new C().f(/(?:)/)
 ```
 
+## Property Overriding
+
+- [ ] Properties that override should contribute an assignment in the constructor after `super()` .
+
 ## Method Overriding
 
 - [ ] Overriding method from a `declare class` which has optional parameters requires restricted optional parameter values (e.g. must be constant and fit into the parameter type). A `declare class` comes from ActionScript. Otherwise, the method can use any kind of optional parameter initialiser, as it should be able to translate to something like `*`.

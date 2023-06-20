@@ -451,7 +451,7 @@ export class ClassTraitInfo extends TraitInfo {
      * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
      */
-    constructor(public name: number, public slotId: number, public classIndex: number, public attributes: number = 0, public metadata: number[] = []) {
+    constructor(name: number, public slotId: number, public classIndex: number, attributes: number = 0, metadata: number[] = []) {
         super(name, attributes, metadata);
     }
 }
@@ -465,7 +465,7 @@ export class FunctionTraitInfo extends TraitInfo {
      * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
      */
-    constructor(public name: number, public slotId: number, public methodIndex: number, public attributes: number = 0, public metadata: number[] = []) {
+    constructor(name: number, public slotId: number, public methodIndex: number, attributes: number = 0, metadata: number[] = []) {
         super(name, attributes, metadata);
     }
 }
@@ -480,7 +480,7 @@ export class MethodTraitInfo extends TraitInfo {
      * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
      */
-    constructor(public name: number, public methodKind: MethodTraitKind, public methodIndex: number, public dispId: number, public attributes: number = 0, public metadata: number[] = []) {
+    constructor(name: number, public methodKind: MethodTraitKind, public methodIndex: number, public dispId: number, attributes: number = 0, metadata: number[] = []) {
         super(name, attributes, metadata);
     }
 }
