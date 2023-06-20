@@ -30,12 +30,6 @@ export default class Ts2SwfState {
 
     public foundAnyError: boolean = false;
 
-    /**
-     * Maps an entry point `.ts` file to a library project path.
-     * Used for compiling dependency projects with custom `ts4air.json` configuration.
-     */
-    public libEntryPoints: Map<string, string> = new Map();
-
     public logMessage(file: string, line: number, character: number, message: string) {
         console.log(`${path.relative(this.project!.path, file)} (${line + 1},${character + 1}): ${message}`);
     }

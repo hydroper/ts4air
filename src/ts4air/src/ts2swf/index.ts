@@ -1,15 +1,16 @@
 import * as ts from 'typescript';
 import * as fs from 'fs';
 import * as path from 'path';
-import {Ts2SwfError} from 'ts4air/ts2swf/errors';
-import {AbcFile} from 'ts4air/abc/abcFile';
+import { Ts2SwfError } from 'ts4air/ts2swf/errors';
+import { AbcFile } from 'ts4air/abc/abcFile';
 import Ts2SwfState from './state';
 import Project from './project';
 import * as colorconvert from 'ts4air/util/convertColor';
 import SwfWriter from 'ts4air/swf/swfWriter';
 import AbcFileWriter from 'ts4air/abc/abcWriter';
-import SwfReader, {SwfTagCode} from 'ts4air/swf/swfReader';
+import SwfReader, { SwfTagCode } from 'ts4air/swf/swfReader';
 import ByteArray from 'com.hydroper.util.nodejsbytearray';
+import { assert } from 'console';
 
 export class Ts2Swf {
     public state: Ts2SwfState = new Ts2SwfState();
@@ -36,18 +37,13 @@ export class Ts2Swf {
                 continue;
             }
             pkgPath = path.normalize(path.resolve(project.path, pkgPath));
-            const entry = this.getLibraryProjectEntry(pkgPath);
-            if (entry !== undefined) {
-               this.state.libEntryPoints.set(entry[0], entry[1]);
-            }
             pkgPath = path.normalize(pkgPath + (pkgPath.endsWith(path.sep) ? '' : path.sep));
             this.state.projectPool.set(pkgPath, new Project(pkgPath));
         }
 
         // compile ts.SourceFile index.d.ts from com.adobe.air package before other
         // source files, since it uses `declare global {}`.
-        compileAdobeAIRDTS();
-
+        this.compileAdobeAIRDTS();
         this.compileProject(project);
 
         if (this.state.foundAnyError) {
@@ -144,24 +140,15 @@ export class Ts2Swf {
         [...this.state.program.getSyntacticDiagnostics(), ...this.state.program.getSemanticDiagnostics()].forEach(this.reportTSDiagnostic.bind(this));
         if (this.state.foundAnyError) {
             return;
-        }  
-        // - program.getTypeChecker();
-        // - program.getSourceFiles();
-        // throw new Error(`Unimplemented node: ${node.kind}`);
-        this.compileNode(sourceFileToCompile);
-    }
-    
-    private mergeProjectReferencedSWFs(projectPath: string) {
-        const ts4airJson = readTs4airJson(projectPath);
-        if (ts4airJson !== undefined && (ts4airJson.externalActionScript instanceof Array)) {
-            for (let swfPath of ts4airJson.externalActionScript) {
-                swfPath = path.resolve(projectPath, swfPath);
-                if (!(fs.existsSync(swfPath) && fs.statSync(swfPath).isFile())) {
-                    throw new Ts2SwfError('externalSWFNotFound', {path: swfPath});
-                }
-                this.state.mergeSWF(swfPath);
-            }
         }
+        const [rootFileName] = this.state.program.getRootFileNames();
+        this.compileNode(this.state.program.getSourceFile(rootFileName)!);
+    }
+
+    public compileAdobeAIRDTS() {
+        let sourceFile = this.state.program!.getSourceFile(path.resolve(this.state.project!.path, 'node_modules/com.adobe.air/src/index.d.ts'));
+        assert(sourceFile !== null, 'Failed to retrieve \'com.adobe.air\' .d.ts.');
+        this.compileNode(sourceFile!);
     }
 
     public getLibraryProjectEntry(projectPath: string): [string, string] | undefined {
@@ -170,7 +157,9 @@ export class Ts2Swf {
     }
 
     public compileNode(node: ts.Node) {
-        if (node.kind == ts.SyntaxKind.SourceFile) {
+        // - program.getTypeChecker();
+        // - program.getSourceFiles();
+        if (node.kind === ts.SyntaxKind.SourceFile) {
             this.compileSourceFile(node as ts.SourceFile);
         } else {
             toDo();
@@ -200,6 +189,19 @@ export class Ts2Swf {
 
         // compile the ts.SourceFile statements
         toDo();
+    }
+
+    private mergeProjectReferencedSWFs(projectPath: string) {
+        const ts4airJson = readTs4airJson(projectPath);
+        if (ts4airJson !== undefined && (ts4airJson.externalActionScript instanceof Array)) {
+            for (let swfPath of ts4airJson.externalActionScript) {
+                swfPath = path.resolve(projectPath, swfPath);
+                if (!(fs.existsSync(swfPath) && fs.statSync(swfPath).isFile())) {
+                    throw new Ts2SwfError('externalSWFNotFound', {path: swfPath});
+                }
+                this.state.mergeSWF(swfPath);
+            }
+        }
     }
 
     public createTSProgram(projectPath: string): ts.Program | undefined {
