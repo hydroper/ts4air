@@ -75,14 +75,15 @@
     - [ ] Vectors (any (`Vector`), uint, int and double)
       - [ ] `[Symbol.iterator]`
 
-## Dynamically generated ABC
-
-- [ ] Map iterators from `[Symbol.iterator]` definitions in classes.
-- [ ] Ignore `[Symbol.iterator]` in interfaces and type aliases.
-
 ## actionscript-prelude
 
 Nothing to do for now.
+
+## Manually-defined built-ins
+
+- [ ] `Promise`
+- [ ] `Map`
+- [ ] `Set`
 
 ## TS-to-SWF
 
@@ -238,3 +239,7 @@ Filter this list.
   - [ ] ts.SyntaxKind.CatchClause
   - [ ] ts.SyntaxKind.EnumMember
   - [ ] ts.SyntaxKind.NotEmittedStatement
+
+### Dynamically generated ABC
+
+- [ ] Ignore `[Symbol.iterator]` in interfaces and type aliases.

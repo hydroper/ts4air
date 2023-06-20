@@ -33,13 +33,20 @@ export default class Ts2SwfState {
      */
     public abcToplevelPubns: number = 0;
 
+    /**
+     * Index of the public namespace of the "$ts" package.
+     */
+    public abcTsPubns: number = 0;
+
     public abcVoidName: number = 0;
     public abcNumberName: number = 0;
     public abcStringName: number = 0;
     public abcBooleanName: number = 0;
     public abcUintName: number = 0;
     public abcIntName: number = 0;
-    public abcPubnsNames
+    public abcFunctionName: number = 0;
+    public abcObjectName: number = 0;
+    public abcRegExpName: number = 0;
 
     /**
      * Tells whether the project is invalidated due to a TypeScript error.
@@ -48,8 +55,16 @@ export default class Ts2SwfState {
 
     constructor() {
         this.abcToplevelPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '');
-        this.abcXName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, '');
-
+        this.abcTsPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '$ts');
+        this.abcVoidName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'void');
+        this.abcNumberName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'Number');
+        this.abcStringName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'String');
+        this.abcBooleanName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'Boolean');
+        this.abcUintName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'uint');
+        this.abcIntName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'int');
+        this.abcFunctionName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'Function');
+        this.abcObjectName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'Object');
+        this.abcRegExpName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'RegExp');
     }
 
     public logMessage(file: string, line: number, character: number, message: string) {

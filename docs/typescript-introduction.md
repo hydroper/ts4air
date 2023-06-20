@@ -4,7 +4,6 @@
 
 ```typescript
 import {ByteArray} from 'com.adobe.air/util';
-
 const ba = new ByteArray();
 ```
 
@@ -14,7 +13,6 @@ The following are equivalent to ActionScript's `Vector`:
 
 ```typescript
 import {Vector, DoubleVector, IntVector, UintVector} from 'com.adobe.air/util';
-
 const anyVector = new Vector();
 const doubles = new DoubleVector();
 const ints = new IntVector();
