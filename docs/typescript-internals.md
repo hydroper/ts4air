@@ -61,7 +61,10 @@ declare global {
 
 Typings for globals and built-ins (including Adobe AIR API) should be included in `compilerOptions.types`: `com.adobe.air`. Globals like `Math`, `Infinity` and `isFinite()` should translate to `public::Math`, `public::Infinity` and `public::isFinite` respectively, where `public` is the global package's namespace (`namespace('packageNamespace', '')`).
 
-Definitions inside `declare global` should be connected to their ActionScript global equivalents.
+Definitions inside `declare global` should be connected to their ActionScript global equivalents, with the **_only exception of_**:
+
+- `IArguments` (specific to TypeScript)
+- `RegExpMatches`
 
 ## Vector Types
 
@@ -97,3 +100,9 @@ o! // throw a ReferenceError
 ## Modules
 
 Using `exports` might not be supported as it is not a priority.
+
+
+## Unallowed
+
+- [ ] Unallow using as an `IArguments` object at runtime.
+- [ ] Unallow using `RegExpMatches` object at runtime.

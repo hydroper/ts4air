@@ -13,8 +13,9 @@ let ba = new ByteArray();
 The following are equivalent to ActionScript's `Vector`:
 
 ```typescript
-import {DoubleVector, IntVector, UintVector} from 'com.adobe.air/util';
+import {Vector, DoubleVector, IntVector, UintVector} from 'com.adobe.air/util';
 
+const anyVector = new Vector();
 const doubles = new DoubleVector();
 const ints = new IntVector();
 const uints = new UintVector();

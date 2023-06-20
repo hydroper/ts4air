@@ -258,6 +258,47 @@ declare global {
     function String(expression: any): string;
 
     class String {
+        readonly length: number;
+
+        charAt(index: number): string;
+
+        charCodeAt(index: number): number;
+
+        concat(...args: string[]): string;
+
+        static fromCharCode(...charCodes: number[]): string;
+
+        indexOf(val: string, startIndex?: number): number;
+
+        lastIndexOf(val: string, startIndex?: number): number;
+
+        localeCompare(other: string, ...values: string[]): number;
+
+        match(pattern: string | RegExp): RegExpMatches;
+
+        replace(pattern: string | RegExp, repl: string | Function): string;
+
+        search(pattern: string | RegExp): number;
+
+        slice(startIndex?: number, endIndex?: number): string;
+
+        substr(startIndex?: number, len?: number): string;
+
+        substring(startIndex?: number, endIndex?: number): string;
+
+        toLocaleUpperCase(): string;
+
+        toLocaleLowerCase(): string;
+
+        toUpperCase(): string;
+
+        toLowerCase(): string;
+
+        valueOf(): string;
+    }
+
+    class RegExpMatches extends Array<string> {
+        lastIndex?: number;
     }
 
     class RegExp {

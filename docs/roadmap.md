@@ -1,7 +1,5 @@
 # Roadmap
 
-- [ ] TypeScript compiler (uses the TS Compiler API)
-- [ ] `com.adobe.air` typings, including `declare global` d.ts
 - [ ] `ts4air` command
   - [ ] `ts4air new --app`: Create new application project
     - Look at src/tsair-testproj for a blank project example.
@@ -56,7 +54,7 @@
   - [ ] `ReferenceError`
   - [ ] `RegExp`
   - [ ] `SecurityError`
-  - [ ] `String`
+  - [x] `String`
   - [ ] `SyntaxError`
   - [ ] `TimeZone`
   - [ ] `TypeError`
@@ -64,8 +62,10 @@
   - [ ] `VerifyError`
   - [ ] `XML`
   - [ ] `XMLList`
-- [ ] `com.adobe.air/util`
-  - [ ] Vectors (uint, int and double)
+- [ ] Adobe AIR
+  - [ ] `com.adobe.air/util`
+    - [ ] `ByteArray`
+    - [ ] Vectors (any (`Vector`), uint, int and double)
 
 ## actionscript-prelude
 
