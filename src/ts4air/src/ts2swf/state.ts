@@ -40,6 +40,12 @@ export default class Ts2SwfState {
 
     public abcVoidName: number = 0;
     public abcNumberName: number = 0;
+
+    /**
+     * Index to a set of public namespaces, including top-level and `$ts`.
+     */
+    public abcPublicNsSet: number = 0;
+
     public abcStringName: number = 0;
     public abcBooleanName: number = 0;
     public abcUintName: number = 0;
@@ -56,6 +62,7 @@ export default class Ts2SwfState {
     constructor() {
         this.abcToplevelPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '');
         this.abcTsPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '$ts');
+        this.abcPublicNsSet = this.abcFile.constantPool.addNsSet([this.abcToplevelPubns, this.abcTsPubns]);
         this.abcVoidName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'void');
         this.abcNumberName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'Number');
         this.abcStringName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'String');

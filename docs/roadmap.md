@@ -13,6 +13,8 @@
 ## Questions
 
 - Are multiple `DoABC`s fine in SWF? https://forum.starling-framework.org/d/23830-multiple-doabc
+- Is `o['x']` and `o.public::['x']` the same in `const o = {x: 10};`?
+  - Answer: Yes! Tested it with `amxmlc` and `adl`.
 
 ## SWF/ABC
 
@@ -72,18 +74,13 @@
 - [ ] Adobe AIR
   - [ ] `com.adobe.air/util`
     - [ ] `ByteArray`
+    - [ ] `Dictionary`
     - [ ] Vectors (any (`Vector`), uint, int and double)
       - [ ] `[Symbol.iterator]`
 
 ## actionscript-prelude
 
 Nothing to do for now.
-
-## Manually-defined built-ins
-
-- [ ] `Promise`
-- [ ] `Map`
-- [ ] `Set`
 
 ## TS-to-SWF
 
@@ -243,3 +240,7 @@ Filter this list.
 ### Dynamically generated ABC
 
 - [ ] Ignore `[Symbol.iterator]` in interfaces and type aliases.
+
+### Strictness
+
+- [ ] Do not allow extending final classes. In this case we will have to track which of the built-in Adobe AIR classes are final.

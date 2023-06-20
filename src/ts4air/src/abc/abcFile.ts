@@ -66,17 +66,79 @@ export class ConstantPool {
         }
         return this.namespaces.push(new NamespaceInfo(kind, name)) - 1;
     }
+    
+    addNsSet(namespaces: number[]): number {
+        return this.nsSets.push(new NsSetInfo(namespaces)) - 1;
+    }
 
-    internQName(ns: number, nameStr: string): number {
-        let name = this.internString(nameStr);
+    /**
+     * 
+     * @param nsOrAnyNs If null, indicates the `*` namespace.
+     * @param nameStr If null, indicates the `*` name.
+     */
+    internQName(nsOrAnyNs: number | null, nameStr: string | null, isAttribute: boolean = false): number {
+        let ns = nsOrAnyNs === null ? 0 : nsOrAnyNs;
+        let name = nameStr !== null ? this.internString(nameStr) : 0;
         let i = 0;
         for (let multiname of this.multinames) {
-            if (multiname instanceof QNameMultinameInfo && multiname.ns == ns && multiname.name == name) {
+            if (multiname instanceof QNameMultinameInfo && multiname.ns == ns && multiname.name == name && multiname.isAttribute == isAttribute) {
                 return i;
             }
             ++i;
         }
-        return this.multinames.push(new QNameMultinameInfo(ns, name)) - 1;
+        return this.multinames.push(new QNameMultinameInfo(ns, name, isAttribute)) - 1;
+    }
+
+    /**
+     * @param nameStr If null, indicates the any (`*`) name.
+     */
+    internRTQName(nameStr: string | null, isAttribute: boolean = false): number {
+        let name = nameStr !== null ? this.internString(nameStr) : 0;
+        let i = 0;
+        for (let multiname of this.multinames) {
+            if (multiname instanceof RTQNameMultinameInfo && multiname.name == name && multiname.isAttribute == isAttribute) {
+                return i;
+            }
+            ++i;
+        }
+        return this.multinames.push(new RTQNameMultinameInfo(name, isAttribute)) - 1;
+    }
+
+    internRTQNameL(isAttribute: boolean = false): number {
+        let i = 0;
+        for (let multiname of this.multinames) {
+            if (multiname instanceof RTQNameLMultinameInfo && multiname.isAttribute == isAttribute) {
+                return i;
+            }
+            ++i;
+        }
+        return this.multinames.push(new RTQNameLMultinameInfo(isAttribute)) - 1;
+    }
+
+    /**
+     * @param nameStr If null, indicates the any (`*`) name.
+     */
+    internMultiname(nsSet: number, nameStr: string | null, isAttribute: boolean = false): number {
+        let name = nameStr !== null ? this.internString(nameStr) : 0;
+        let i = 0;
+        for (let multiname of this.multinames) {
+            if (multiname instanceof MultinameMultinameInfo && multiname.nsSet == nsSet && multiname.name == name && multiname.isAttribute == isAttribute) {
+                return i;
+            }
+            ++i;
+        }
+        return this.multinames.push(new MultinameMultinameInfo(name, nsSet, isAttribute)) - 1;
+    }
+
+    internMultinameL(nsSet: number, isAttribute: boolean = false): number {
+        let i = 0;
+        for (let multiname of this.multinames) {
+            if (multiname instanceof MultinameLMultinameInfo && multiname.nsSet == nsSet && multiname.isAttribute == isAttribute) {
+                return i;
+            }
+            ++i;
+        }
+        return this.multinames.push(new MultinameLMultinameInfo(nsSet, isAttribute)) - 1;
     }
 }
 
@@ -154,7 +216,7 @@ export class RTQNameLMultinameInfo extends MultinameInfo {
 export class MultinameMultinameInfo extends MultinameInfo {
     /**
      * @param name Index into the string section of the constant pool.
-     * @param ns_set Index into the `nsSets` section of the constant pool.
+     * @param nsSet Index into the `nsSets` section of the constant pool.
      */
     constructor(public name: number, public nsSet: number, isAttribute: boolean = false) {
         super(isAttribute);
@@ -166,7 +228,7 @@ export class MultinameMultinameInfo extends MultinameInfo {
  */
 export class MultinameLMultinameInfo extends MultinameInfo {
     /**
-     * @param ns_set Index into the `nsSets` section of the constant pool.
+     * @param nsSet Index into the `nsSets` section of the constant pool.
      */
     constructor(public nsSet: number, isAttribute: boolean = false) {
         super(isAttribute);

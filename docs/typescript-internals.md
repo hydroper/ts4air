@@ -85,8 +85,8 @@ Every top-level or namespace-level definition other than `declare global` will b
 
 For any type other than `Array`, `Map` and `Set`, `for..of` will try to:
 
-- Resolve the `"$iterator"` method (either as `o.public::['$iterator']` or `o['$iterator']`) and iterate it by using `iterator.next()` calls (captures it from either `o.public::next` or `o['next']`; maybe ABC does have a single instruction to look for both?).
-- Resolve the `next` method (either as `o.public::next` as `o['next']`) and use it to iterate.
+- Resolve the `"$iterator"` method (from the `public` namespaces from top-level and `$ts` package) and iterate it by using `iterator.next()` calls (`next` is resolved as said in the following item).
+- Resolve the `next` method (from the `public` namespaces from top-level and `$ts` package) and use it to iterate.
 
 ## Integer types
 
