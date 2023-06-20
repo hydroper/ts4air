@@ -106,6 +106,9 @@ export class Ts2Swf {
             }
         }
 
+        // output the entry point script to state.abcFile.scripts
+        outputABCEntryScriptInfoHere();
+
         const abcWriter = new AbcFileWriter();
         abcWriter.abcFile(this.state.abcFile);
         swfWriter.doABC('frame1', abcWriter.bytes);
