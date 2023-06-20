@@ -15,9 +15,9 @@ The following are equivalent to ActionScript's `Vector`:
 ```typescript
 import {DoubleVector, IntVector, UintVector} from 'com.adobe.air/util';
 
-let doubles = new DoubleVector();
-let ints = new IntVector();
-let uints = new UintVector();
+const doubles = new DoubleVector();
+const ints = new IntVector();
+const uints = new UintVector();
 ```
 
 ## Embed
@@ -25,6 +25,7 @@ let uints = new UintVector();
 ```typescript
 let dataText: string = import.meta.embedString('./data.txt');
 let byteArray: ByteArray = import.meta.embedBytes('./data.bin');
+let obj: any = import.meta.embedJSON('./data.json');
 ```
 
 ## Bound Methods
