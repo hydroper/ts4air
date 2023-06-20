@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Ts2SwfError } from 'ts4air/ts2swf/errors';
+import defineAdditionalBuiltins from 'ts4air/ts2swf/defineAdditionalBuiltins';
 import { AbcFile } from 'ts4air/abc/abcFile';
 import Ts2SwfState from './state';
 import Project from './project';
@@ -20,7 +21,9 @@ export class Ts2Swf {
         this.state.project = project;
 
         this.mergePreludeSWFs();
-        this.defineAdditionalBuiltins();
+
+        // define types such as Promise and Map
+        defineAdditionalBuiltins(this.state);
 
         // check for package-lock.json
         let packageLockPath = path.resolve(project.path, 'package-lock.json');

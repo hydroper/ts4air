@@ -28,7 +28,19 @@ export default class Ts2SwfState {
 
     public abcFile: AbcFile = new AbcFile();
 
+    /**
+     * Index of the public namespace of the top-level package.
+     */
+    public abcToplevelPubns: number = 0;
+
+    /**
+     * Tells whether the project is invalidated due to a TypeScript error.
+     */
     public foundAnyError: boolean = false;
+
+    constructor() {
+        this.abcToplevelPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '');
+    }
 
     public logMessage(file: string, line: number, character: number, message: string) {
         console.log(`${path.relative(this.project!.path, file)} (${line + 1},${character + 1}): ${message}`);

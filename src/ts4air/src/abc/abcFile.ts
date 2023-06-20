@@ -53,7 +53,8 @@ export class ConstantPool {
         return i;
     }
 
-    internNamespace(kind: NamespaceInfoKind, name: number): number {
+    internNamespace(kind: NamespaceInfoKind, nameStr: string): number {
+        let name = this.internString(nameStr);
         for (let i = 0; i < this.namespaces.length; ++i) {
             let ns = this.namespaces[i];
             if (ns === null) {
@@ -66,7 +67,8 @@ export class ConstantPool {
         return this.namespaces.push(new NamespaceInfo(kind, name)) - 1;
     }
 
-    internQName(ns: number, name: number): number {
+    internQName(ns: number, nameStr: string): number {
+        let name = this.internString(nameStr);
         let i = 0;
         for (let multiname of this.multinames) {
             if (multiname instanceof QNameMultinameInfo && multiname.ns == ns && multiname.name == name) {
