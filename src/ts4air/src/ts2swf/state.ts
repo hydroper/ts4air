@@ -118,6 +118,7 @@ export default class Ts2SwfState {
                 newData.ui32(0);
                 newData.binary(binaryData.data);
                 tag.data = newData.toNodejsBuffer();
+                this.swfTags.push(tag);
             }
         }
         for (let symbolClass of symbolClasses) {
