@@ -5,7 +5,7 @@
 ```typescript
 import {ByteArray} from 'com.adobe.air/util';
 
-let ba = new ByteArray();
+const ba = new ByteArray();
 ```
 
 ## Vector
@@ -24,9 +24,9 @@ const uints = new UintVector();
 ## Embed
 
 ```typescript
-let dataText: string = import.meta.embedString('./data.txt');
-let byteArray: ByteArray = import.meta.embedBytes('./data.bin');
-let obj: any = import.meta.embedJSON('./data.json');
+const text: string = import.meta.embedString('./data.txt');
+const bytes: ByteArray = import.meta.embedBytes('./data.bin');
+const obj: any = import.meta.embedJSON('./data.json');
 ```
 
 ## Bound Methods
@@ -91,3 +91,4 @@ Not all packages from the NPM ecosystem may be reused because of some features, 
 - Use of features beyond ECMA-262 3rd edition, including:
   - `this` on class static method will return the class from the current class definition, not the one from the method scope itself.
 - Use of Node.js `exports`. It might be supported later.
+- Relying on `constructor.name`, which does not exist in ActionScript classes.
