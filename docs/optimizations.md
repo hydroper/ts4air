@@ -49,4 +49,4 @@ try {
 
 ## Integer types
 
-- Convert from `number` to `uint` or `int` ahead-of-time whenever possible.
+- Not sure if AVM2 does this, but if needed, convert from `number` to `uint` or `int` ahead-of-time whenever possible.

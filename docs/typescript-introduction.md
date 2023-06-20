@@ -56,5 +56,6 @@ The TypeScript `!` operator can be used to assert an expression is not `undefine
 
 Not all packages from the NPM ecosystem may be reused because of some features, including:
 
-- Use of features beyond ECMA-262 3rd edition
+- Use of features beyond ECMA-262 3rd edition, including:
+  - `this` on class static method will return the class from the current class definition, not the one from the method scope itself.
 - Use of Node.js `exports`. It might be supported later.

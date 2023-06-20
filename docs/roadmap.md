@@ -33,9 +33,37 @@
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/write.rs
 
-## AIR API
+## AIR API typings
 
 - [ ] Top-level
+  - [x] Constants and functions
+  - [x] `ArgumentError`
+  - [x] `Array`
+  - [x] `Boolean`
+  - [x] `Class`
+  - [ ] `Date`
+  - [ ] `DefinitionError`
+  - [x] `Error`
+  - [ ] `EvalError`
+  - [x] `Function`
+  - [ ] `JSON`
+  - [ ] `Math`
+  - [ ] `Namespace`
+  - [x] `Number`
+  - [x] `Object`
+  - [ ] `QName`
+  - [ ] `RangeError`
+  - [ ] `ReferenceError`
+  - [ ] `RegExp`
+  - [ ] `SecurityError`
+  - [ ] `String`
+  - [ ] `SyntaxError`
+  - [ ] `TimeZone`
+  - [ ] `TypeError`
+  - [ ] `URIError`
+  - [ ] `VerifyError`
+  - [ ] `XML`
+  - [ ] `XMLList`
 - [ ] `com.adobe.air/util`
   - [ ] Vectors (uint, int and double)
 

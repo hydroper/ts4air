@@ -97,7 +97,3 @@ o! // throw a ReferenceError
 ## Modules
 
 Using `exports` might not be supported as it is not a priority.
-
-## `this` on class static methods
-
-Should return the class object itself dynamically.
