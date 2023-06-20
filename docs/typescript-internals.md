@@ -34,7 +34,7 @@ for (let [k, v] of new Map) {
 
 ## Symbols
 
-- Symbols won't be supported, so it must be unallowed to use them, but it should be possible to define a `Symbol.iterator` iterator by internally creating global static maps using `Dictionary` with _**weak keys**_. Thus allow `Symbol.iterator` definitions, but don't allow use of symbols anywhere else.
+- Symbols won't be supported, so it must be unallowed to use the `Symbol` class, but it should be possible to define a `Symbol.iterator` iterator, which will map to the property or method `"$iterator"`.
 
 ## Control Flow Graph
 
@@ -76,9 +76,12 @@ Definitions other than `declare global` should have a suffix to not conflict wit
 
 ## Manually Generated Globals
 
-- `Promise`, `Map`, `WeakMap`, `Set` and `WeakSet` should be wrappers around their equivalents in `com.asprelude.util`.
+- `Promise`, `Map` and `Set` should be wrappers around their equivalents in `com.asprelude.util`.
   - These types can use keyword in ABC; e.g. `delete`, `try` and `finally`.
-  - Iterating these requires careful mapping.
+
+## for..of
+
+For any type other than `Array`, `for..of` will try to resolve the `"$iterator"` property (either as `o.public::['$iterator']` or `o['$iterator']`).
 
 ## Integer types
 
