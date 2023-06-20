@@ -1,6 +1,6 @@
 package
 {
-    import com.rialight.util.Map;
+    import com.asprelude.util.Map;
 
     public function minimalFormat(base:String, argumentsObject:*):String
     {
