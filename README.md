@@ -19,6 +19,7 @@ Blank projects will be created through `ts4air new`.
 - [FFI](docs/ffi.md)
 - [Optimizations](docs/optimizations.md)
 - [TypeScript Internals](docs/typescript-internals.md)
+- [Future Features](docs/future-features.md)
 
 ## Research
 
