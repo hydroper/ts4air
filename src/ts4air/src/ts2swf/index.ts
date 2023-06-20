@@ -145,15 +145,11 @@ export class Ts2Swf {
         this.compileNode(this.state.program.getSourceFile(rootFileName)!);
     }
 
+    // compile .d.ts specifically from 'com.adobe.air'.
     public compileAdobeAIRDTS() {
         let sourceFile = this.state.program!.getSourceFile(path.resolve(this.state.project!.path, 'node_modules/com.adobe.air/src/index.d.ts'));
         assert(sourceFile !== null, 'Failed to retrieve \'com.adobe.air\' .d.ts.');
         this.compileNode(sourceFile!);
-    }
-
-    public getLibraryProjectEntry(projectPath: string): [string, string] | undefined {
-        const entryTS = findEntryTypeScript(projectPath);
-        return entryTS === undefined ? undefined : [path.normalize(entryTS), projectPath];
     }
 
     public compileNode(node: ts.Node) {
