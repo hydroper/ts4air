@@ -152,3 +152,46 @@ new C().f(/(?:)/)
 ## Final Classes
 
 - [ ] ActionScript has final classes that must not be extended. Unallow to extend those.
+
+## Implementing interface's fields and methods in different ways
+
+Consider the following example:
+
+```ts
+interface I {
+    get x(): number;
+}
+
+class C implements I {
+    x: number = 10;
+}
+```
+
+Another example:
+
+```ts
+interface I {
+    x: number;
+}
+
+class C implements I {
+    get x(): number { return 10 }
+}
+```
+
+Another example:
+
+```ts
+interface I {
+    x: () => number;
+}
+
+class C implements I {
+    x() {return 10}
+}
+```
+
+These are all valid TypeScript programs. This will be complex to handle, so `ts4air` won't allow this for now.
+
+- [ ] Allow implementing a virtual property as a field, as in the first example. The reverse should also be possible.
+- [ ] Unallow implementing a specific property from an interface in another form (e.g., a field cannot be implemented as a method)
