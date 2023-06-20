@@ -63,7 +63,7 @@
   - [ ] `XML`
   - [ ] `XMLList`
 - [ ] ECMA-262 additional top-level
-  - [ ] `Iterator`
+  - [x] `Iterator`
   - [ ] `Promise`
   - [ ] `Generator`
   - [ ] `Map`
@@ -74,6 +74,7 @@
   - [ ] `com.adobe.air/util`
     - [ ] `ByteArray`
     - [ ] Vectors (any (`Vector`), uint, int and double)
+      - [ ] `[Symbol.iterator]`
 
 ## Dynamically generated ABC
 

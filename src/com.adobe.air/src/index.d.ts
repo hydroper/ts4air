@@ -76,7 +76,7 @@ declare global {
     }
 
     class Symbol {
-        readonly iterator: symbol;
+        static readonly iterator: unique symbol;
     }
 
     class Array<T> {
