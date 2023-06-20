@@ -58,6 +58,32 @@ The TypeScript `!` operator can be used to assert an expression is not `undefine
 - If `as` is given a concrete type (ignoring type arguments), it is equivalent to ActionScript's `as`.
 - TypeScript's `(v as C)!` is equivalent to ActionScript's `C(v)`.
 
+## Assertion
+
+Global assertion functions exist, which throw `AssertionError` on failure.
+
+```ts
+assert(false, 'Error!');
+assertEq(x, y, 'Error!');
+assertNeq(x, y, 'Error!');
+```
+
+## Formatting
+
+TypeScript supports template literals:
+
+```ts
+trace(`Attribute: ${10}`);
+```
+
+`ts4air` also ships a global minimal formatting function for formatting dynamic string arguments:
+
+```ts
+minimalFormat('$a', {a: 10})
+minimalFormat('$<hyphens-n_Underscores>', {'hyphens-n_Underscores': 10})
+minimalFormat('$$', {})
+```
+
 ## NPM
 
 Not all packages from the NPM ecosystem may be reused because of some features, including:

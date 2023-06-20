@@ -7,6 +7,23 @@ declare global {
 
     const Infinity: number;
 
+    function assert(test: any, errorMessage?: string): void;
+
+    function assertEquals(left: any, right: any, errorMessage?: string): void;
+
+    function assertNotEquals(left: any, right: any, errorMessage?: string): void;
+
+    /**
+     * Formats simple string parameters.
+     * # Examples
+     * ```ts
+     * minimalFormat('$a', {a: 'foo'})
+     * minimalFormat('$<hyphens-n_Underscores>', {'hyphens-n_Underscores': ''})
+     * minimalFormat('$$', {}) // '$'
+     * ```
+     */
+    function minimalFormat(base: string, argumentsObject: any): string;
+
     /**
      * Displays expressions, or writes to log files, while debugging.
      */
@@ -335,6 +352,10 @@ declare global {
         constructor(message?: string);
     }
 
+    class AssertionError extends Error {
+        constructor(message?: string);
+    }
+
     class Class {
     }
     
@@ -361,7 +382,7 @@ declare global {
 
         ['finally'](onFinally: () => any): Promise<T>;
 
-        ['then']<T>(onFulfilled?: any, onRejected?: any): Promise<T>;
+        ['then']<T>(onFulfilled: any, onRejected?: any): Promise<T>;
     }
 
     class Map<K, V> {
