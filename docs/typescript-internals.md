@@ -141,7 +141,7 @@ new C().f(/(?:)/)
 
 ## Property Overriding
 
-- [ ] Properties that override should contribute an assignment in the constructor after `super()` .
+- [ ] Properties that override another should contribute an assignment in the constructor after `super()` .
 
 ## Method Overriding
 
