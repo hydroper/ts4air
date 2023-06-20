@@ -46,3 +46,7 @@ try {
     // new local for ReferenceError
 }
 ```
+
+## Integer types
+
+- Convert from `number` to `uint` or `int` ahead-of-time whenever possible.

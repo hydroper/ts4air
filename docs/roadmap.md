@@ -33,6 +33,12 @@
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/write.rs
   - https://github.com/ruffle-rs/ruffle/blob/master/swf/src/avm2/write.rs
 
+## AIR API
+
+- [ ] Top-level
+- [ ] `com.adobe.air/util`
+  - [ ] Vectors (uint, int and double)
+
 ## actionscript-prelude
 
 - Re-structure the map and set iterators in `com.asprelude.util` so that they can be used as proper ECMAScript iterators. Maybe improve some other things too there.
