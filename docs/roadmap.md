@@ -43,9 +43,9 @@
 - [x] 1. Merge prelude SWF
 - [ ] 2. Create some built-ins manually, like `Promise`.
 - [ ] 3. Compile nodes
-  - [ ] Fix various parts involving `ts.createProgram()`. I've discovered TSConfig is handled fine.
-  - [ ] If the source file is the entry point of a library (`state.libEntryPoints.has(path.normalize(sourceFilePath))`), compile it via `compileProject`; otherwise compile it as part of the current project.
-  - [ ] `import.meta.embedBytes`: while incrementing the `BinaryData` id, check if it doesn't duplicate too due to merged SWFs.
+  - [ ] `import.meta.embedString`
+  - [ ] `import.meta.embedBytes`
+  - [ ] `import.meta.embedJSON`
 - [ ] 4. Generate SWF
   - [ ] The application's entry point .ts exports a default `Sprite` subclass. Add a `SymbolClass` with character tag ID 0 (the "main" class) and the name of that default class.
     - [ ] Report an error if either the entry point does not export a default class or that default class does not extend `Sprite`.
