@@ -40,6 +40,10 @@ export class Ts2Swf {
             }
         }
 
+        // compile ts.SourceFile index.d.ts from com.adobe.air package before other
+        // source files, since it uses `declare global {}`.
+        compileAdobeAIRDTS();
+
         this.compileProject(project);
 
         if (this.state.foundAnyError) {
@@ -52,10 +56,9 @@ export class Ts2Swf {
     }
 
     public generateSWF(project: Project) {
-        // read ts4air.json to get things like frame-rate, background, width etc.
         const ts4airJson = readTs4airJson(project.path);
         if (ts4airJson === undefined) {
-            console.error('Project must have a ts4air.json file.');
+            console.error('Project must have a package.json file with a "ts4air" field.');
             return;
         }
         if (ts4airJson.type != 'app') {
@@ -63,11 +66,11 @@ export class Ts2Swf {
             return;
         }
         if (typeof ts4airJson.swf != 'object') {
-            console.error('ts4air.json must have a "swf" property.');
+            console.error('package.json must have a "ts4air.swf" property.');
             return;
         }
         if (typeof ts4airJson.swf.path != 'string') {
-            console.error('ts4air.json must have a "swf.path" string property.');
+            console.error('package.json must have a "ts4air.swf.path" string property.');
             return;
         }
         const swfPath = path.resolve(project.path, ts4airJson.swf.path);
@@ -138,7 +141,7 @@ export class Ts2Swf {
 
         this.state.projectStack.push(project);
 
-        // merge any SWFs referenced in optional ts4air.json
+        // merge any SWFs referenced from package.json
         this.mergeProjectReferencedSWFs(project.path);
 
         const program = this.createTSProgram(project.path);
@@ -201,11 +204,12 @@ export class Ts2Swf {
 }
 
 function readTs4airJson(projectPath: string): any {
-    const ts4airJsonPath = path.resolve(projectPath, 'ts4air.json');
+    const ts4airJsonPath = path.resolve(projectPath, 'package.json');
     if (!(fs.existsSync(ts4airJsonPath) && fs.statSync(ts4airJsonPath).isFile())) {
         return undefined;
     }
-    return JSON.parse(fs.readFileSync(ts4airJsonPath, 'utf8'));
+    const o = JSON.parse(fs.readFileSync(ts4airJsonPath, 'utf8'));
+    return typeof o.ts4air === 'object' ? o.ts4air : undefined;
 }
 
 function findEntryTypeScript(projectPath: string): string | undefined {

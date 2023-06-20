@@ -18,13 +18,11 @@
 
 ## To-do before the following
 
-- [ ] Move ts4air.json to a package.json field
-- [ ] ts4air.json for libs has to be loaded not based on index.ts
+- [ ] package.json for libs has to be loaded not based on index.ts
 - [ ] SourceFiles must load related project package.json ts4air field only once
 - [ ] SourceFiles must be compiled only once
 - [ ] Find SourceFile from com.adobe.air in the ts.Program and compile it before all other SourceFiles.
 - [ ] FFI can be associated to .ts and .d.ts
-- [ ] A stub for outputting ABC entry script info based on root SourceFile.
 
 ## SWF/ABC
 
