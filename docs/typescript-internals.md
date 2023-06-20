@@ -65,7 +65,6 @@ Definitions inside `declare global` should be connected to their ActionScript gl
 
 - `Symbol` (inexistent)
 - `Iterator` (inexistent interface)
-- `Generator` (inexistent interface)
 - `IArguments` (specific to TypeScript)
 - `RegExpMatches`
 
@@ -109,7 +108,6 @@ Using `exports` might not be supported as it is not a priority.
 
 - [ ] Unallow using `Symbol` class object at runtime.
 - [ ] Unallow using `Iterator` class object at runtime.
-- [ ] Unallow using `Generator` class object at runtime.
 - [ ] Unallow using `IArguments` class object at runtime.
 - [ ] Unallow using `RegExpMatches` class object at runtime.
 

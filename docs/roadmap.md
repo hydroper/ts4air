@@ -62,13 +62,12 @@
   - [ ] `VerifyError`
   - [ ] `XML`
   - [ ] `XMLList`
-- [ ] ECMA-262 additional top-level
+- [x] ECMA-262 additional top-level
   - [x] `Iterator`
-  - [ ] `Promise`
-  - [ ] `Generator`
-  - [ ] `Map`
+  - [x] `Promise`
+  - [x] `Map`
   - [ ] `WeakMap`
-  - [ ] `Set`
+  - [x] `Set`
   - [ ] `WeakSet`
 - [ ] Adobe AIR
   - [ ] `com.adobe.air/util`
@@ -83,18 +82,7 @@
 
 ## actionscript-prelude
 
-- [ ] `Map` entry iterator
-- [ ] `Map` key iterator
-- [ ] `Map` value iterator
-- [ ] `Set` iterator
-- [ ] `WeakMap`
-- [ ] `WeakMap` key iterator
-- [ ] `WeakMap` value iterator
-- [ ] `WeakSet`
-- [ ] `WeakMap` iterator
-- [ ] `WeakSet` iterator
-- Re-structure the map and set iterators in `com.asprelude.util` so that they can be used as proper ECMAScript iterators. Maybe improve some other things too there.
-- Add `WeakMap` and `WeakSet`.
+- ?
 
 ## TS-to-SWF
 

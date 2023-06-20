@@ -86,6 +86,17 @@ package com.asprelude.util
                 m_keys = Map(argumentValue).m_keys.slice(0);
                 m_values = Map(argumentValue).m_values.slice(0);
             }
+            /*
+            else if (argumentValue is WeakMap)
+            {
+                const weakMap: WeakMap = WeakMap(argumentValue);
+                for (v in weakMap.m_dict)
+                {
+                    m_keys.push(v);
+                    m_keys.push(weakMap.m_dict[v]);
+                }
+            }
+            */
             else if (argumentValue is Dictionary)
             {
                 var dict:Dictionary = Dictionary(argumentValue);
@@ -158,19 +169,27 @@ package com.asprelude.util
             return this.m_keys.indexOf(key) != -1;
         }
 
-        public function entries():MapEntries
+        public function entries():MapEntriesIterator
         {
-            return new MapEntries(this);
+            return new MapEntriesIterator(this);
         }
 
-        public function keys():MapKeys
+        public function keys():MapKeysIterator
         {
-            return new MapKeys(this);
+            return new MapKeysIterator(this);
         }
 
-        public function values():MapValues
+        public function values():MapValuesIterator
         {
-            return new MapValues(this);
+            return new MapValuesIterator(this);
+        }
+
+        public function forEach(callback:Function):void
+        {
+            for (var i:uint = 0; i < this.m_keys.length; ++i)
+            {
+                callback(this.m_values[i], this.m_keys[i], this);
+            }
         }
 
         override flash_proxy function nextNameIndex(index:int):int

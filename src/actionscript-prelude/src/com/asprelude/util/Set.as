@@ -19,7 +19,7 @@ package com.asprelude.util
      */
     public final class Set extends Proxy
     {
-        private var m_values:Vector.<*> = new Vector.<*>;
+        internal var m_values:Vector.<*> = new Vector.<*>;
 
         public function Set(argumentValue:* = undefined)
         {
@@ -49,6 +49,16 @@ package com.asprelude.util
                     }
                 }
             }
+            /*
+            else if (argumentValue is WeakSet)
+            {
+                const weakSet: WeakSet = WeakSet(argumentValue);
+                for (v in weakSet.m_dict)
+                {
+                    m_values.push(v);
+                }
+            }
+            */
             else if (argumentValue is Dictionary)
             {
                 var dict:Dictionary = Dictionary(argumentValue);
@@ -126,6 +136,30 @@ package com.asprelude.util
         override flash_proxy function nextValue(index:int):*
         {
             return m_values[index - 1];
+        }
+
+        public function entries():SetEntriesIterator
+        {
+            return new SetEntriesIterator(this);
+        }
+
+        public function keys():SetValuesIterator
+        {
+            return new SetValuesIterator(this);
+        }
+
+        public function values():SetValuesIterator
+        {
+            return new SetValuesIterator(this);
+        }
+
+        public function forEach(callback:Function):void
+        {
+            for (var i:uint = 0; i < this.m_values.length; ++i)
+            {
+                const v:* = this.m_values[i];
+                callback(v, v, this);
+            }
         }
 
         public function toArray():Array

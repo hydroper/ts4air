@@ -11,6 +11,10 @@ const Q = {
 trace(Q.x); // trace(10);
 ```
 
+## Iteration
+
+Directly iterating an `Array`, vector, `Map`, `Set`, `WeakMap` or `WeakSet`, in a `for..of`, should not generate an iterator object and instead use `nextNameIndex` etc.
+
 ## Subtype
 
 Example 1:

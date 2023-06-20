@@ -53,6 +53,11 @@ In ActionScript, omitting parameters in a callback causes a runtime error withou
 
 The TypeScript `!` operator can be used to assert an expression is not `undefined` or `null`. It will throw a `ReferenceError` if it fails.
 
+## Type conversion
+
+- If `as` is given a concrete type (ignoring type arguments), it is equivalent to ActionScript's `as`.
+- TypeScript's `(v as C)!` is equivalent to ActionScript's `C(v)`.
+
 ## NPM
 
 Not all packages from the NPM ecosystem may be reused because of some features, including:

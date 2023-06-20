@@ -338,7 +338,133 @@ declare global {
     class Class {
     }
     
-    interface Iterator<T> {
-        next(): {done: boolean, value: T | undefined};
+    interface Iterator<T, R = undefined> {
+        next(): {done: boolean, value: T | R};
     }
+
+    class Promise<T> {
+        static all<T>(array: Promise<T>[]): Promise<T>;
+
+        static allSettled<T>(array: Promise<T>[]): Promise<T>;
+
+        static any<T>(array: Promise<T>[]): Promise<T>;
+
+        static race<T>(array: Promise<T>[]): Promise<T>;
+
+        static reject<T>(reason: any): Promise<T>;
+
+        static resolve<T>(value: any): Promise<T>;
+
+        constructor(executor: (resolve: Function, reject: Function) => void);
+
+        ['catch'](onRejected: (reason: any) => any): Promise<T>;
+
+        ['finally'](onFinally: () => any): Promise<T>;
+
+        ['then']<T>(onFulfilled?: any, onRejected?: any): Promise<T>;
+    }
+
+    class Map<K, V> {
+        constructor(arguments: [K, V][] | Map<K, V>);
+
+        [Symbol.iterator]: Iterator<[K, V]>;
+
+        entries(): Iterator<[K, V]>;
+
+        keys(): Iterator<K>;
+
+        values(): Iterator<V>;
+
+        readonly size: number;
+
+        clear(): void;
+
+        get(key: K): V | undefined;
+
+        set(key: K, value: V): Map<K, V>;
+
+        ['delete'](key: K): boolean;
+
+        has(key: K): boolean;
+
+        forEach(callback: (value: V, key: K, map: Map<K, V>) => void): void;
+    }
+
+    /*
+    class WeakMap<K, V> {
+        constructor(arguments: [K, V][] | Map<K, V> | WeakMap<K, V>);
+
+        [Symbol.iterator]: Iterator<[K, V]>;
+
+        entries(): Iterator<[K, V]>;
+
+        keys(): Iterator<K>;
+
+        values(): Iterator<V>;
+
+        readonly size: number;
+
+        clear(): void;
+
+        get(key: K): V | undefined;
+
+        set(key: K, value: V): WeakMap<K, V>;
+
+        ['delete'](key: K): boolean;
+
+        has(key: K): boolean;
+
+        forEach(callback: (value: V, key: K, map: WeakMap<K, V>) => void): void;
+    }
+    */
+
+    class Set<V> {
+        constructor(arguments: V[] | Set<V>);
+
+        [Symbol.iterator]: Iterator<V>;
+
+        entries(): Iterator<[V, V]>;
+
+        keys(): Iterator<V>;
+
+        values(): Iterator<V>;
+
+        readonly size: number;
+
+        clear(): void;
+
+        add(value: V): Set<V>;
+
+        ['delete'](value: V): boolean;
+
+        has(value: V): boolean;
+
+        forEach(callback: (value: V, key: V, set: Set<V>) => void): void;
+    }
+
+    /*
+    class WeakSet<V> {
+        constructor(arguments: V[] | Set<V> | WeakSet<V>);
+
+        [Symbol.iterator]: Iterator<V>;
+
+        entries(): Iterator<[V, V]>;
+
+        keys(): Iterator<V>;
+
+        values(): Iterator<V>;
+
+        readonly size: number;
+
+        clear(): void;
+
+        add(value: V): WeakSet<V>;
+
+        ['delete'](value: V): boolean;
+
+        has(value: V): boolean;
+
+        forEach(callback: (value: V, key: V, set: WeakSet<V>) => void): void;
+    }
+    */
 }
