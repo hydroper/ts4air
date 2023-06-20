@@ -16,6 +16,7 @@ export class Ts2Swf {
     
     constructor(projectPath: string, generateSWF: boolean = true) {
         const project = new Project(path.resolve(projectPath));
+        this.state.project = project;
 
         this.mergePreludeSWFs();
         this.defineAdditionalBuiltins();
@@ -34,10 +35,13 @@ export class Ts2Swf {
             if (!pkgPath.startsWith('node_modules/')) {
                 continue;
             }
-            const entry = this.getLibraryProjectEntry(path.resolve(project.path, pkgPath));
+            pkgPath = path.normalize(path.resolve(project.path, pkgPath));
+            const entry = this.getLibraryProjectEntry(pkgPath);
             if (entry !== undefined) {
                this.state.libEntryPoints.set(entry[0], entry[1]);
             }
+            pkgPath = path.normalize(pkgPath + (pkgPath.endsWith(path.sep) ? '' : path.sep));
+            this.state.projectPool.set(pkgPath, new Project(pkgPath));
         }
 
         // compile ts.SourceFile index.d.ts from com.adobe.air package before other
@@ -132,24 +136,19 @@ export class Ts2Swf {
     }
 
     public compileProject(project: Project) {
-        project = this.state.projectPool.has(project.path) ? this.state.projectPool.get(project.path)! : project;
-        this.state.projectPool.set(project.path, project);
-        if (project.alreadyCompiled) {
-            return;
-        }
-        project.alreadyCompiled = true;
-
-        this.state.projectStack.push(project);
-
-        // merge any SWFs referenced from package.json
-        this.mergeProjectReferencedSWFs(project.path);
-
         const program = this.createTSProgram(project.path);
-        if (program !== undefined) {
-            this.state.project.program = program;
-            this.compileTSProgram(program);
+        if (program === undefined) {
+            throw new Ts2SwfError('noEntryTS');
         }
-        this.state.projectStack.pop();
+        this.state.program = program;
+        [...this.state.program.getSyntacticDiagnostics(), ...this.state.program.getSemanticDiagnostics()].forEach(this.reportTSDiagnostic.bind(this));
+        if (this.state.foundAnyError) {
+            return;
+        }  
+        // - program.getTypeChecker();
+        // - program.getSourceFiles();
+        // throw new Error(`Unimplemented node: ${node.kind}`);
+        this.compileNode(sourceFileToCompile);
     }
     
     private mergeProjectReferencedSWFs(projectPath: string) {
@@ -170,21 +169,40 @@ export class Ts2Swf {
         return entryTS === undefined ? undefined : [path.normalize(entryTS), projectPath];
     }
 
-    public compileTSProgram(program: ts.Program) {
-        [...program.getSyntacticDiagnostics(), ...program.getSemanticDiagnostics()].forEach(this.reportTSDiagnostic.bind(this));
-        if (this.state.foundAnyError) {
+    public compileNode(node: ts.Node) {
+        if (node.kind == ts.SyntaxKind.SourceFile) {
+            this.compileSourceFile(node as ts.SourceFile);
+        } else {
+            toDo();
+            throw new Error(`Unimplemented node: ${node.kind}`);
+        }
+    }
+
+    public compileSourceFile(node: ts.SourceFile) {
+        let fileName = path.normalize(node.fileName);
+        if (this.state.sourceFilesAlreadyCompiled.has(fileName)) {
             return;
-        }  
-        // - program.getTypeChecker();
-        // - program.getSourceFiles();
-        // throw new Error(`Unimplemented node: ${node.kind}`);
-        this.compileNode(sourceFileToCompile);
+        }
+        this.state.sourceFilesAlreadyCompiled.add(fileName);
+
+        // if the source file is from another project from a dependencty,
+        // merge referenced SWFs from package.json.
+        for (let [projDirName, proj] of this.state.projectPool) {
+            if (fileName.startsWith(projDirName)) {
+                if (proj.externalSWFsLoaded) {
+                    break;
+                }
+                this.mergeProjectReferencedSWFs(proj.path);
+                proj.externalSWFsLoaded = true;
+                break;
+            }
+        }
+
+        // compile the ts.SourceFile statements
+        toDo();
     }
 
     public createTSProgram(projectPath: string): ts.Program | undefined {
-        // there should be only one program. no need to worry about custom TSConfig.
-        // - assign state.program
-        fixthisfixthisfhix();
         let tsConfigPath = findTsConfigPath(projectPath);
         let tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf8'));
         let entryTS = findEntryTypeScript(projectPath);

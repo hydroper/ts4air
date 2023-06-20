@@ -16,14 +16,6 @@
 
 - Are multiple `DoABC`s fine in SWF? https://forum.starling-framework.org/d/23830-multiple-doabc
 
-## To-do before the following
-
-- [ ] package.json for libs has to be loaded not based on index.ts
-- [ ] SourceFiles must load related project package.json ts4air field only once
-- [ ] SourceFiles must be compiled only once
-- [ ] Find SourceFile from com.adobe.air in the ts.Program and compile it before all other SourceFiles.
-- [ ] FFI can be associated to .ts and .d.ts
-
 ## SWF/ABC
 
 - [x] Reader

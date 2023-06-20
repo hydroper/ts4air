@@ -16,6 +16,12 @@
 - `for...of` over an untyped value should iterate based on a map that maps constructor (`obj.constructor`) to its equivalent generator.
 - `for...of` should use generator.
 
+```ts
+for (let [k, v] of new Map) {
+    // optimized
+}
+```
+
 ## Generators
 
 - Generators are useful for iterators and `for...of`. When TypeScript emits JavaScript for an edition prior to ES2015, it emits special code instead of using `yield`; this means `ts4air` can use a similiar approach, taking care to not break the control flow graph.

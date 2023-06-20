@@ -12,10 +12,16 @@ export default class Ts2SwfState {
     public program: ts.Program | null = null;
 
     /**
-     * Avoids duplicating `Project` instances. Maps from a project path
-     * to a `Project` object.
+     * Entry point project.
+     */
+    public project: Project | null = null;
+
+    /**
+     * Maps from a project path, terminating with a slash, to a `Project` object.
      */
     public projectPool: Map<string, Project> = new Map();
+
+    public sourceFilesAlreadyCompiled: Set<string> = new Set();
 
     public swfTags: SwfTag[] = [];
     private swfAlreadyUsedCharTagIds: Set<number> = new Set();
@@ -24,25 +30,19 @@ export default class Ts2SwfState {
 
     public foundAnyError: boolean = false;
 
-    public projectStack: Project[] = [];
-
     /**
      * Maps an entry point `.ts` file to a library project path.
      * Used for compiling dependency projects with custom `ts4air.json` configuration.
      */
     public libEntryPoints: Map<string, string> = new Map();
 
-    public get project(): Project {
-        return this.projectStack[this.projectStack.length - 1];
-    }
-
     public logMessage(file: string, line: number, character: number, message: string) {
-        console.log(`${path.relative(this.project.path, file)} (${line + 1},${character + 1}): ${message}`);
+        console.log(`${path.relative(this.project!.path, file)} (${line + 1},${character + 1}): ${message}`);
     }
 
     public reportError(file: string, line: number, character: number, message: string) {
         this.foundAnyError = true;
-        console.error(`${path.relative(this.project.path, file)} (${line + 1},${character + 1}): ${message}`);
+        console.error(`${path.relative(this.project!.path, file)} (${line + 1},${character + 1}): ${message}`);
     }
 
     public nextSWFCharTagId(): number {
