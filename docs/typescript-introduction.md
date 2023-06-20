@@ -98,6 +98,10 @@ Known list of such methods:
 
 - [ ] ?
 
+## Interface Limitations
+
+Currently it is unallowed to implement a virtual property (or field) as a method and also unallowed to implement a method as a virtual property (or field).
+
 ## NPM
 
 Not all packages from the NPM ecosystem may be reused because of some features, including:

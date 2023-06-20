@@ -191,7 +191,7 @@ class C implements I {
 }
 ```
 
-These are all valid TypeScript programs. This will be complex to handle, so `ts4air` won't allow this for now.
+These are all valid TypeScript programs. This will be complex to handle, so `ts4air` won't allow some forms of this for now.
 
 - [ ] Allow implementing a virtual property as a field, as in the first example. The reverse should also be possible.
 - [ ] Unallow implementing a specific property from an interface in another form (e.g., a field cannot be implemented as a method)
