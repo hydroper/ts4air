@@ -13,8 +13,6 @@
 ## Questions
 
 - Are multiple `DoABC`s fine in SWF? https://forum.starling-framework.org/d/23830-multiple-doabc
-- Is `o['x']` and `o.public::['x']` the same in `const o = {x: 10};`?
-  - Answer: Yes! Tested it with `amxmlc` and `adl`.
 
 ## SWF/ABC
 
