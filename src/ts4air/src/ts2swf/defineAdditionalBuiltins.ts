@@ -31,13 +31,16 @@ export default function defineAdditionalBuiltins(state: Ts2SwfState) {
         instanceInfo.iinit = definePromiseConstructor();
         const instanceIdx = abcFile.instances.push(instanceInfo) - 1;
 
+        // com.asprelude.util.Promise
+        const wrappedPromiseTypeName = abcFile.constantPool.internQName(state.abcAsPreludeUtilPubns, 'Promise');
+
         // - define private '_promise' field
         const wrappedPromiseName = abcFile.constantPool.internQName(state.abcToplevelInternalNs, '_promise');
         instanceInfo.traits.push(new SlotTraitInfo({
             name: wrappedPromiseName,
             isConst: false,
             slotId: 0,
-            typeName: abcFile.constantPool.internQName(state.abcAsPreludeUtilPubns, 'Promise'),
+            typeName: wrappedPromiseTypeName,
             value: new ConstantValue('null', 0),
         }));
 
@@ -47,11 +50,14 @@ export default function defineAdditionalBuiltins(state: Ts2SwfState) {
             const methodInfo = new MethodInfo();
             methodInfo.paramCount = 1;
             methodInfo.returnType = 0;
-            methodInfo.paramTypes = [state.abcFunctionName];
+            methodInfo.paramTypes = [0];
             methodInfo.name = abcFile.constantPool.internString('Promise');
             methodInfo.flags |= 0;
             const index = abcFile.methods.push(methodInfo) - 1;
 
+            // - if given a com.asprelude.util.Promise, wrap it;
+            // otherwise force argument to a Function and
+            // construct a com.asprelude.util.Promise.
             // - emit returnvoid at the end
             const methodBodyInfo = new MethodBodyInfo();
             methodBodyInfo.method = index;
