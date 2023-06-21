@@ -197,3 +197,7 @@ These are all valid TypeScript programs. This will be complex to handle, so `ts4
 
 - [ ] Allow implementing a virtual property as a field, as in the first example. The reverse should also be possible.
 - [ ] Unallow implementing a specific property from an interface in another form (e.g., a field cannot be implemented as a method)
+
+## Implementing interface methods with `uint` or `int`
+
+Similiar to covered above, there might be cases where a class implements an interface method (or virtual property) that uses `uint` or `int`. This also requires careful mapping. An interface can also extend another.

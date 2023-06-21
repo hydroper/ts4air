@@ -107,7 +107,15 @@ Known list of final methods:
 
 `ts4air` will internally adapt `number` to `uint` or `int` when you override a method that takes `uint` or `int` on some parameter, however it does that for a specific list of methods. If you notice something is missing, fill an issue.
 
-Known list of such methods:
+Known list of such methods and virtual properties:
+
+- [ ] ?
+
+## Int and uint on ActionScript interface methods and properties
+
+Similiar to overriden methods, `ts4air` also internally adapts `number` to `uint` or `int` when implementing method or property from an interface.
+
+Known list of such methods and virtual properties:
 
 - [ ] ?
 

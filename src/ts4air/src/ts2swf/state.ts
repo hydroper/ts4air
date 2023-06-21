@@ -1,10 +1,10 @@
-import {AbcFile} from 'ts4air/abc/abcFile';
-import {SwfTag} from 'ts4air/swf/swf';
+import { AbcFile } from 'ts4air/abc/abcFile';
+import { SwfTag } from 'ts4air/swf/swf';
 import * as ts from 'typescript';
 import * as path from 'path';
 import Project from './project';
-import SwfReader, {SwfTagCode} from 'ts4air/swf/swfReader';
-import {assert} from 'console';
+import SwfReader, { SwfTagCode } from 'ts4air/swf/swfReader';
+import { assert } from 'console';
 import ByteArray from 'com.hydroper.util.nodejsbytearray';
 import SwfWriter from 'ts4air/swf/swfWriter';
 
@@ -32,6 +32,11 @@ export default class Ts2SwfState {
      * Index of the public namespace of the top-level package.
      */
     public abcToplevelPubns: number = 0;
+
+    /**
+     * Index of the internal namespace of the top-level package.
+     */
+    public abcToplevelInternalNs: number = 0;
 
     /**
      * Index of the public namespace of the "$ts" package.
@@ -71,6 +76,7 @@ export default class Ts2SwfState {
 
     constructor() {
         this.abcToplevelPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '');
+        this.abcToplevelInternalNs = this.abcFile.constantPool.internNamespace('packageInternalNs', '');
         this.abcTsPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '$ts');
         this.abcTsInternalNs = this.abcFile.constantPool.internNamespace('packageInternalNs', '$ts');
         this.abcAsPreludeUtilPubns = this.abcFile.constantPool.internNamespace('packageNamespace', 'com.asprelude.util');
