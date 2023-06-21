@@ -136,3 +136,6 @@ Using `exports` might not be supported as it is not a priority.
 ## Interfaces
 
 Interfaces are erased in generated ABC.
+
+- [ ] When a class implements an ActionScript interface, whether _directly_ or _indirectly_, add that interface to its list of interfaces. List of such interfaces:
+  - [ ] ?

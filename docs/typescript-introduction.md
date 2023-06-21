@@ -105,9 +105,9 @@ Known list of final methods:
 
 ## Interfaces
 
-Interfaces are erased at runtime.
-
-When implementing a method or property from an ActionScript interface, make sure to implement it with the same type or signature, otherwise `ts4air` will generate incorrect ABC.
+- Interfaces are erased at runtime.
+- When implementing a method or property from an ActionScript interface, make sure to implement it with the same type or signature, otherwise `ts4air` will generate incorrect ABC.
+- When importing custom ActionScript, do not define ActionScript `interface`s; use `*` or `Object` instead.
 
 ## Integer Types
 
