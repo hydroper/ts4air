@@ -142,9 +142,11 @@ new C().f(/(?:)/)
 ## Property Overriding
 
 - [ ] Properties that override another should contribute an assignment in the constructor after `super()` .
+- [ ] Unallow overriding final methods from ActionScript virtual properties. For this, track a list of ActionScript final methods.
 
 ## Method Overriding
 
+- [ ] Unallow overriding from ActionScript final methods. For this, track a list of ActionScript final methods.
 - [ ] Overriding method from a `declare class` may require mapping `number` type to `uint` or `int` depending on which ActionScript method it is (and outputting any default parameter values converting from `number` to `uint` or `int` before writting to ABC). We can do that by simply checking for specific TypeScript methods, but currently I don't know of any cases for now.
   - [ ] Remember that an overrider may override another overrider, so do that transformation recursively.
 - [ ] Overriding method from a `declare class` which has optional parameters requires restricted optional parameter values (e.g. must be constant and fit into the parameter type). A `declare class` comes from ActionScript. Otherwise, the method can use any kind of optional parameter initialiser, as it should be able to translate to something like `*`.

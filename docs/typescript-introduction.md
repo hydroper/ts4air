@@ -84,9 +84,17 @@ minimalFormat('$$', {})
 
 ## Final classes
 
-TypeScript doesn't have final classes. If  you import custom ActionScript code, make sure to not mark classes as final as `ts4air` doesn't know classes other than the ones from Adobe AIR API.
+TypeScript doesn't have final classes. If you import custom ActionScript code, make sure to not mark classes as final as `ts4air` doesn't know classes other than the ones from Adobe AIR API.
 
 Known list of final classes:
+
+- [ ] ?
+
+## Final methods
+
+TypeScript doesn't have final methods. If you import custom ActionScript code, make sure to not mark methods as final as `ts4air` doesn't know methods other than the ones from Adobe AIR API.
+
+Known list of final methods:
 
 - [ ] ?
 
