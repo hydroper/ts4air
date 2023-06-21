@@ -6,6 +6,7 @@ import defineAdditionalBuiltins from 'ts4air/ts2swf/defineAdditionalBuiltins';
 import { AbcFile } from 'ts4air/abc/abcFile';
 import Ts2SwfState from './state';
 import Project from './project';
+import compileNode from './nodes';
 import * as colorconvert from 'ts4air/util/convertColor';
 import SwfWriter from 'ts4air/swf/swfWriter';
 import AbcFileWriter from 'ts4air/abc/abcWriter';
@@ -32,13 +33,7 @@ export class Ts2Swf {
         }
         const packageLockJson = JSON.parse(fs.readFileSync(packageLockPath, 'utf8'));
 
-        // collect the library entry points,
-        // mapping them to their library project paths.
-        const libProjectEntries: [string, string][] = [];
         for (let pkgPath of Object.keys(packageLockJson.packages)) {
-            if (!pkgPath.startsWith('node_modules/')) {
-                continue;
-            }
             pkgPath = path.normalize(path.resolve(project.path, pkgPath));
             pkgPath = path.normalize(pkgPath + (pkgPath.endsWith(path.sep) ? '' : path.sep));
             this.state.projectPool.set(pkgPath, new Project(pkgPath));
@@ -145,62 +140,14 @@ export class Ts2Swf {
             return;
         }
         const [rootFileName] = this.state.program.getRootFileNames();
-        this.compileNode(this.state.program.getSourceFile(rootFileName)!);
+        compileNode(this.state.program.getSourceFile(rootFileName)!, this.state);
     }
 
     // compile .d.ts specifically from 'com.adobe.air'.
     public compileAdobeAIRDTS() {
         let sourceFile = this.state.program!.getSourceFile(path.resolve(this.state.project!.path, 'node_modules/com.adobe.air/src/index.d.ts'));
-        assert(sourceFile !== null, 'Failed to retrieve \'com.adobe.air\' .d.ts.');
-        this.compileNode(sourceFile!);
-    }
-
-    public compileNode(node: ts.Node) {
-        // - program.getTypeChecker();
-        // - program.getSourceFiles();
-        if (node.kind === ts.SyntaxKind.SourceFile) {
-            this.compileSourceFile(node as ts.SourceFile);
-        } else {
-            toDo();
-            throw new Error(`Unimplemented node: ${node.kind}`);
-        }
-    }
-
-    public compileSourceFile(node: ts.SourceFile) {
-        let fileName = path.normalize(node.fileName);
-        if (this.state.sourceFilesAlreadyCompiled.has(fileName)) {
-            return;
-        }
-        this.state.sourceFilesAlreadyCompiled.add(fileName);
-
-        // if the source file is from another project from a dependencty,
-        // merge referenced SWFs from package.json.
-        for (let [projDirName, proj] of this.state.projectPool) {
-            if (fileName.startsWith(projDirName)) {
-                if (proj.externalSWFsLoaded) {
-                    break;
-                }
-                this.mergeProjectReferencedSWFs(proj.path);
-                proj.externalSWFsLoaded = true;
-                break;
-            }
-        }
-
-        // compile the ts.SourceFile statements
-        toDo();
-    }
-
-    private mergeProjectReferencedSWFs(projectPath: string) {
-        const ts4airJson = readTs4airJson(projectPath);
-        if (ts4airJson !== undefined && (ts4airJson.externalActionScript instanceof Array)) {
-            for (let swfPath of ts4airJson.externalActionScript) {
-                swfPath = path.resolve(projectPath, swfPath);
-                if (!(fs.existsSync(swfPath) && fs.statSync(swfPath).isFile())) {
-                    throw new Ts2SwfError('externalSWFNotFound', {path: swfPath});
-                }
-                this.state.mergeSWF(swfPath);
-            }
-        }
+        assert(sourceFile !== undefined, 'Failed to retrieve \'com.adobe.air\' .d.ts.');
+        compileNode(sourceFile!, this.state!);
     }
 
     public createTSProgram(projectPath: string): ts.Program | undefined {

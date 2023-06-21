@@ -11,6 +11,7 @@
         "noFallthroughCasesInSwitch": true,
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
-        "noImplicitOverride": true
+        "noImplicitOverride": true,
+        "noImplicitThis": true
     }
 }
