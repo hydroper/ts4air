@@ -7,6 +7,10 @@ declare global {
 
     const Infinity: number;
 
+    type uint = number;
+
+    type int = number;
+
     function assert(test: any, errorMessage?: string): void;
 
     function assertEquals(left: any, right: any, errorMessage?: string): void;
@@ -97,35 +101,35 @@ declare global {
     }
 
     class Array<T> {
-        length: number;
+        length: uint;
 
-        constructor(numElements?: number);
+        constructor(numElements?: int);
 
         [Symbol.iterator](): Iterator<T>;
 
         concat(...argumentsList: T[]): T[];
 
-        every(callback: (item: T, index: number, array: T[]) => boolean): boolean;
+        every(callback: (item: T, index: int, array: T[]) => boolean): boolean;
 
-        filter(callback: (item: T, index: number, array: T[]) => boolean): T[];
+        filter(callback: (item: T, index: int, array: T[]) => boolean): T[];
 
-        forEach(callback: (item: T, index: number, array: T[]) => void): void;
+        forEach(callback: (item: T, index: int, array: T[]) => void): void;
 
-        indexOf(searchElement: T, fromIndex?: number): number;
+        indexOf(searchElement: T, fromIndex?: int): int;
 
-        insertAt(index: number, element: T): void;
+        insertAt(index: int, element: T): void;
 
         join(sep: any): string;
 
-        lastIndexOf(searchElement: T, fromIndex?: number): number;
+        lastIndexOf(searchElement: T, fromIndex?: int): int;
 
-        map(callback: (item: T, index: number, array: T[]) => T): T[];
+        map(callback: (item: T, index: int, array: T[]) => T): T[];
 
         pop(): T | undefined;
 
-        push(...argumentsList: T[]): number;
+        push(...argumentsList: T[]): uint;
 
-        removeAt(index: number): T | undefined;
+        removeAt(index: int): T | undefined;
 
         /**
          * Reverses the array in place.
@@ -137,9 +141,9 @@ declare global {
          */
         shift(): T | undefined;
 
-        slice(startIndex?: number, endIndex?: number): T[];
+        slice(startIndex?: int, endIndex?: int): T[];
 
-        some(callback: (item: T, index: number, array: T[]) => boolean): boolean;
+        some(callback: (item: T, index: int, array: T[]) => boolean): boolean;
 
         static readonly CASEINSENSITIVE: 1;
         static readonly DESCENDING: 2;
@@ -231,7 +235,7 @@ declare global {
          * Adds elements to and removes elements from an array.
          * This method modifies the array without making a copy.
          */
-        splice(startIndex: number, deleteCount: number, ...values: T[]): T[];
+        splice(startIndex: int, deleteCount: uint, ...values: T[]): T[];
 
         /**
          * Returns a string that represents the elements in the specified array.
@@ -247,7 +251,7 @@ declare global {
          * Adds one or more elements to the beginning of an array and
          * returns the new length of the array.
          */
-        unshift(...argumentsList: T[]): number;
+        unshift(...argumentsList: T[]): uint;
     }
 
     function Boolean(expression: any): boolean;
@@ -267,11 +271,11 @@ declare global {
         static readonly NEGATIVE_INFINITY: number;
         static readonly POSITIVE_INFINITY: number;
 
-        toExponential(fractionDigits: number): string;
+        toExponential(fractionDigits: uint): string;
 
-        toFixed(fractionDigits: number): string;
+        toFixed(fractionDigits: uint): string;
 
-        toPrecision(precision: number): string;;
+        toPrecision(precision: uint): string;;
 
         toString(radix?: number): string;
 

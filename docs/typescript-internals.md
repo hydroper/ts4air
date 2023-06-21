@@ -90,7 +90,7 @@ For any type other than `Array`, `Map` and `Set`, `for..of` will try to:
 
 ## Integer types
 
-Internal tweaks may be neccessary since there is no `int` and `uint` in TypeScript.
+`int` and `uint` are declared as type aliases of `number`; however they _must_ be treated as different and output a reference to the `int` and `uint` classes respectively.
 
 ## Byte embedding
 
@@ -147,8 +147,6 @@ new C().f(/(?:)/)
 ## Method Overriding
 
 - [ ] Unallow overriding from ActionScript final methods. For this, track a list of ActionScript final methods.
-- [ ] Overriding method from a `declare class` may require mapping `number` type to `uint` or `int` depending on which ActionScript method it is (and outputting any default parameter values converting from `number` to `uint` or `int` before writting to ABC). We can do that by simply checking for specific TypeScript methods, but currently I don't know of any cases for now.
-  - [ ] Remember that an overrider may override another overrider, so do that transformation recursively.
 - [ ] Overriding method from a `declare class` which has optional parameters requires restricted optional parameter values (e.g. must be constant and fit into the parameter type). A `declare class` comes from ActionScript. Otherwise, the method can use any kind of optional parameter initialiser, as it should be able to translate to something like `*`.
 
 ## Final Classes
@@ -197,7 +195,3 @@ These are all valid TypeScript programs. This will be complex to handle, so `ts4
 
 - [ ] Allow implementing a virtual property as a field, as in the first example. The reverse should also be possible.
 - [ ] Unallow implementing a specific property from an interface in another form (e.g., a field cannot be implemented as a method)
-
-## Implementing interface methods with `uint` or `int`
-
-Similiar to covered above, there might be cases where a class implements an interface method (or virtual property) that uses `uint` or `int`. This also requires careful mapping. An interface can also extend another.
