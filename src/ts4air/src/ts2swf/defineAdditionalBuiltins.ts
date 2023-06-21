@@ -5,7 +5,7 @@ import {
     FunctionTraitInfo,
     MethodTraitInfo,
     MethodInfo,
-    InstanceInfo
+    InstanceInfo,
 } from 'ts4air/abc/abcFile';
 
 export default function defineAdditionalBuiltins(state: Ts2SwfState) {

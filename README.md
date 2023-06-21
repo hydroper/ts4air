@@ -7,7 +7,7 @@ This is a work-in-progress still beginning. [Roadmap](docs/roadmap.md).
 ## Example
 
 ```typescript
-import {Rectangle} from 'com.adobe.air/geom';
+import { Rectangle } from 'com.adobe.air/geom';
 ```
 
 Blank projects will be created through `ts4air new`.
