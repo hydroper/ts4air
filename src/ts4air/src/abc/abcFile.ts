@@ -340,7 +340,7 @@ export class InstanceInfo {
 
     /**
      * Index into the namespace section of the constant pool.
-     * Must only be set if `flags` includes `InstanceInfoFlags.CLASS_PROTECTED_NS`.
+     * If zero, there is no protected namespace for the class.
      */
     public protectedNs: number = 0;
 

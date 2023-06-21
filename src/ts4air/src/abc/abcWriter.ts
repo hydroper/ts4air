@@ -209,6 +209,7 @@ export default class AbcFileWriter {
     instanceInfo(instance: abc.InstanceInfo) {
         this.u30(instance.name);
         this.u30(instance.superName);
+        instance.flags |= instance.protectedNs !== 0 ? abc.InstanceInfoFlags.CLASS_PROTECTED_NS : 0;
         this.u8(instance.flags);
         if ((instance.flags & abc.InstanceInfoFlags.CLASS_PROTECTED_NS) != 0) {
             this.u30(instance.protectedNs);
