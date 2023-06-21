@@ -119,26 +119,6 @@ Using `exports` might not be supported as it is not a priority.
 - [ ] Unallow using `IArguments` class object at runtime.
 - [ ] Unallow using `RegExpMatches` class object at runtime.
 
-## Multiple signature functions
-
-- [ ] When a method of an interface has multiple signatures, it translates to `function(...rest)`.
-- [ ] When a method of a class is the implementor of an interface's method with multiple signatures, it translates to `function(...rest)`.
-
-Example:
-
-```ts
-interface IFoo {
-    f(n: number): void
-    f(s: string): void
-}
-
-class C implements IFoo {
-    f(r: RegExp) {}
-}
-
-new C().f(/(?:)/)
-```
-
 ## Property Overriding
 
 - [ ] Properties that override another should contribute an assignment in the constructor after `super()` .
