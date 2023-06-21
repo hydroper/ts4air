@@ -23,6 +23,9 @@ export default function compileNode(node: ts.Node, state: Ts2SwfState): void {
         }
         state.sourceFilesAlreadyCompiled.add(fileName);
 
+        // compile the ts.SourceFile statements
+        toDo();
+
         // if the source file is from another project from a dependencty,
         // merge referenced SWFs from package.json.
         for (let [projDirName, proj] of state.projectPool) {
@@ -35,9 +38,6 @@ export default function compileNode(node: ts.Node, state: Ts2SwfState): void {
                 break;
             }
         }
-
-        // compile the ts.SourceFile statements
-        toDo();
     }
 
     compileNode(node);
