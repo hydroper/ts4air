@@ -39,6 +39,11 @@ export default class Ts2SwfState {
     public abcTsPubns: number = 0;
 
     /**
+     * Index of the public namespace of the "com.asprelude.util" package.
+     */
+    public abcAsPreludeUtilPubns: number = 0;
+
+    /**
      * Index of the internal namespace of the "$ts" package.
      */
     public abcTsInternalNs: number = 0;
@@ -68,7 +73,8 @@ export default class Ts2SwfState {
         this.abcToplevelPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '');
         this.abcTsPubns = this.abcFile.constantPool.internNamespace('packageNamespace', '$ts');
         this.abcTsInternalNs = this.abcFile.constantPool.internNamespace('packageInternalNs', '$ts');
-        this.abcPubNsSet = this.abcFile.constantPool.addNsSet([this.abcToplevelPubns, this.abcTsPubns]);
+        this.abcAsPreludeUtilPubns = this.abcFile.constantPool.internNamespace('packageNamespace', 'com.asprelude.util');
+        this.abcPubNsSet = this.abcFile.constantPool.addNsSet([this.abcToplevelPubns, this.abcTsPubns, this.abcAsPreludeUtilPubns]);
         this.abcVoidName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'void');
         this.abcNumberName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'Number');
         this.abcStringName = this.abcFile.constantPool.internQName(this.abcToplevelPubns, 'String');
