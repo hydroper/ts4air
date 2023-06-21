@@ -24,11 +24,15 @@ export default function defineAdditionalBuiltins(state: Ts2SwfState) {
         instanceInfoObj.superName = 0;
         instanceInfoObj.flags = toDo();
         instanceInfoObj.protectedNs = toDo();
-        instanceInfoObj.iinit = definePromiseConstructor(qname);
+        instanceInfoObj.iinit = definePromiseConstructor();
         instanceInfoObj.traits = toDo();
         const instanceIdx = abcFile.instances.push(instanceInfoObj) - 1;
 
         const constructorIdx = ;
+
+        function definePromiseConstructor(): number {
+            toDo();
+        }
 
         toDo();
     }
