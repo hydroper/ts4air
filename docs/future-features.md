@@ -14,3 +14,5 @@ E4X.has(node, qname)
 E4X.filter(node, callback)
 E4X.descendants(node, qname)
 ```
+
+Not sure about the `default namespace` statement, maybe a specially-processed function would do it.

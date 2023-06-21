@@ -239,6 +239,7 @@ export class MethodInfo {
     public paramCount: number = 0;
     /**
      * Index into the multiname section of the constant pool.
+     * Zero denotes the any type (`*`).
      */
     public returnType: number = 0;
     /**
@@ -248,6 +249,7 @@ export class MethodInfo {
     public paramTypes: number[] = [];
     /**
      * Index into the string section of the constant pool.
+     * If zero, the method has no name.
      */
     public name: number = 0;
     /**
@@ -423,7 +425,8 @@ export type SlotTraitInfoOptions = {
     isConst: boolean,
     /**
      * Integer from 0 to N used to identify a position
-     * in which this trait resides.
+     * in which this trait resides. A value of zero requests
+     * the AVM2 to assign a position.
      */
     slotId: number,
     /**
@@ -510,6 +513,7 @@ export class MethodBodyInfo {
      * Index into the method section of the ABC.
      */
     public method: number = 0;
+
     public maxStack: number = 0;
     public localCount: number = 0;
     public initScopeDepth: number = 0;
