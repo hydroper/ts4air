@@ -6,6 +6,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 export default function nodeTransform(node: ts.Node, state: Ts2SwfState): void {
+    transformNode(node);
+
     function transformNode(node: ts.Node): void {
         // - program.getTypeChecker();
         // - program.getSourceFiles();
@@ -39,6 +41,4 @@ export default function nodeTransform(node: ts.Node, state: Ts2SwfState): void {
             }
         }
     }
-
-    transformNode(node);
 }

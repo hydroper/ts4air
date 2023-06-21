@@ -31,16 +31,17 @@ export default function defineAdditionalBuiltins(state: Ts2SwfState) {
         instanceInfo.iinit = definePromiseConstructor();
         const instanceIdx = abcFile.instances.push(instanceInfo) - 1;
 
-        // - define private _promise using abcFile.constantPool.internQName(state.abcToplevelInternalNs, '_promise')
-        const wrapped = new SlotTraitInfo({
-            name: abcFile.constantPool.internQName(state.abcToplevelInternalNs, '_promise'),
+        // - define private '_promise' field
+        const wrappedPromiseName = abcFile.constantPool.internQName(state.abcToplevelInternalNs, '_promise');
+        instanceInfo.traits.push(new SlotTraitInfo({
+            name: wrappedPromiseName,
             isConst: false,
             slotId: 0,
             typeName: abcFile.constantPool.internQName(state.abcAsPreludeUtilPubns, 'Promise'),
             value: new ConstantValue('null', 0),
-        });
+        }));
+
         toDo();
-        instanceInfo.traits.push(wrapped);
 
         function definePromiseConstructor(): number {
             const methodInfo = new MethodInfo();

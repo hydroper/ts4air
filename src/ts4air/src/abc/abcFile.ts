@@ -394,7 +394,8 @@ export class SlotTraitInfo extends TraitInfo {
     public isConst: boolean;
     /**
      * Integer from 0 to N used to identify a position
-     * in which this trait resides.
+     * in which this trait resides. A value of zero requests
+     * the AVM2 to assign a position.
      */
     public slotId: number;
 
@@ -450,6 +451,7 @@ export class ClassTraitInfo extends TraitInfo {
      * @param name Index into the multiname section of the constant pool.
      * Must be a non-zero QName.
      * @param slotId Integer from 0 to N used to identify a position in which this trait resides.
+     * A value of zero requests the AVM2 to assign a position.
      * @param classIndex Index into the class section of the ABC.
      * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
@@ -464,6 +466,7 @@ export class FunctionTraitInfo extends TraitInfo {
      * @param name Index into the multiname section of the constant pool.
      * Must be a non-zero QName.
      * @param slotId Integer from 0 to N used to identify a position in which this trait resides.
+     * A value of zero requests the AVM2 to assign a position.
      * @param methodIndex Index into the method section of the ABC.
      * @param attributes Attribute flags represented by `TraitAttributes`.
      * @param metadata Indexes into the metadata section of the ABC.
