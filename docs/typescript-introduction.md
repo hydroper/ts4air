@@ -103,9 +103,11 @@ Known list of final methods:
 
 - [ ] ?
 
-## Interface Limitations
+## Interfaces
 
-Currently it is unallowed to implement a virtual property (or field) as a method and also unallowed to implement a method as a virtual property (or field).
+Interfaces are erased at runtime.
+
+When implementing a method or property from an ActionScript interface, make sure to implement it with the same type or signature, otherwise `ts4air` will generate incorrect ABC.
 
 ## Integer Types
 

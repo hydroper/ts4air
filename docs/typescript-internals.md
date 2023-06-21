@@ -1,6 +1,6 @@
 # TypeScript Internals
 
-- Object initializer, just as in JavaScript, translates to plain objects whose constructor is `Object`, regardless of its associated type. If the object implements an interface, it is not considered an implementor anymore after translated to ABC.
+- Object initializer, just as in JavaScript, translates to plain objects whose constructor is `Object`, regardless of its associated type.
 - Whenever a signature type is known, output unused parameters to the ABC. This avoids bugs such as `map()` receiving a callback that accepts only one parameter (`o.map(a => v)` vs. `o.map((a, i, arr) => v)`).
 - Optional parameters are optimized if their type supports a constant value and a proper default (e.g. `NaN`, `null` or `undefined`); otherwise they'll translate to an untyped parameter, which is converted to its expected type later in the same function.
 - https://github.com/airsdk/Adobe-Runtime-Support/discussions/2595
@@ -153,45 +153,6 @@ new C().f(/(?:)/)
 
 - [ ] ActionScript has final classes that must not be extended. Unallow to extend those.
 
-## Implementing interface's fields and methods in different ways
+## Interfaces
 
-Consider the following example:
-
-```ts
-interface I {
-    get x(): number;
-}
-
-class C implements I {
-    x: number = 10;
-}
-```
-
-Another example:
-
-```ts
-interface I {
-    x: number;
-}
-
-class C implements I {
-    get x(): number { return 10 }
-}
-```
-
-Another example:
-
-```ts
-interface I {
-    x: () => number;
-}
-
-class C implements I {
-    x() {return 10}
-}
-```
-
-These are all valid TypeScript programs. This will be complex to handle, so `ts4air` won't allow some forms of this for now.
-
-- [ ] Allow implementing a virtual property as a field, as in the first example. The reverse should also be possible.
-- [ ] Unallow implementing a specific property from an interface in another form (e.g., a field cannot be implemented as a method)
+Interfaces are erased in generated ABC.
