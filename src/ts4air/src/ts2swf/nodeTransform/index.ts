@@ -4,19 +4,19 @@ import * as ts from 'typescript';
 import * as path from 'path';
 import * as fs from 'fs';
 
-export default function compileNode(node: ts.Node, state: Ts2SwfState): void {
-    function compileNode(node: ts.Node): void {
+export default function nodeTransform(node: ts.Node, state: Ts2SwfState): void {
+    function transformNode(node: ts.Node): void {
         // - program.getTypeChecker();
         // - program.getSourceFiles();
         if (node.kind === ts.SyntaxKind.SourceFile) {
-            compileSourceFile(node as ts.SourceFile);
+            transformSourceFile(node as ts.SourceFile);
         } else {
             toDo();
             throw new Error(`Unimplemented node: ${node.kind}`);
         }
     }
 
-    function compileSourceFile(node: ts.SourceFile): void {
+    function transformSourceFile(node: ts.SourceFile): void {
         let fileName = path.normalize(node.fileName);
         if (state.sourceFilesAlreadyCompiled.has(fileName)) {
             return;
@@ -40,7 +40,7 @@ export default function compileNode(node: ts.Node, state: Ts2SwfState): void {
         }
     }
 
-    compileNode(node);
+    transformNode(node);
 }
 
 function readTs4airJson(projectPath: string): any {

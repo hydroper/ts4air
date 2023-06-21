@@ -6,7 +6,7 @@ import defineAdditionalBuiltins from 'ts4air/ts2swf/defineAdditionalBuiltins';
 import { AbcFile } from 'ts4air/abc/abcFile';
 import Ts2SwfState from './state';
 import Project from './project';
-import compileNode from './nodes';
+import nodeTransform from './nodeTransform';
 import * as colorconvert from 'ts4air/util/convertColor';
 import SwfWriter from 'ts4air/swf/swfWriter';
 import AbcFileWriter from 'ts4air/abc/abcWriter';
@@ -140,14 +140,14 @@ export class Ts2Swf {
             return;
         }
         const [rootFileName] = this.state.program.getRootFileNames();
-        compileNode(this.state.program.getSourceFile(rootFileName)!, this.state);
+        nodeTransform(this.state.program.getSourceFile(rootFileName)!, this.state);
     }
 
     // compile .d.ts specifically from 'com.adobe.air'.
     public compileAdobeAIRDTS() {
         let sourceFile = this.state.program!.getSourceFile(path.resolve(this.state.project!.path, 'node_modules/com.adobe.air/src/index.d.ts'));
         assert(sourceFile !== undefined, 'Failed to retrieve \'com.adobe.air\' .d.ts.');
-        compileNode(sourceFile!, this.state!);
+        nodeTransform(sourceFile!, this.state!);
     }
 
     public createTSProgram(projectPath: string): ts.Program | undefined {
