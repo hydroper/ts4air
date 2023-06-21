@@ -52,7 +52,7 @@ export default class Ts2SwfState {
     public abcNumberName: number = 0;
 
     /**
-     * Index to a set of public namespaces, including top-level and `$ts`.
+     * Index to a set of public namespaces, including top-level, `$ts` and `com.asprelude.util`.
      */
     public abcPubNsSet: number = 0;
 
