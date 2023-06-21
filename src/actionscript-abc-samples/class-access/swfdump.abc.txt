@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Parsing swf file:/C:/Users/matheus-pc/Documents/typescript-projects/ts4air/src/actionscript-abc-samples/class-access/build/app.swf -->
+<swf xmlns="http://macromedia/2003/swfx" version="50" framerate="24.0" size="10000x7500" compressed="true" >
+  <!-- framecount=1 length=855 -->
+  <FileAttributes useDirectBlit="false" useGPU="false" hasMetadata="true" actionScript3="true" suppressCrossDomainCaching="false" swfRelativeUrls="false" useNetwork="true"/>
+  <Metadata>
+        <![CDATA[<?xml version="1.0" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:asc="http://ns.adobe.com/asc/2012">
+        <dc:format>application/x-shockwave-flash</dc:format>
+        <asc:compiler name="ActionScript Compiler" version="2.3.0" build="0"/>
+    </rdf:Description>
+</rdf:RDF>
+]]>
+  </Metadata>
+  <SetBackgroundColor color="#FFFFFF"/>
+  <ScriptLimits scriptRecursionLimit="1000" scriptTimeLimit="60"/>
+  <DoABC>
+// script 0
+
+// class_id=0 slot_id=0
+public class Main extends flash.display::Sprite
+{
+
+  // method_id=1
+  public function Main():*
+  {
+    //  derivedName  Main  
+    //  method_info  1     
+    //  max_stack    1     
+    //  max_regs     1     
+    //  scope_depth  0     
+    //  max_scope    1     
+    //  code_length  11    
+    bb0
+      succs=[]
+      0      getlocal0                   
+      1      pushscope                   
+      2      getlocal0                   
+      3      constructsuper           0  
+      4      getlex          q.b::C1     
+      5      callpropvoid                
+      6      returnvoid                  
+  }
+
+  public static function Main$():*
+  {
+    //  derivedName  null  
+    //  method_info  2     
+    //  max_stack    0     
+    //  max_regs     1     
+    //  scope_depth  0     
+    //  max_scope    0     
+    //  code_length  1     
+    bb0
+      succs=[]
+      0      returnvoid      
+  }
+}
+
+function script0$init():*
+{
+  //  derivedName  null  
+  //  method_info  0     
+  //  max_stack    3     
+  //  max_regs     1     
+  //  scope_depth  0     
+  //  max_scope    7     
+  //  code_length  34    
+  bb0
+    succs=[]
+    0       getlocal0                                                 
+    1       pushscope                                                 
+    2       getscopeobject                                         0  
+    3       getlex          Object                                    
+    4       pushscope                                                 
+    5       getlex          flash.events::EventDispatcher             
+    6       pushscope                                                 
+    7       getlex          flash.display::DisplayObject              
+    8       pushscope                                                 
+    9       getlex          flash.display::InteractiveObject          
+    10      pushscope                                                 
+    11      getlex          flash.display::DisplayObjectContainer     
+    12      pushscope                                                 
+    13      getlex          flash.display::Sprite                     
+    14      dup                                                       
+    15      pushscope                                                 
+    16      newclass                                                  
+    17      popscope                                                  
+    18      popscope                                                  
+    19      popscope                                                  
+    20      popscope                                                  
+    21      popscope                                                  
+    22      popscope                                                  
+    23      initproperty    Main                                      
+    24      returnvoid                                                
+}
+
+// script 1
+
+// class_id=1 slot_id=0
+public class q.b::C1 extends Object
+{
+
+  // method_id=6
+  public function q.b::C1():*
+  {
+    //  derivedName  null  
+    //  method_info  6     
+    //  max_stack    1     
+    //  max_regs     1     
+    //  scope_depth  0     
+    //  max_scope    1     
+    //  code_length  6     
+    bb0
+      succs=[]
+      0      getlocal0            
+      1      pushscope            
+      2      getlocal0            
+      3      constructsuper    0  
+      4      returnvoid           
+  }
+
+  public static function q.b::C1$():*
+  {
+    //  derivedName  null  
+    //  method_info  5     
+    //  max_stack    0     
+    //  max_regs     1     
+    //  scope_depth  0     
+    //  max_scope    0     
+    //  code_length  1     
+    bb0
+      succs=[]
+      0      returnvoid      
+  }
+
+  public static function f(Number):void
+  {
+    //  derivedName  f   
+    //  method_info  4   
+    //  max_stack    3   
+    //  max_regs     2   
+    //  scope_depth  0   
+    //  max_scope    1   
+    //  code_length  10  
+    bb0
+      succs=[]
+      0      getlocal0                 
+      1      pushscope                 
+      2      getlex          trace     
+      3      getglobalscope            
+      4      pushstring      "foo"     
+      5      call                   1  
+      6      returnvoid                
+  }
+}
+
+function script1$init():*
+{
+  //  derivedName  null  
+  //  method_info  3     
+  //  max_stack    3     
+  //  max_regs     1     
+  //  scope_depth  0     
+  //  max_scope    2     
+  //  code_length  14    
+  bb0
+    succs=[]
+    0      getlocal0                   
+    1      pushscope                   
+    2      getscopeobject           0  
+    3      getlex          Object      
+    4      dup                         
+    5      pushscope                   
+    6      newclass                    
+    7      popscope                    
+    8      initproperty    q.b::C1     
+    9      returnvoid                  
+}
+
+  </DoABC>
+  <SymbolClass>
+    <Symbol idref="0" className="Main" />
+  </SymbolClass>
+  <ShowFrame/>
+</swf>
