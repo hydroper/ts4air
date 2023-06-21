@@ -90,7 +90,7 @@ For any type other than `Array`, `Map` and `Set`, `for..of` will try to:
 
 ## Integer types
 
-`int` and `uint` are declared as type aliases of `number`; however they _must_ be treated as different and output a reference to the `int` and `uint` classes respectively.
+`int` and `uint` are declared as type aliases of `number`; however they _must_ be treated as different and output a reference to the `int` and `uint` classes respectively. If a type aliases `uint` or `int`, it must map to them as well and not `Number`.
 
 ## Byte embedding
 

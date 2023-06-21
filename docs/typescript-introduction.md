@@ -107,6 +107,27 @@ Known list of final methods:
 
 Currently it is unallowed to implement a virtual property (or field) as a method and also unallowed to implement a method as a virtual property (or field).
 
+## Integer Types
+
+`uint` and `int` are aliases to `number`:
+
+```ts
+const u = uint; // error
+const i = int; // error
+const n = Number; // OK
+```
+
+When overriding a method or implementing an interface method, do not mix the number types. E.g., if a method takes `uint`, an overridder must also take `uint`. If you use different types, the generated SWF may be incorrect and AVM2 may throw a `VerifyError`.
+
+```ts
+class C1 {
+    f(v: uint) {}
+}
+class C2 extends C1 {
+    override f(v: number) {} // generates incorrect ABC
+}
+```
+
 ## NPM
 
 Not all packages from the NPM ecosystem may be reused because of some features, including:

@@ -64,7 +64,7 @@ declare global {
 
     function parseFloat(str: string): number;
 
-    function parseInt(str: string, radix?: number): number;
+    function parseInt(str: string, radix?: uint): number;
 
     /**
      * The Object class is at the root of the ActionScript runtime class hierarchy.
@@ -285,7 +285,7 @@ declare global {
     function String(expression: any): string;
 
     class String {
-        readonly length: number;
+        readonly length: int;
 
         charAt(index: number): string;
 
@@ -295,11 +295,11 @@ declare global {
 
         static fromCharCode(...charCodes: number[]): string;
 
-        indexOf(val: string, startIndex?: number): number;
+        indexOf(val: string, startIndex?: number): int;
 
-        lastIndexOf(val: string, startIndex?: number): number;
+        lastIndexOf(val: string, startIndex?: number): int;
 
-        localeCompare(other: string, ...values: string[]): number;
+        localeCompare(other: string, ...values: string[]): int;
 
         match(pattern: string | RegExp): RegExpMatches;
 

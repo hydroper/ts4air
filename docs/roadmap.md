@@ -70,6 +70,7 @@
   - [x] `Set`
   - [ ] `WeakSet`
 - [ ] Adobe AIR
+  - [ ] Make sure to use `uint` and `int` aliases everywhere necessary.
   - [ ] `com.adobe.air/util`
     - [ ] `ByteArray`
     - [ ] `Dictionary`
